@@ -70,18 +70,51 @@
   .btn-outline { padding: 8px 16px; background: transparent; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-size: 13px; cursor: pointer; font-family: var(--font-body); color: var(--color-text-secondary); }
   .btn-outline:hover { background: var(--color-background-secondary); }
 
-  .hero { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 2.5rem 1.5rem; text-align: center; }
-  .hero { position: relative; }
-  .lang-switch { position: absolute; top: 14px; right: 1.5rem; display: inline-flex; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
+  .hero { position: relative; background: #F8FBFD; border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.25rem 1.5rem 3.25rem; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 72% 18%, rgba(29,158,117,0.16), transparent 28%), linear-gradient(115deg, #FFFFFF 0%, #FFFFFF 42%, #EAF3F8 42%, #F7FBFD 100%); pointer-events: none; }
+  .home-nav-strip, .hero-grid, .home-trust-row { position: relative; z-index: 1; }
+  .home-nav-strip { max-width: 1180px; margin: 0 auto 2.75rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .home-logo { height: 54px; width: auto; display: block; }
+  .home-nav-actions { display: flex; align-items: center; gap: 14px; }
+  .home-nav-link { font-size: 13px; color: var(--color-text-secondary); white-space: nowrap; }
+  .lang-switch { display: inline-flex; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
   .nav-lang { position: static; }
   .lang-btn { border: none; background: transparent; color: var(--color-text-secondary); font-family: var(--font-body); font-size: 12px; line-height: 1; padding: 7px 10px; cursor: pointer; }
   .lang-btn.active { background: var(--iris-blue); color: white; }
   .lang-btn:hover:not(.active) { background: var(--color-background-secondary); color: var(--color-text-primary); }
-  .hero-logo { width: min(330px, 72vw); height: auto; display: block; margin: 0 auto 1.35rem; }
-  .hero-tag { display: inline-block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--iris-teal); background: #E1F5EE; padding: 3px 12px; border-radius: 20px; margin-bottom: 1rem; font-weight: 500; }
-  .hero h1 { font-family: var(--font-display); font-size: 30px; line-height: 1.2; margin-bottom: 0.75rem; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .hero p { font-size: 14px; color: var(--color-text-secondary); max-width: 380px; margin: 0 auto 1.75rem; line-height: 1.6; }
-  .question-roller { max-width: 560px; margin: 1.5rem auto 0; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); background: var(--color-background-primary); overflow: hidden; text-align: left; }
+  .hero-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(420px, 0.98fr); gap: 54px; align-items: center; }
+  .hero-copy { text-align: left; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: #0F6E56; background: #E1F5EE; padding: 6px 12px; border-radius: 999px; margin-bottom: 1.2rem; font-weight: 500; }
+  .hero h1 { font-family: var(--font-display); font-size: 56px; line-height: 1.02; margin-bottom: 1rem; max-width: 640px; color: var(--iris-navy); }
+  .hero p { font-size: 17px; color: var(--color-text-secondary); max-width: 560px; margin: 0 0 1.8rem; line-height: 1.65; }
+  .hero-cta-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .hero-cta-row .btn-primary { width: auto; padding: 13px 24px; }
+  .hero-cta-row .btn-outline { padding: 12px 18px; background: rgba(255,255,255,0.78); }
+  .hero-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 560px; }
+  .proof-item { border-left: 2px solid var(--iris-teal); padding-left: 12px; }
+  .proof-value { font-size: 19px; font-weight: 500; color: var(--iris-navy); }
+  .proof-label { font-size: 12px; color: var(--color-text-secondary); line-height: 1.45; }
+  .hero-visual { position: relative; min-height: 520px; }
+  .compliance-cockpit { position: relative; background: #FFFFFF; border: 0.5px solid rgba(12,35,64,0.15); border-radius: 8px; padding: 18px; box-shadow: 0 22px 60px rgba(12,35,64,0.14); }
+  .cockpit-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .cockpit-title { font-size: 13px; font-weight: 500; color: var(--iris-navy); }
+  .cockpit-status { font-size: 11px; color: #0F6E56; background: #E1F5EE; padding: 4px 9px; border-radius: 999px; }
+  .cockpit-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 14px; margin-top: 16px; }
+  .cockpit-panel { background: #F8FBFD; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; padding: 14px; }
+  .panel-label { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+  .risk-score { font-family: var(--font-display); font-size: 46px; color: var(--iris-blue); line-height: 1; }
+  .bar-list { display: flex; flex-direction: column; gap: 9px; margin-top: 14px; }
+  .bar-row { display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center; font-size: 11px; color: var(--color-text-secondary); }
+  .bar-line { height: 7px; border-radius: 999px; background: #DDEAF4; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 999px; background: var(--iris-teal); }
+  .timeline-list { display: flex; flex-direction: column; gap: 12px; }
+  .timeline-item { display: flex; gap: 10px; align-items: flex-start; font-size: 12px; color: var(--color-text-secondary); line-height: 1.45; }
+  .timeline-dot { width: 20px; height: 20px; border-radius: 50%; background: var(--iris-blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+  .floating-card { position: absolute; background: #FFFFFF; border: 0.5px solid rgba(12,35,64,0.14); border-radius: 8px; box-shadow: 0 16px 42px rgba(12,35,64,0.13); padding: 12px 14px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--iris-navy); }
+  .floating-card i { color: var(--iris-teal); font-size: 18px; }
+  .floating-card.amazon { top: -20px; right: 24px; }
+  .floating-card.fda { bottom: 118px; left: -28px; }
+  .question-roller { margin: 18px 0 0; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-primary); overflow: hidden; text-align: left; }
   .question-roller-head { display: flex; align-items: center; gap: 8px; padding: 11px 14px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); font-size: 12px; font-weight: 500; }
   .question-roller-head i { color: var(--iris-blue); font-size: 16px; }
   .question-window { height: 138px; overflow: hidden; position: relative; }
@@ -101,6 +134,20 @@
   .feature-tile i { font-size: 20px; color: var(--iris-blue); margin-bottom: 6px; display: block; }
   .feature-tile h3 { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
   .feature-tile p { font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+  .home-section { padding: 3.5rem 1.5rem; background: var(--color-background-primary); }
+  .home-section-inner { max-width: 1180px; margin: 0 auto; }
+  .section-kicker { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--iris-teal); font-weight: 500; margin-bottom: 8px; }
+  .section-title { font-family: var(--font-display); font-size: 34px; line-height: 1.15; color: var(--iris-navy); max-width: 620px; margin-bottom: 1.5rem; }
+  .advantage-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .advantage-card { border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; padding: 20px; background: #FFFFFF; min-height: 178px; }
+  .advantage-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
+  .advantage-card h3 { font-size: 15px; color: var(--iris-navy); margin-bottom: 8px; }
+  .advantage-card p { font-size: 13px; line-height: 1.55; color: var(--color-text-secondary); }
+  .home-band { background: var(--iris-navy); color: white; padding: 3.25rem 1.5rem; }
+  .home-band-inner { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
+  .home-band h2 { font-family: var(--font-display); font-size: 34px; line-height: 1.15; margin-bottom: 8px; }
+  .home-band p { color: rgba(255,255,255,0.74); line-height: 1.6; max-width: 620px; }
+  .home-band .btn-primary { width: auto; background: var(--iris-teal); padding: 13px 24px; }
 
   .notice { background: var(--color-background-info); border: 0.5px solid var(--color-border-info); border-radius: var(--border-radius-md); padding: 10px 14px; font-size: 12px; color: var(--color-text-info); display: flex; align-items: flex-start; gap: 8px; margin-bottom: 1rem; line-height: 1.5; }
   .notice i { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
@@ -155,9 +202,21 @@
     .nav-logo img { height: 30px; }
     .nav-actions { flex-direction: column; align-items: flex-end; gap: 6px; }
     .nav-user { font-size: 12px; }
-    .hero { padding-top: 3.5rem; }
-    .lang-switch { right: 1rem; }
+    .hero { padding: 1rem 1rem 2.25rem; }
+    .home-nav-strip { margin-bottom: 1.5rem; align-items: flex-start; }
+    .home-logo { height: 42px; }
+    .home-nav-actions { flex-direction: column; align-items: flex-end; gap: 8px; }
+    .home-nav-link { display: none; }
+    .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+    .hero h1 { font-size: 38px; }
+    .hero p { font-size: 15px; }
+    .hero-proof { grid-template-columns: 1fr; }
+    .hero-visual { min-height: auto; }
+    .cockpit-grid, .home-band-inner { grid-template-columns: 1fr; }
+    .floating-card { position: static; margin-top: 12px; }
     .question-roller { margin-top: 1.25rem; }
+    .advantage-grid { grid-template-columns: 1fr; }
+    .section-title, .home-band h2 { font-size: 28px; }
   }
 </style>
 </head>
@@ -183,46 +242,102 @@
 <!-- ══ S0: LANDING ══ -->
 <div class="screen active" id="s0">
   <div class="hero">
-    <div class="lang-switch" aria-label="Language selector">
-      <button class="lang-btn active" data-lang="en" type="button" onclick="setLanguage('en')">EN</button>
-      <button class="lang-btn" data-lang="zh" type="button" onclick="setLanguage('zh')">中文</button>
-    </div>
-    <img class="hero-logo" src="assets/logo-large.png" alt="IRIS Device & Health" />
-    <div class="hero-tag">FDA 510(k) Compliance Platform</div>
-    <h1>Navigate FDA clearance with confidence</h1>
-    <p>AI-powered device classification and expert regulatory guidance — from product diagnosis to market-ready.</p>
-    <button class="btn-primary" style="width:auto;padding:11px 28px;" onclick="goTo('s1')">Start your application <i class="ti ti-arrow-right"></i></button>
-    <div class="question-roller" aria-label="Common FDA and Amazon compliance questions">
-      <div class="question-roller-head"><i class="ti ti-message-question" aria-hidden="true"></i> Common questions we help answer</div>
-      <div class="question-window">
-        <div class="question-track">
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What should we do if our product was removed by Amazon?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>We have a 510(k), but Amazon still will not approve us. What can we do?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>How do I register a massager with FDA?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What is the registration process for a beauty device?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What class is a knee brace, and how do we register it?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What documents are needed to list a blood pressure monitor on Amazon?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What should we do if our product was removed by Amazon?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>We have a 510(k), but Amazon still will not approve us. What can we do?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>How do I register a massager with FDA?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What is the registration process for a beauty device?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What class is a knee brace, and how do we register it?</span></div>
-          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What documents are needed to list a blood pressure monitor on Amazon?</span></div>
+    <div class="home-nav-strip">
+      <img class="home-logo" src="assets/logo-large.png" alt="IRIS Device & Health" />
+      <div class="home-nav-actions">
+        <span class="home-nav-link">FDA 510(k)</span>
+        <span class="home-nav-link">Amazon compliance</span>
+        <span class="home-nav-link">Device registration</span>
+        <div class="lang-switch" aria-label="Language selector">
+          <button class="lang-btn active" data-lang="en" type="button" onclick="setLanguage('en')">EN</button>
+          <button class="lang-btn" data-lang="zh" type="button" onclick="setLanguage('zh')">中文</button>
         </div>
       </div>
     </div>
-  </div>
-  <div class="page-wrap">
-    <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--color-text-tertiary);font-weight:500;margin-bottom:1rem;">How it works</div>
-    <div class="features-grid">
-      <div class="feature-tile"><i class="ti ti-clipboard-list" aria-hidden="true"></i><h3>AI diagnosis</h3><p>Smart questionnaire classifies your device instantly</p></div>
-      <div class="feature-tile"><i class="ti ti-user-check" aria-hidden="true"></i><h3>Expert review</h3><p>Regulatory specialists validate your classification</p></div>
-      <div class="feature-tile"><i class="ti ti-building-hospital" aria-hidden="true"></i><h3>Registration</h3><p>Facility registration and labeling compliance</p></div>
-      <div class="feature-tile"><i class="ti ti-certificate" aria-hidden="true"></i><h3>Market-ready</h3><p>Complete documentation for FDA submission</p></div>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="hero-tag"><i class="ti ti-shield-check" aria-hidden="true"></i> FDA 510(k) & Amazon Compliance</div>
+        <h1>Medical device compliance, clarified from day one.</h1>
+        <p>IRIS Device & Health helps product teams understand device class, FDA registration needs, Amazon review documents, and practical next steps before costly delays happen.</p>
+        <div class="hero-cta-row">
+          <button class="btn-primary" onclick="goTo('s1')">Start your application <i class="ti ti-arrow-right"></i></button>
+          <button class="btn-outline" onclick="goTo('s2')"><i class="ti ti-clipboard-list" aria-hidden="true"></i> Run quick diagnosis</button>
+        </div>
+        <div class="hero-proof">
+          <div class="proof-item"><div class="proof-value">7-step</div><div class="proof-label">guided product diagnosis</div></div>
+          <div class="proof-item"><div class="proof-value">48h</div><div class="proof-label">expert review target</div></div>
+          <div class="proof-item"><div class="proof-value">FDA + AMZ</div><div class="proof-label">market access focus</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-card amazon"><i class="ti ti-alert-circle" aria-hidden="true"></i><span>Amazon review blockers mapped</span></div>
+        <div class="compliance-cockpit">
+          <div class="cockpit-top">
+            <div class="cockpit-title">IRIS Compliance Cockpit</div>
+            <div class="cockpit-status">Live assessment</div>
+          </div>
+          <div class="cockpit-grid">
+            <div class="cockpit-panel">
+              <div class="panel-label">Preliminary pathway</div>
+              <div class="risk-score">Class I</div>
+              <div class="bar-list">
+                <div class="bar-row"><span>Device fit</span><div class="bar-line"><div class="bar-fill" style="width:82%;"></div></div></div>
+                <div class="bar-row"><span>Labeling</span><div class="bar-line"><div class="bar-fill" style="width:58%;"></div></div></div>
+                <div class="bar-row"><span>Amazon</span><div class="bar-line"><div class="bar-fill" style="width:72%;"></div></div></div>
+              </div>
+            </div>
+            <div class="cockpit-panel">
+              <div class="panel-label">Next actions</div>
+              <div class="timeline-list">
+                <div class="timeline-item"><span class="timeline-dot">1</span><span>Confirm intended use and claims.</span></div>
+                <div class="timeline-item"><span class="timeline-dot">2</span><span>Prepare registration and listing route.</span></div>
+                <div class="timeline-item"><span class="timeline-dot">3</span><span>Package documents for marketplace review.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="question-roller" aria-label="Common FDA and Amazon compliance questions">
+            <div class="question-roller-head"><i class="ti ti-message-question" aria-hidden="true"></i> Common questions we help answer</div>
+            <div class="question-window">
+              <div class="question-track">
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What should we do if our product was removed by Amazon?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>We have a 510(k), but Amazon still will not approve us. What can we do?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>How do I register a massager with FDA?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What is the registration process for a beauty device?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What class is a knee brace, and how do we register it?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What documents are needed to list a blood pressure monitor on Amazon?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What should we do if our product was removed by Amazon?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>We have a 510(k), but Amazon still will not approve us. What can we do?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>How do I register a massager with FDA?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What is the registration process for a beauty device?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What class is a knee brace, and how do we register it?</span></div>
+                <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What documents are needed to list a blood pressure monitor on Amazon?</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-card fda"><i class="ti ti-file-check" aria-hidden="true"></i><span>FDA document route prepared</span></div>
+      </div>
     </div>
-    <div class="card">
-      <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:10px;">Already have an account?</div>
-      <button class="btn-outline" style="width:100%;" onclick="goTo('s1')"><i class="ti ti-login" aria-hidden="true"></i> Sign in</button>
+  </div>
+  <div class="home-section">
+    <div class="home-section-inner">
+      <div class="section-kicker">MasterControl-style industry focus</div>
+      <h2 class="section-title">A practical compliance path for medical device sellers and manufacturers.</h2>
+      <div class="advantage-grid">
+        <div class="advantage-card"><i class="ti ti-clipboard-list" aria-hidden="true"></i><h3>AI diagnosis</h3><p>Start with a structured questionnaire that captures function, body contact, claims, software, production, and FDA history.</p></div>
+        <div class="advantage-card"><i class="ti ti-user-check" aria-hidden="true"></i><h3>Expert review</h3><p>Regulatory specialists review the pathway and help separate low-risk claims from higher-risk submissions.</p></div>
+        <div class="advantage-card"><i class="ti ti-building-hospital" aria-hidden="true"></i><h3>FDA registration</h3><p>Map establishment registration, device listing, labeling, and documentation requirements in one flow.</p></div>
+        <div class="advantage-card"><i class="ti ti-brand-amazon" aria-hidden="true"></i><h3>Amazon readiness</h3><p>Prepare the evidence package marketplaces ask for when listings are blocked, removed, or under review.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="home-band">
+    <div class="home-band-inner">
+      <div>
+        <h2>Turn regulatory uncertainty into a clear action plan.</h2>
+        <p>Answer seven product questions and get a preliminary pathway before you spend time preparing the wrong documents.</p>
+      </div>
+      <button class="btn-primary" onclick="goTo('s1')">Begin diagnosis <i class="ti ti-arrow-right"></i></button>
     </div>
   </div>
 </div>
@@ -507,9 +622,31 @@ let userData={}, qAnswers={}, qAnswerDetails={}, currentQ=0, aiClassResult=null,
 
 const ZH_TEXT = {
   'FDA 510(k) Compliance Platform':'FDA 510(k) 合规平台',
+  'FDA 510(k) & Amazon Compliance':'FDA 510(k) 与亚马逊合规',
+  'FDA 510(k)':'FDA 510(k)',
+  'Amazon compliance':'亚马逊合规',
+  'Device registration':'器械注册',
   'Navigate FDA clearance with confidence':'自信推进 FDA 审批',
+  'Medical device compliance, clarified from day one.':'从第一天起，把医疗器械合规讲清楚。',
   'AI-powered device classification and expert regulatory guidance — from product diagnosis to market-ready.':'通过 AI 器械分类与专家法规指导，从产品诊断一路走到上市准备。',
+  'IRIS Device & Health helps product teams understand device class, FDA registration needs, Amazon review documents, and practical next steps before costly delays happen.':'IRIS Device & Health 帮助产品团队在出现高成本延误之前，弄清器械类别、FDA 注册需求、亚马逊审核材料和可执行的下一步。',
   'Start your application':'开始申请',
+  'Run quick diagnosis':'快速诊断',
+  'guided product diagnosis':'引导式产品诊断',
+  'expert review target':'专家审核目标',
+  'market access focus':'市场准入重点',
+  'Amazon review blockers mapped':'定位亚马逊审核卡点',
+  'IRIS Compliance Cockpit':'IRIS 合规驾驶舱',
+  'Live assessment':'实时评估',
+  'Preliminary pathway':'初步路径',
+  'Device fit':'器械匹配',
+  'Labeling':'标签',
+  'Amazon':'亚马逊',
+  'Next actions':'下一步行动',
+  'Confirm intended use and claims.':'确认预期用途和产品声明。',
+  'Prepare registration and listing route.':'准备注册和列名路径。',
+  'Package documents for marketplace review.':'整理平台审核所需材料。',
+  'FDA document route prepared':'FDA 文件路径已准备',
   'Common questions we help answer':'我们可以帮你解答这些问题',
   'What should we do if our product was removed by Amazon?':'我们产品被亚马逊下架了怎么办？',
   'We have a 510(k), but Amazon still will not approve us. What can we do?':'我们有510k,亚马逊还是审核不过怎么办？',
@@ -518,14 +655,25 @@ const ZH_TEXT = {
   'What class is a knee brace, and how do we register it?':'护膝产品属于几类？如何注册？',
   'What documents are needed to list a blood pressure monitor on Amazon?':'血压计要上亚马逊，需要什么材料？',
   'How it works':'流程说明',
+  'MasterControl-style industry focus':'医疗器械行业解决方案',
+  'A practical compliance path for medical device sellers and manufacturers.':'为医疗器械卖家和制造商设计的实用合规路径。',
   'AI diagnosis':'AI 诊断',
   'Smart questionnaire classifies your device instantly':'智能问卷即时判断器械类别',
+  'Start with a structured questionnaire that captures function, body contact, claims, software, production, and FDA history.':'从结构化问卷开始，收集产品功能、人体接触方式、产品声明、软件、生产方式和 FDA 基础情况。',
   'Expert review':'专家审核',
   'Regulatory specialists validate your classification':'法规专家验证你的分类结果',
+  'Regulatory specialists review the pathway and help separate low-risk claims from higher-risk submissions.':'法规专家审核路径，帮助区分低风险声明和更高风险的提交需求。',
   'Registration':'注册',
   'Facility registration and labeling compliance':'完成机构注册与标签合规',
+  'FDA registration':'FDA 注册',
+  'Map establishment registration, device listing, labeling, and documentation requirements in one flow.':'在一个流程中梳理机构注册、器械列名、标签和文件要求。',
   'Market-ready':'上市准备',
   'Complete documentation for FDA submission':'准备 FDA 提交所需文件',
+  'Amazon readiness':'亚马逊准备',
+  'Prepare the evidence package marketplaces ask for when listings are blocked, removed, or under review.':'当产品被拦截、下架或进入审核时，准备平台需要的证明材料包。',
+  'Turn regulatory uncertainty into a clear action plan.':'把法规不确定性转化为清晰行动计划。',
+  'Answer seven product questions and get a preliminary pathway before you spend time preparing the wrong documents.':'回答 7 个产品问题，在花时间准备错误文件之前，先获得初步路径。',
+  'Begin diagnosis':'开始诊断',
   'Already have an account?':'已经有账号？',
   'Sign in':'登录',
   'Back to home':'返回首页',
