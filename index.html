@@ -70,6 +70,11 @@
   .btn-outline:hover { background: var(--color-background-secondary); }
 
   .hero { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 2.5rem 1.5rem; text-align: center; }
+  .hero { position: relative; }
+  .lang-switch { position: absolute; top: 14px; right: 1.5rem; display: inline-flex; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
+  .lang-btn { border: none; background: transparent; color: var(--color-text-secondary); font-family: var(--font-body); font-size: 12px; line-height: 1; padding: 7px 10px; cursor: pointer; }
+  .lang-btn.active { background: var(--iris-blue); color: white; }
+  .lang-btn:hover:not(.active) { background: var(--color-background-secondary); color: var(--color-text-primary); }
   .hero-tag { display: inline-block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--iris-teal); background: #E1F5EE; padding: 3px 12px; border-radius: 20px; margin-bottom: 1rem; font-weight: 500; }
   .hero h1 { font-family: var(--font-display); font-size: 30px; line-height: 1.2; margin-bottom: 0.75rem; max-width: 480px; margin-left: auto; margin-right: auto; }
   .hero p { font-size: 14px; color: var(--color-text-secondary); max-width: 380px; margin: 0 auto 1.75rem; line-height: 1.6; }
@@ -133,6 +138,10 @@
 
   .upload-zone { border: 1.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 1.75rem; text-align: center; cursor: pointer; }
   .upload-zone:hover { background: var(--color-background-secondary); }
+  @media (max-width: 520px) {
+    .hero { padding-top: 3.5rem; }
+    .lang-switch { right: 1rem; }
+  }
 </style>
 </head>
 <body>
@@ -151,6 +160,10 @@
 <!-- ══ S0: LANDING ══ -->
 <div class="screen active" id="s0">
   <div class="hero">
+    <div class="lang-switch" aria-label="Language selector">
+      <button class="lang-btn active" id="lang-en" type="button" onclick="setLanguage('en')">EN</button>
+      <button class="lang-btn" id="lang-zh" type="button" onclick="setLanguage('zh')">中文</button>
+    </div>
     <div class="hero-tag">FDA 510(k) Compliance Platform</div>
     <h1>Navigate FDA clearance with confidence</h1>
     <p>AI-powered device classification and expert regulatory guidance — from product diagnosis to market-ready.</p>
@@ -410,7 +423,7 @@
     </div>
     <div class="card">
       <div class="card-title"><i class="ti ti-file-upload" aria-hidden="true"></i> Upload label draft <span style="font-size:11px;font-weight:400;color:var(--color-text-tertiary);margin-left:4px;">(optional)</span></div>
-      <div class="upload-zone" onclick="alert('In production: connect to file storage service')">
+      <div class="upload-zone" onclick="alert(t('In production: connect to file storage service'))">
         <i class="ti ti-upload" style="font-size:22px;color:var(--color-text-tertiary);display:block;margin-bottom:6px;" aria-hidden="true"></i>
         <div style="font-size:13px;color:var(--color-text-secondary);">Click to upload label file</div>
         <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:3px;">PDF, PNG, JPG up to 10MB</div>
@@ -447,7 +460,7 @@
     </div>
     <div class="card" style="text-align:center;">
       <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:10px;">Need ongoing compliance support?</div>
-      <button class="btn-primary" onclick="alert('In production: redirect to consultation booking')"><i class="ti ti-calendar" aria-hidden="true"></i> Schedule follow-up consultation</button>
+      <button class="btn-primary" onclick="alert(t('In production: redirect to consultation booking'))"><i class="ti ti-calendar" aria-hidden="true"></i> Schedule follow-up consultation</button>
     </div>
     <div style="text-align:center;margin-top:1rem;">
       <button class="inline-link" onclick="restart()">Start a new application</button>
@@ -459,7 +472,224 @@
 const STEPS = ['Register','Diagnosis','AI review','Payment','Classification','Registration','Labeling','Complete'];
 const SCREEN_STEP_MAP = {s1:0,s2:1,s3:2,s4:3,s5:4,s6:5,s7:6,s8:7};
 const PREV_SCREEN_MAP = {s1:'s0',s2:'s1',s3:'s2',s4:'s3',s5:'s4',s6:'s5',s7:'s6',s8:'s7'};
-let userData={}, apiKey='', qAnswers={}, currentQ=0, aiClassResult=null;
+let userData={}, apiKey='', qAnswers={}, currentQ=0, aiClassResult=null, currentLang='en';
+
+const ZH_TEXT = {
+  'FDA 510(k) Compliance Platform':'FDA 510(k) 合规平台',
+  'Navigate FDA clearance with confidence':'自信推进 FDA 审批',
+  'AI-powered device classification and expert regulatory guidance — from product diagnosis to market-ready.':'通过 AI 器械分类与专家法规指导，从产品诊断一路走到上市准备。',
+  'Start your application':'开始申请',
+  'How it works':'流程说明',
+  'AI diagnosis':'AI 诊断',
+  'Smart questionnaire classifies your device instantly':'智能问卷即时判断器械类别',
+  'Expert review':'专家审核',
+  'Regulatory specialists validate your classification':'法规专家验证你的分类结果',
+  'Registration':'注册',
+  'Facility registration and labeling compliance':'完成机构注册与标签合规',
+  'Market-ready':'上市准备',
+  'Complete documentation for FDA submission':'准备 FDA 提交所需文件',
+  'Already have an account?':'已经有账号？',
+  'Sign in':'登录',
+  'Back to home':'返回首页',
+  'Create your account':'创建账号',
+  'Step 1 of 6 — Account setup':'第 1 步，共 6 步 — 账号设置',
+  'Account information':'账号信息',
+  'First name':'名',
+  'Last name':'姓',
+  'Work email':'工作邮箱',
+  'Company / Organization':'公司 / 机构',
+  'Password':'密码',
+  'First name is required':'请输入名',
+  'Last name is required':'请输入姓',
+  'Please enter a valid email address':'请输入有效邮箱地址',
+  'Password must be at least 8 characters':'密码至少需要 8 个字符',
+  'AI API key':'AI API 密钥',
+  '(optional)':'（可选）',
+  'Enter your Anthropic API key to enable live AI analysis. Leave blank to use demo mode.':'输入 Anthropic API 密钥即可启用实时 AI 分析；留空则使用演示模式。',
+  'Anthropic API key':'Anthropic API 密钥',
+  'Test':'测试',
+  'Create account':'创建账号',
+  'Back':'返回',
+  'Product diagnosis':'产品诊断',
+  'Answer a few questions so our AI can classify your device':'回答几个问题，AI 将帮助判断你的器械类别',
+  'Next':'下一步',
+  'Analyze my device ↗':'分析我的器械 ↗',
+  'Back to questionnaire':'返回问卷',
+  'AI analysis':'AI 分析',
+  'Reviewing your answers and generating a preliminary classification':'正在审核你的回答并生成初步分类',
+  'Proceed to expert review':'进入专家审核',
+  'Back to AI analysis':'返回 AI 分析',
+  'Expert review':'专家审核',
+  'A licensed regulatory specialist will verify your classification within 48 hours':'持证法规专家将在 48 小时内核验你的分类结果',
+  'Expert review service':'专家审核服务',
+  'One-time payment · 48-hour turnaround':'一次性付款 · 48 小时内完成',
+  'Licensed regulatory specialist review':'持证法规专家审核',
+  'Written classification determination':'书面分类判定',
+  '510(k) exemption analysis':'510(k) 豁免分析',
+  'Recommended pathway report':'推荐法规路径报告',
+  '30-min follow-up consultation':'30 分钟后续咨询',
+  'Payment details':'付款信息',
+  'Secure payment via Stripe. Connect your Stripe account to enable live payments.':'通过 Stripe 安全付款。连接 Stripe 账号后可启用真实付款。',
+  'Card number':'卡号',
+  'Expiry':'有效期',
+  'CVV':'CVV',
+  'Name on card':'持卡人姓名',
+  'Please enter a valid card number':'请输入有效卡号',
+  'Required':'必填',
+  'Pay $299 and submit for review':'支付 $299 并提交审核',
+  'By proceeding you agree to our Terms of Service and Privacy Policy':'继续即表示你同意我们的服务条款和隐私政策',
+  'Classification result':'分类结果',
+  'Expert review complete':'专家审核已完成',
+  'Class I Device':'I 类器械',
+  'Class II Device':'II 类器械',
+  'Class III Device':'III 类器械',
+  'Your device is classified as low risk. Most Class I devices are exempt from 510(k) premarket notification.':'你的器械被归为低风险。多数 I 类器械可豁免 510(k) 上市前通知。',
+  'Moderate risk device. Typically requires 510(k) premarket notification demonstrating substantial equivalence.':'中等风险器械。通常需要提交 510(k) 上市前通知，以证明实质等同。',
+  'High risk device. Generally requires PMA (Premarket Approval), the most stringent FDA pathway.':'高风险器械。通常需要 PMA（上市前批准），这是 FDA 最严格的路径。',
+  'Recommended next steps':'建议的下一步',
+  'Continue to facility registration':'继续机构注册',
+  'Back to classification':'返回分类结果',
+  'Facility registration':'机构注册',
+  'Register your establishment with FDA (annual requirement)':'向 FDA 注册你的机构（年度要求）',
+  'FDA requires all device establishments to register annually. Registration fees are paid directly to FDA (~$5,672/year).':'FDA 要求所有医疗器械机构每年注册。注册费直接支付给 FDA（约 $5,672/年）。',
+  'Establishment details':'机构信息',
+  'Establishment name':'机构名称',
+  'Establishment type':'机构类型',
+  'Select type...':'请选择类型...',
+  'Manufacturer':'制造商',
+  'Repackager/Relabeler':'重新包装/重新贴标方',
+  'Specification Developer':'规格开发方',
+  'Contract Manufacturer':'合同制造商',
+  'Contract Sterilizer':'合同灭菌方',
+  'Street address':'街道地址',
+  'City':'城市',
+  'State':'州',
+  'Zip code':'邮编',
+  'Responsible party':'负责人',
+  'Contact name':'联系人姓名',
+  'Email':'邮箱',
+  'Please enter a valid email':'请输入有效邮箱',
+  'Phone':'电话',
+  'Submit registration & continue':'提交注册并继续',
+  'Back to facility registration':'返回机构注册',
+  'Labeling compliance':'标签合规',
+  'Verify your device labeling meets 21 CFR Part 801 requirements':'确认器械标签符合 21 CFR Part 801 要求',
+  'Required label elements':'必需标签要素',
+  'Upload label draft':'上传标签草稿',
+  'Click to upload label file':'点击上传标签文件',
+  'PDF, PNG, JPG up to 10MB':'PDF、PNG、JPG，最大 10MB',
+  'Complete labeling review':'完成标签审核',
+  'Back to labeling':'返回标签审核',
+  'Application complete!':'申请已完成！',
+  'Congratulations — your FDA 510(k) compliance process is complete. A summary report will be sent to':'恭喜，你的 FDA 510(k) 合规流程已完成。摘要报告将发送至',
+  'Summary':'摘要',
+  'Account registered':'账号已注册',
+  'Product diagnosis completed':'产品诊断已完成',
+  'AI classification generated':'AI 分类已生成',
+  'Expert review completed':'专家审核已完成',
+  'Device classified:':'器械分类：',
+  'Facility registration submitted':'机构注册已提交',
+  'Labeling compliance verified':'标签合规已验证',
+  'Need ongoing compliance support?':'需要持续合规支持？',
+  'Schedule follow-up consultation':'预约后续咨询',
+  'Start a new application':'开始新的申请',
+  'Register':'注册',
+  'Diagnosis':'诊断',
+  'AI review':'AI 审核',
+  'Payment':'付款',
+  'Classification':'分类',
+  'Labeling':'标签',
+  'Complete':'完成',
+  'What best describes your device?':'以下哪项最能描述你的器械？',
+  'Diagnostic / imaging device':'诊断 / 成像器械',
+  'Therapeutic / treatment device':'治疗 / 处置器械',
+  'Monitoring device (e.g. wearable)':'监测器械（如可穿戴设备）',
+  'Software as a Medical Device (SaMD)':'医疗器械软件（SaMD）',
+  'In-vitro diagnostic (IVD)':'体外诊断（IVD）',
+  'Surgical instrument / tool':'手术器械 / 工具',
+  'Is the device invasive (enters the body or contacts internal tissues)?':'该器械是否具有侵入性（进入人体或接触内部组织）？',
+  'No — external use only':'否 — 仅外部使用',
+  'Yes — non-surgical, temporary':'是 — 非手术、临时性',
+  'Yes — surgically invasive':'是 — 手术侵入性',
+  'Yes — implantable':'是 — 可植入',
+  'Does the device emit or use energy (electrical, radiation, laser, ultrasound)?':'该器械是否发射或使用能量（电、辐射、激光、超声等）？',
+  'No':'否',
+  'Yes — low energy / battery powered':'是 — 低能量 / 电池供电',
+  'Yes — significant energy (laser, X-ray, RF)':'是 — 较高能量（激光、X 光、射频）',
+  'Yes — ionizing radiation':'是 — 电离辐射',
+  'Do you have a predicate device in mind?':'你是否已有可比的 predicate device？',
+  'Yes — I have a specific predicate':'是 — 我已有具体可比器械',
+  'Yes — a few potential predicates':'是 — 有几个可能的可比器械',
+  'Not yet — need help identifying one':'还没有 — 需要帮助寻找',
+  'No predicate needed (de novo or PMA pathway)':'不需要可比器械（de novo 或 PMA 路径）',
+  'Has your device or a similar product received prior FDA clearance?':'你的器械或类似产品此前是否获得过 FDA clearance？',
+  'Yes — 510(k) cleared predicate exists':'是 — 存在已获 510(k) clearance 的可比器械',
+  'Unsure — need to research':'不确定 — 需要进一步检索',
+  'No — this is a novel device':'否 — 这是新型器械',
+  'International clearance only (CE mark, etc.)':'仅有国际认证（如 CE 标志等）',
+  'Device name / trade name':'器械名称 / 商品名',
+  'Manufacturer name and address':'制造商名称和地址',
+  'Lot or batch number':'批号',
+  'Expiration date (if applicable)':'有效期（如适用）',
+  'Intended use / indications for use':'预期用途 / 适应症',
+  'Warnings and precautions':'警告和注意事项',
+  'Storage conditions':'储存条件',
+  'Instructions for use reference':'使用说明引用',
+  'UDI (Unique Device Identifier)':'UDI（唯一器械标识）',
+  'Sterility statement (if applicable)':'无菌声明（如适用）',
+  'Your responses':'你的回答',
+  'Analyzing your device':'正在分析你的器械',
+  'Low risk':'低风险',
+  'Often 510(k) exempt':'通常 510(k) 豁免',
+  'General controls':'一般控制',
+  'Moderate risk':'中等风险',
+  '510(k) required':'需要 510(k)',
+  'Special controls':'特殊控制',
+  'High risk':'高风险',
+  'PMA required':'需要 PMA',
+  'Clinical data needed':'需要临床数据',
+  'Proceed to facility registration':'进入机构注册',
+  'Prepare device labeling per 21 CFR 801':'按 21 CFR 801 准备器械标签',
+  'Establish basic quality system requirements':'建立基本质量体系要求',
+  'Submit device listing to FDA':'向 FDA 提交器械列名',
+  'Identify predicate device for 510(k)':'为 510(k) 确认可比器械',
+  'Prepare 510(k) submission package':'准备 510(k) 提交资料',
+  'Complete facility registration':'完成机构注册',
+  'Prepare device labeling':'准备器械标签',
+  'Consult specialist for PMA strategy':'咨询专家制定 PMA 策略',
+  'Design clinical study protocol':'设计临床研究方案',
+  'Submit Pre-Submission (Q-Sub) to FDA':'向 FDA 提交预提交（Q-Sub）',
+  'Prepare IDE application if needed':'必要时准备 IDE 申请',
+  'Please select an option to continue.':'请选择一个选项后继续。',
+  'Testing...':'测试中...',
+  '✗ Invalid format. Should start with sk-ant-...':'✗ 格式无效，应以 sk-ant-... 开头',
+  '✓ API key valid — live AI analysis enabled':'✓ API 密钥有效，已启用实时 AI 分析',
+  '✗ API key rejected':'✗ API 密钥被拒绝',
+  '✗ Connection error':'✗ 连接错误',
+  'In production: connect to file storage service':'生产环境中：连接文件存储服务',
+  'In production: redirect to consultation booking':'生产环境中：跳转到咨询预约'
+};
+
+const ZH_PLACEHOLDERS = {
+  'Jane':'Jane',
+  'Smith':'Smith',
+  'jane@company.com':'jane@company.com',
+  'MedTech Inc.':'MedTech Inc.',
+  'Min. 8 characters':'至少 8 个字符',
+  'sk-ant-api03-...':'sk-ant-api03-...',
+  '4242 4242 4242 4242':'4242 4242 4242 4242',
+  'MM/YY':'月/年',
+  '123':'123',
+  'Jane Smith':'Jane Smith',
+  'Your Company Inc.':'你的公司 Inc.',
+  '123 Medical Drive':'123 Medical Drive',
+  'City':'城市',
+  'CA':'CA',
+  '90210':'90210',
+  'Full name':'姓名',
+  'contact@company.com':'contact@company.com',
+  '+1 (555) 000-0000':'+1 (555) 000-0000'
+};
 
 const QUESTIONS = [
   {id:'device_type',text:'What best describes your device?',options:['Diagnostic / imaging device','Therapeutic / treatment device','Monitoring device (e.g. wearable)','Software as a Medical Device (SaMD)','In-vitro diagnostic (IVD)','Surgical instrument / tool']},
@@ -470,6 +700,54 @@ const QUESTIONS = [
 ];
 
 const LABEL_ITEMS = ['Device name / trade name','Manufacturer name and address','Lot or batch number','Expiration date (if applicable)','Intended use / indications for use','Warnings and precautions','Storage conditions','Instructions for use reference','UDI (Unique Device Identifier)','Sterility statement (if applicable)'];
+
+function t(text) { return currentLang === 'zh' ? (ZH_TEXT[text] || text) : text; }
+function tPlaceholder(text) { return currentLang === 'zh' ? (ZH_PLACEHOLDERS[text] || text) : text; }
+function classLabel(cls) { return currentLang === 'zh' ? `${cls} 类器械` : `Class ${cls}`; }
+
+function setLanguage(lang) {
+  currentLang = lang;
+  const current = document.querySelector('.screen.active')?.id || 's0';
+  buildStepper(current);
+  if(current === 's2') renderQuestion();
+  if(current === 's5') showClassResult();
+  if(current === 's7') buildLabelChecklist();
+  if(current === 's8') updateCompleteScreen();
+  localizePage();
+}
+
+function localizePage() {
+  document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+  document.getElementById('lang-en')?.classList.toggle('active', currentLang === 'en');
+  document.getElementById('lang-zh')?.classList.toggle('active', currentLang === 'zh');
+
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if(!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      if(node.parentElement?.closest('script,style')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node => {
+    if(!node._enText) node._enText = node.nodeValue.trim();
+    const leading = node.nodeValue.match(/^\s*/)?.[0] || '';
+    const trailing = node.nodeValue.match(/\s*$/)?.[0] || '';
+    node.nodeValue = leading + t(node._enText) + trailing;
+  });
+
+  document.querySelectorAll('input[placeholder]').forEach(input => {
+    if(!input.dataset.enPlaceholder) input.dataset.enPlaceholder = input.getAttribute('placeholder');
+    input.setAttribute('placeholder', tPlaceholder(input.dataset.enPlaceholder));
+  });
+}
+
+function updateCompleteScreen() {
+  document.getElementById('complete-email').textContent=userData.email||'';
+  document.getElementById('final-class').textContent=classLabel(aiClassResult||'I');
+  localizePage();
+}
 
 function buildStepper(sid) {
   const nav = document.getElementById('main-nav');
@@ -486,7 +764,7 @@ function buildStepper(sid) {
     dot.textContent = i<active?'✓':(i+1);
     const lbl = document.createElement('div');
     lbl.className='step-label'+(i<active?' done':i===active?' active':'');
-    lbl.textContent=s;
+    lbl.textContent=t(s);
     col.appendChild(dot); col.appendChild(lbl); inner.appendChild(col);
     if(i<STEPS.length-1){ const line=document.createElement('div'); line.className='step-line'+(i<active?' done':''); inner.appendChild(line); }
   });
@@ -501,7 +779,8 @@ function goTo(sid) {
   if(sid==='s3') runAIAnalysis();
   if(sid==='s5') showClassResult();
   if(sid==='s7') buildLabelChecklist();
-  if(sid==='s8'){ document.getElementById('complete-email').textContent=userData.email||''; document.getElementById('final-class').textContent='Class '+(aiClassResult||'I'); }
+  if(sid==='s8') updateCompleteScreen();
+  localizePage();
 }
 
 function goBack() {
@@ -537,13 +816,13 @@ function doRegister() {
 async function testApiKey() {
   const key=document.getElementById('api-key-input').value.trim();
   const status=document.getElementById('api-status');
-  status.style.display='block'; status.className='api-status'; status.textContent='Testing...';
-  if(!key.startsWith('sk-ant')){ status.className='api-status err'; status.textContent='✗ Invalid format. Should start with sk-ant-...'; return; }
+  status.style.display='block'; status.className='api-status'; status.textContent=t('Testing...');
+  if(!key.startsWith('sk-ant')){ status.className='api-status err'; status.textContent=t('✗ Invalid format. Should start with sk-ant-...'); return; }
   try {
     const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:10,messages:[{role:'user',content:'hi'}]})});
-    if(r.ok){ status.className='api-status ok'; status.textContent='✓ API key valid — live AI analysis enabled'; apiKey=key; }
-    else{ status.className='api-status err'; status.textContent='✗ API key rejected'; }
-  } catch(e){ status.className='api-status err'; status.textContent='✗ Connection error'; }
+    if(r.ok){ status.className='api-status ok'; status.textContent=t('✓ API key valid — live AI analysis enabled'); apiKey=key; }
+    else{ status.className='api-status err'; status.textContent=t('✗ API key rejected'); }
+  } catch(e){ status.className='api-status err'; status.textContent=t('✗ Connection error'); }
 }
 
 function initQuestionnaire() { currentQ=0; renderQuestion(); }
@@ -552,18 +831,19 @@ function renderQuestion() {
   const q=QUESTIONS[currentQ];
   document.getElementById('q-progress').style.width=(((currentQ+1)/QUESTIONS.length)*100)+'%';
   document.getElementById('q-back-btn').disabled=currentQ===0;
-  document.getElementById('q-next-btn').innerHTML=currentQ===QUESTIONS.length-1?'Analyze my device ↗':'Next <i class="ti ti-arrow-right"></i>';
+  document.getElementById('q-next-btn').innerHTML=currentQ===QUESTIONS.length-1?t('Analyze my device ↗'):`${t('Next')} <i class="ti ti-arrow-right"></i>`;
   document.getElementById('q-container').innerHTML=`
     <div class="q-block">
-      <div class="q-num">Question ${currentQ+1} of ${QUESTIONS.length}</div>
-      <div class="q-text">${q.text}</div>
-      <div class="q-options">${q.options.map(o=>`<div class="q-option ${qAnswers[q.id]===o?'selected':''}" onclick="selectOpt('${q.id}',this)" data-value="${o}">${o}</div>`).join('')}</div>
+      <div class="q-num">${currentLang === 'zh' ? `第 ${currentQ+1} 题，共 ${QUESTIONS.length} 题` : `Question ${currentQ+1} of ${QUESTIONS.length}`}</div>
+      <div class="q-text">${t(q.text)}</div>
+      <div class="q-options">${q.options.map(o=>`<div class="q-option ${qAnswers[q.id]===o?'selected':''}" onclick="selectOpt('${q.id}',this)" data-value="${o}">${t(o)}</div>`).join('')}</div>
     </div>`;
+  localizePage();
 }
 
 function selectOpt(qid,el) { document.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected')); el.classList.add('selected'); qAnswers[qid]=el.dataset.value; }
 function qPrev() { if(currentQ>0){currentQ--;renderQuestion();} else goTo('s1'); }
-function qNext() { if(!qAnswers[QUESTIONS[currentQ].id]){alert('Please select an option to continue.');return;} if(currentQ<QUESTIONS.length-1){currentQ++;renderQuestion();}else{goTo('s3');} }
+function qNext() { if(!qAnswers[QUESTIONS[currentQ].id]){alert(t('Please select an option to continue.'));return;} if(currentQ<QUESTIONS.length-1){currentQ++;renderQuestion();}else{goTo('s3');} }
 
 async function runAIAnalysis() {
   const area=document.getElementById('ai-chat-area');
@@ -588,12 +868,12 @@ async function runAIAnalysis() {
 
 function addUserSummary(area){
   const d=document.createElement('div');
-  d.innerHTML=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:1rem;font-size:12px;color:var(--color-text-secondary);line-height:1.7;"><strong style="font-size:11px;letter-spacing:0.5px;text-transform:uppercase;display:block;margin-bottom:4px;">Your responses</strong>${Object.values(qAnswers).map(a=>`<div>· ${a}</div>`).join('')}</div>`;
+  d.innerHTML=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:1rem;font-size:12px;color:var(--color-text-secondary);line-height:1.7;"><strong style="font-size:11px;letter-spacing:0.5px;text-transform:uppercase;display:block;margin-bottom:4px;">${t('Your responses')}</strong>${Object.values(qAnswers).map(a=>`<div>· ${t(a)}</div>`).join('')}</div>`;
   area.appendChild(d);
 }
 function addTyping(area){
   const d=document.createElement('div'); d.className='ai-bubble-wrap'; d.id='typing-indicator';
-  d.innerHTML=`<div class="ai-icon"><i class="ti ti-brain" aria-hidden="true"></i></div><div class="ai-bubble" style="display:flex;align-items:center;gap:4px;min-height:40px;"><span style="font-size:12px;color:var(--color-text-secondary);margin-right:4px;">Analyzing your device</span><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  d.innerHTML=`<div class="ai-icon"><i class="ti ti-brain" aria-hidden="true"></i></div><div class="ai-bubble" style="display:flex;align-items:center;gap:4px;min-height:40px;"><span style="font-size:12px;color:var(--color-text-secondary);margin-right:4px;">${t('Analyzing your device')}</span><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
   area.appendChild(d);
 }
 function removeTyping(area){const t=document.getElementById('typing-indicator');if(t)t.remove();}
@@ -605,7 +885,12 @@ function addAIMsg(area,text){
 }
 function buildPrompt(){return `Device: ${qAnswers.device_type||'?'}\nInvasiveness: ${qAnswers.invasive||'?'}\nEnergy: ${qAnswers.energy||'?'}\nPredicate: ${qAnswers.predicate||'?'}\nPrior clearance: ${qAnswers.prior_clearance||'?'}\nCompany: ${userData.company||'?'}`;}
 function extractClass(t){if(/class\s*iii/i.test(t))return'III';if(/class\s*ii/i.test(t))return'II';return'I';}
-function getFallback(){return`**Preliminary Classification: Class I Device**\n\nBased on your questionnaire responses, your device profile aligns with a Class I classification under 21 CFR Parts 860-892.\n\n**Key reasoning:**\n• Device appears non-invasive with limited energy output\n• No significant risk factors identified\n• Profile consistent with general wellness / low-risk device categories\n\n**Regulatory pathway:**\n• 510(k) exempt (most Class I devices do not require premarket notification)\n• Must comply with General Controls: establishment registration, device listing, labeling\n\n**Important:** This is a preliminary AI assessment only. The expert review you are about to purchase will provide a definitive classification with full written determination.`;}
+function getFallback(){
+  if(currentLang === 'zh') {
+    return`**初步分类：I 类器械**\n\n根据你的问卷回答，该器械概况与 21 CFR Parts 860-892 下的 I 类分类相符。\n\n**关键依据：**\n• 器械看起来为非侵入性，能量输出有限\n• 未识别出显著风险因素\n• 产品特征与一般健康 / 低风险器械类别一致\n\n**法规路径：**\n• 510(k) 豁免（多数 I 类器械无需上市前通知）\n• 仍需遵守一般控制要求：机构注册、器械列名和标签合规\n\n**重要提示：** 这只是 AI 初步评估。即将购买的专家审核将提供正式分类意见和完整书面判定。`;
+  }
+  return`**Preliminary Classification: Class I Device**\n\nBased on your questionnaire responses, your device profile aligns with a Class I classification under 21 CFR Parts 860-892.\n\n**Key reasoning:**\n• Device appears non-invasive with limited energy output\n• No significant risk factors identified\n• Profile consistent with general wellness / low-risk device categories\n\n**Regulatory pathway:**\n• 510(k) exempt (most Class I devices do not require premarket notification)\n• Must comply with General Controls: establishment registration, device listing, labeling\n\n**Important:** This is a preliminary AI assessment only. The expert review you are about to purchase will provide a definitive classification with full written determination.`;
+}
 
 function doPayment(){
   const card=document.getElementById('pay-card').value.replace(/\s/g,'');
@@ -627,17 +912,18 @@ function fmtExp(el){let v=el.value.replace(/\D/g,'');if(v.length>=2)v=v.substrin
 function showClassResult(){
   const cls=aiClassResult||'I';
   document.getElementById('result-class-badge').textContent=cls;
-  document.getElementById('final-class').textContent='Class '+cls;
+  document.getElementById('final-class').textContent=classLabel(cls);
   const cfg={
     'I':{name:'Class I Device',desc:'Your device is classified as low risk. Most Class I devices are exempt from 510(k) premarket notification.',tags:[['Low risk','tag-low'],['Often 510(k) exempt','tag-low'],['General controls','tag-low']],steps:['Proceed to facility registration','Prepare device labeling per 21 CFR 801','Establish basic quality system requirements','Submit device listing to FDA']},
     'II':{name:'Class II Device',desc:'Moderate risk device. Typically requires 510(k) premarket notification demonstrating substantial equivalence.',tags:[['Moderate risk','tag-med'],['510(k) required','tag-med'],['Special controls','tag-med']],steps:['Identify predicate device for 510(k)','Prepare 510(k) submission package','Complete facility registration','Prepare device labeling']},
     'III':{name:'Class III Device',desc:'High risk device. Generally requires PMA (Premarket Approval), the most stringent FDA pathway.',tags:[['High risk','tag-high'],['PMA required','tag-high'],['Clinical data needed','tag-high']],steps:['Consult specialist for PMA strategy','Design clinical study protocol','Submit Pre-Submission (Q-Sub) to FDA','Prepare IDE application if needed']}
   };
   const c=cfg[cls]||cfg['I'];
-  document.getElementById('result-class-name').textContent=c.name;
-  document.getElementById('result-class-desc').textContent=c.desc;
-  document.getElementById('result-tags').innerHTML=c.tags.map(([t,cl])=>`<span class="result-tag ${cl}">${t}</span>`).join('');
-  document.getElementById('next-steps-list').innerHTML=c.steps.map(s=>`<li><i class="ti ti-circle-check" aria-hidden="true"></i> ${s}</li>`).join('');
+  document.getElementById('result-class-name').textContent=t(c.name);
+  document.getElementById('result-class-desc').textContent=t(c.desc);
+  document.getElementById('result-tags').innerHTML=c.tags.map(([txt,cl])=>`<span class="result-tag ${cl}">${t(txt)}</span>`).join('');
+  document.getElementById('next-steps-list').innerHTML=c.steps.map(s=>`<li><i class="ti ti-circle-check" aria-hidden="true"></i> ${t(s)}</li>`).join('');
+  localizePage();
 }
 
 function doFacility(){
@@ -657,11 +943,13 @@ function doFacility(){
 function buildLabelChecklist(){
   document.getElementById('label-checklist-wrap').innerHTML=LABEL_ITEMS.map((item,i)=>`
     <label style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer;font-size:13px;font-weight:400;color:var(--color-text-primary);margin-bottom:0;">
-      <input type="checkbox" id="lbl-${i}" style="width:auto;margin-bottom:0;flex-shrink:0;" />${item}
+      <input type="checkbox" id="lbl-${i}" style="width:auto;margin-bottom:0;flex-shrink:0;" />${t(item)}
     </label>`).join('');
+  localizePage();
 }
 
 function restart(){userData={};apiKey='';qAnswers={};currentQ=0;aiClassResult=null;goTo('s0');}
+localizePage();
 </script>
 </body>
 </html>
