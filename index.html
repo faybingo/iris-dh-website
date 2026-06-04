@@ -87,12 +87,6 @@
   .notice { background: var(--color-background-info); border: 0.5px solid var(--color-border-info); border-radius: var(--border-radius-md); padding: 10px 14px; font-size: 12px; color: var(--color-text-info); display: flex; align-items: flex-start; gap: 8px; margin-bottom: 1rem; line-height: 1.5; }
   .notice i { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
 
-  .api-key-wrap { display: flex; gap: 8px; margin-bottom: 0; }
-  .api-key-wrap input { margin-bottom: 0; flex: 1; }
-  .api-status { font-size: 12px; margin-top: 8px; padding: 6px 10px; border-radius: var(--border-radius-md); }
-  .api-status.ok { background: #E1F5EE; color: #0F6E56; }
-  .api-status.err { background: #FCEBEB; color: #A32D2D; }
-
   .progress-bar-wrap { height: 3px; background: var(--color-border-tertiary); border-radius: 2px; margin-bottom: 1.25rem; overflow: hidden; }
   .progress-bar-fill { height: 100%; background: var(--iris-blue); border-radius: 2px; transition: width 0.4s ease; }
 
@@ -221,18 +215,6 @@
         <label>Password <span class="required-star">*</span></label>
         <input type="password" id="reg-pass" placeholder="Min. 8 characters" />
         <div class="field-error">Password must be at least 8 characters</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title"><i class="ti ti-key" aria-hidden="true"></i> AI API key <span style="font-size:11px;font-weight:400;color:var(--color-text-tertiary);margin-left:4px;">(optional)</span></div>
-      <div class="notice"><i class="ti ti-info-circle" aria-hidden="true"></i><span>Enter your Anthropic API key to enable live AI analysis. Leave blank to use demo mode.</span></div>
-      <div class="field">
-        <label>Anthropic API key</label>
-        <div class="api-key-wrap">
-          <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." />
-          <button class="btn-outline" onclick="testApiKey()">Test</button>
-        </div>
-        <div id="api-status" style="display:none;" class="api-status"></div>
       </div>
     </div>
     <button class="btn-primary" onclick="doRegister()">Create account <i class="ti ti-arrow-right"></i></button>
@@ -472,7 +454,7 @@
 const STEPS = ['Register','Diagnosis','AI review','Payment','Classification','Registration','Labeling','Complete'];
 const SCREEN_STEP_MAP = {s1:0,s2:1,s3:2,s4:3,s5:4,s6:5,s7:6,s8:7};
 const PREV_SCREEN_MAP = {s1:'s0',s2:'s1',s3:'s2',s4:'s3',s5:'s4',s6:'s5',s7:'s6',s8:'s7'};
-let userData={}, apiKey='', qAnswers={}, currentQ=0, aiClassResult=null, currentLang='en';
+let userData={}, qAnswers={}, currentQ=0, aiClassResult=null, currentLang='en';
 
 const ZH_TEXT = {
   'FDA 510(k) Compliance Platform':'FDA 510(k) 合规平台',
@@ -503,11 +485,6 @@ const ZH_TEXT = {
   'Last name is required':'请输入姓',
   'Please enter a valid email address':'请输入有效邮箱地址',
   'Password must be at least 8 characters':'密码至少需要 8 个字符',
-  'AI API key':'AI API 密钥',
-  '(optional)':'（可选）',
-  'Enter your Anthropic API key to enable live AI analysis. Leave blank to use demo mode.':'输入 Anthropic API 密钥即可启用实时 AI 分析；留空则使用演示模式。',
-  'Anthropic API key':'Anthropic API 密钥',
-  'Test':'测试',
   'Create account':'创建账号',
   'Back':'返回',
   'Product diagnosis':'产品诊断',
@@ -661,11 +638,6 @@ const ZH_TEXT = {
   'Submit Pre-Submission (Q-Sub) to FDA':'向 FDA 提交预提交（Q-Sub）',
   'Prepare IDE application if needed':'必要时准备 IDE 申请',
   'Please select an option to continue.':'请选择一个选项后继续。',
-  'Testing...':'测试中...',
-  '✗ Invalid format. Should start with sk-ant-...':'✗ 格式无效，应以 sk-ant-... 开头',
-  '✓ API key valid — live AI analysis enabled':'✓ API 密钥有效，已启用实时 AI 分析',
-  '✗ API key rejected':'✗ API 密钥被拒绝',
-  '✗ Connection error':'✗ 连接错误',
   'In production: connect to file storage service':'生产环境中：连接文件存储服务',
   'In production: redirect to consultation booking':'生产环境中：跳转到咨询预约'
 };
@@ -676,7 +648,6 @@ const ZH_PLACEHOLDERS = {
   'jane@company.com':'jane@company.com',
   'MedTech Inc.':'MedTech Inc.',
   'Min. 8 characters':'至少 8 个字符',
-  'sk-ant-api03-...':'sk-ant-api03-...',
   '4242 4242 4242 4242':'4242 4242 4242 4242',
   'MM/YY':'月/年',
   '123':'123',
@@ -807,22 +778,9 @@ function doRegister() {
   setErr('f-pass',pass.length<8); if(pass.length<8) ok=false;
   if(!ok) return;
   userData={first,last,email,company:document.getElementById('reg-company').value.trim()};
-  apiKey=document.getElementById('api-key-input').value.trim();
   document.getElementById('nav-name').textContent=first+' '+last;
   document.getElementById('nav-avatar').textContent=(first[0]||'')+(last[0]||'');
   goTo('s2');
-}
-
-async function testApiKey() {
-  const key=document.getElementById('api-key-input').value.trim();
-  const status=document.getElementById('api-status');
-  status.style.display='block'; status.className='api-status'; status.textContent=t('Testing...');
-  if(!key.startsWith('sk-ant')){ status.className='api-status err'; status.textContent=t('✗ Invalid format. Should start with sk-ant-...'); return; }
-  try {
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:10,messages:[{role:'user',content:'hi'}]})});
-    if(r.ok){ status.className='api-status ok'; status.textContent=t('✓ API key valid — live AI analysis enabled'); apiKey=key; }
-    else{ status.className='api-status err'; status.textContent=t('✗ API key rejected'); }
-  } catch(e){ status.className='api-status err'; status.textContent=t('✗ Connection error'); }
 }
 
 function initQuestionnaire() { currentQ=0; renderQuestion(); }
@@ -850,18 +808,9 @@ async function runAIAnalysis() {
   area.innerHTML='';
   document.getElementById('proceed-to-payment').style.display='none';
   addUserSummary(area); addTyping(area);
-  let aiText='';
-  if(apiKey){
-    try{
-      const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'You are an FDA regulatory specialist at IRIS DH Inc. Analyze the device questionnaire and provide a preliminary 510(k) classification. Include: (1) preliminary class (Class I, II, or III), (2) key reasoning, (3) regulatory pathway, (4) caveats. Be concise and professional.',messages:[{role:'user',content:buildPrompt()}]})});
-      const data=await r.json();
-      aiText=data.content?.[0]?.text||getFallback();
-      aiClassResult=extractClass(aiText);
-    }catch(e){aiText=getFallback();aiClassResult='I';}
-  } else {
-    await new Promise(r=>setTimeout(r,2200));
-    aiText=getFallback(); aiClassResult='I';
-  }
+  await new Promise(r=>setTimeout(r,2200));
+  const aiText=getFallback();
+  aiClassResult='I';
   removeTyping(area); addAIMsg(area,aiText);
   document.getElementById('proceed-to-payment').style.display='block';
 }
@@ -948,7 +897,7 @@ function buildLabelChecklist(){
   localizePage();
 }
 
-function restart(){userData={};apiKey='';qAnswers={};currentQ=0;aiClassResult=null;goTo('s0');}
+function restart(){userData={};qAnswers={};currentQ=0;aiClassResult=null;goTo('s0');}
 localizePage();
 </script>
 </body>
