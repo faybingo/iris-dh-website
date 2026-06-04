@@ -454,7 +454,7 @@
 const STEPS = ['Register','Diagnosis','AI review','Payment','Classification','Registration','Labeling','Complete'];
 const SCREEN_STEP_MAP = {s1:0,s2:1,s3:2,s4:3,s5:4,s6:5,s7:6,s8:7};
 const PREV_SCREEN_MAP = {s1:'s0',s2:'s1',s3:'s2',s4:'s3',s5:'s4',s6:'s5',s7:'s6',s8:'s7'};
-let userData={}, qAnswers={}, currentQ=0, aiClassResult=null, currentLang='en';
+let userData={}, qAnswers={}, qAnswerDetails={}, currentQ=0, aiClassResult=null, currentLang='en';
 
 const ZH_TEXT = {
   'FDA 510(k) Compliance Platform':'FDA 510(k) 合规平台',
@@ -604,6 +604,48 @@ const ZH_TEXT = {
   'Unsure — need to research':'不确定 — 需要进一步检索',
   'No — this is a novel device':'否 — 这是新型器械',
   'International clearance only (CE mark, etc.)':'仅有国际认证（如 CE 标志等）',
+  'Product function':'产品功能',
+  'What is your product mainly used for?':'你的产品主要用来做什么？',
+  'Beauty or personal care':'美容或个人护理',
+  'Wound care or protection (non-drug)':'伤口处理或防护（非药物类）',
+  'Monitoring body data (blood pressure, blood glucose, temperature)':'监测身体数据（血压、血糖、体温）',
+  'Physical therapy or corrective support':'理疗或矫正辅助',
+  'Other (specify)':'其他（specify）',
+  'Product readiness':'产品完成度',
+  'What stage is your product development in?':'你的产品开发到哪个阶段了？',
+  'Not developed yet, concept only':'还没开发，暂时只有概念',
+  'In design':'设计中',
+  'Design complete, not yet produced':'设计完成，但还未生产',
+  'Design complete, already produced':'设计完成，已经生产',
+  'Currently on sale':'在销售中',
+  'Body contact':'接触人体方式',
+  'Will your product contact the human body?':'你的产品会接触人体吗？',
+  'No body contact':'不接触人体',
+  'Contacts skin surface':'接触皮肤表面',
+  'Placed in the mouth or body cavity':'放入口腔或体腔',
+  'Implanted in the body':'植入体内',
+  'Product claims':'产品声明',
+  'Does your product marketing include any of these claims?':'你的产品宣传语里有没有这类说法？',
+  'Treats a disease (for example, treats arthritis)':'能治疗某种疾病（如“治疗关节炎”）',
+  'Relieves a symptom (for example, relieves pain)':'能缓解某种症状（如“缓解疼痛”）',
+  'Daily wellness only, no medical claims':'仅用于日常保健，无医疗声明',
+  'No marketing yet or not launched':'暂无宣传or还没上市',
+  'Software availability':'软件有无',
+  'Does your product include a companion app or software?':'你的产品有配套App或软件吗？',
+  'Hardware only, no software':'纯硬件，没有软件',
+  'Hardware plus companion app':'硬件 + 配套App',
+  'Software-only or mobile app':'纯软件或移动应用',
+  'Production method':'生产方式',
+  'How is your product produced?':'你的产品是怎么生产的？',
+  'Produced in-house':'自己生产',
+  'Produced by a contract manufacturer':'找代工厂生产',
+  'Existing compliance foundation':'现有合规基础',
+  'Have you done anything FDA-related so far?':'你现在有没有做过任何FDA相关的事情？',
+  'Nothing yet, starting from scratch':'完全没有，从零开始',
+  'Already selling on Amazon, not registered':'已在亚马逊销售，但未注册',
+  'Product was removed and needs urgent handling':'产品被下架，需要紧急处理',
+  'Facility registration completed':'已完成设施注册',
+  'Please specify before continuing.':'请填写其他说明后继续。',
   'Device name / trade name':'器械名称 / 商品名',
   'Manufacturer name and address':'制造商名称和地址',
   'Lot or batch number':'批号',
@@ -659,15 +701,18 @@ const ZH_PLACEHOLDERS = {
   '90210':'90210',
   'Full name':'姓名',
   'contact@company.com':'contact@company.com',
-  '+1 (555) 000-0000':'+1 (555) 000-0000'
+  '+1 (555) 000-0000':'+1 (555) 000-0000',
+  'Please specify':'请填写说明'
 };
 
 const QUESTIONS = [
-  {id:'device_type',text:'What best describes your device?',options:['Diagnostic / imaging device','Therapeutic / treatment device','Monitoring device (e.g. wearable)','Software as a Medical Device (SaMD)','In-vitro diagnostic (IVD)','Surgical instrument / tool']},
-  {id:'invasive',text:'Is the device invasive (enters the body or contacts internal tissues)?',options:['No — external use only','Yes — non-surgical, temporary','Yes — surgically invasive','Yes — implantable']},
-  {id:'energy',text:'Does the device emit or use energy (electrical, radiation, laser, ultrasound)?',options:['No','Yes — low energy / battery powered','Yes — significant energy (laser, X-ray, RF)','Yes — ionizing radiation']},
-  {id:'predicate',text:'Do you have a predicate device in mind?',options:['Yes — I have a specific predicate','Yes — a few potential predicates','Not yet — need help identifying one','No predicate needed (de novo or PMA pathway)']},
-  {id:'prior_clearance',text:'Has your device or a similar product received prior FDA clearance?',options:['Yes — 510(k) cleared predicate exists','Unsure — need to research','No — this is a novel device','International clearance only (CE mark, etc.)']}
+  {id:'product_function',group:'Product function',text:'What is your product mainly used for?',options:['Beauty or personal care','Wound care or protection (non-drug)','Monitoring body data (blood pressure, blood glucose, temperature)','Physical therapy or corrective support','Other (specify)']},
+  {id:'product_readiness',group:'Product readiness',text:'What stage is your product development in?',options:['Not developed yet, concept only','In design','Design complete, not yet produced','Design complete, already produced','Currently on sale']},
+  {id:'body_contact',group:'Body contact',text:'Will your product contact the human body?',options:['No body contact','Contacts skin surface','Placed in the mouth or body cavity','Implanted in the body','Other (specify)']},
+  {id:'product_claims',group:'Product claims',text:'Does your product marketing include any of these claims?',options:['Treats a disease (for example, treats arthritis)','Relieves a symptom (for example, relieves pain)','Daily wellness only, no medical claims','No marketing yet or not launched']},
+  {id:'software_availability',group:'Software availability',text:'Does your product include a companion app or software?',options:['Hardware only, no software','Hardware plus companion app','Software-only or mobile app','Other (specify)']},
+  {id:'production_method',group:'Production method',text:'How is your product produced?',options:['Produced in-house','Produced by a contract manufacturer','Other (specify)']},
+  {id:'compliance_foundation',group:'Existing compliance foundation',text:'Have you done anything FDA-related so far?',options:['Nothing yet, starting from scratch','Already selling on Amazon, not registered','Product was removed and needs urgent handling','Facility registration completed','Other (specify)']}
 ];
 
 const LABEL_ITEMS = ['Device name / trade name','Manufacturer name and address','Lot or batch number','Expiration date (if applicable)','Intended use / indications for use','Warnings and precautions','Storage conditions','Instructions for use reference','UDI (Unique Device Identifier)','Sterility statement (if applicable)'];
@@ -675,6 +720,7 @@ const LABEL_ITEMS = ['Device name / trade name','Manufacturer name and address',
 function t(text) { return currentLang === 'zh' ? (ZH_TEXT[text] || text) : text; }
 function tPlaceholder(text) { return currentLang === 'zh' ? (ZH_PLACEHOLDERS[text] || text) : text; }
 function classLabel(cls) { return currentLang === 'zh' ? `${cls} 类器械` : `Class ${cls}`; }
+function escapeAttr(text) { return String(text).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
 
 function setLanguage(lang) {
   currentLang = lang;
@@ -787,21 +833,36 @@ function initQuestionnaire() { currentQ=0; renderQuestion(); }
 
 function renderQuestion() {
   const q=QUESTIONS[currentQ];
+  const needsDetail=qAnswers[q.id]?.includes('(specify)');
   document.getElementById('q-progress').style.width=(((currentQ+1)/QUESTIONS.length)*100)+'%';
   document.getElementById('q-back-btn').disabled=currentQ===0;
   document.getElementById('q-next-btn').innerHTML=currentQ===QUESTIONS.length-1?t('Analyze my device ↗'):`${t('Next')} <i class="ti ti-arrow-right"></i>`;
   document.getElementById('q-container').innerHTML=`
     <div class="q-block">
       <div class="q-num">${currentLang === 'zh' ? `第 ${currentQ+1} 题，共 ${QUESTIONS.length} 题` : `Question ${currentQ+1} of ${QUESTIONS.length}`}</div>
+      <div class="q-num">${t(q.group)}</div>
       <div class="q-text">${t(q.text)}</div>
       <div class="q-options">${q.options.map(o=>`<div class="q-option ${qAnswers[q.id]===o?'selected':''}" onclick="selectOpt('${q.id}',this)" data-value="${o}">${t(o)}</div>`).join('')}</div>
+      ${needsDetail ? `<div class="field" style="margin-top:12px;"><input type="text" id="q-detail-input" placeholder="Please specify" value="${escapeAttr(qAnswerDetails[q.id] || '')}" oninput="setQuestionDetail('${q.id}', this.value)" /></div>` : ''}
     </div>`;
   localizePage();
 }
 
-function selectOpt(qid,el) { document.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected')); el.classList.add('selected'); qAnswers[qid]=el.dataset.value; }
+function selectOpt(qid,el) {
+  document.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  qAnswers[qid]=el.dataset.value;
+  if(!qAnswers[qid].includes('(specify)')) qAnswerDetails[qid]='';
+  renderQuestion();
+}
+function setQuestionDetail(qid,value) { qAnswerDetails[qid]=value.trim(); }
 function qPrev() { if(currentQ>0){currentQ--;renderQuestion();} else goTo('s1'); }
-function qNext() { if(!qAnswers[QUESTIONS[currentQ].id]){alert(t('Please select an option to continue.'));return;} if(currentQ<QUESTIONS.length-1){currentQ++;renderQuestion();}else{goTo('s3');} }
+function qNext() {
+  const q=QUESTIONS[currentQ];
+  if(!qAnswers[q.id]){alert(t('Please select an option to continue.'));return;}
+  if(qAnswers[q.id].includes('(specify)') && !qAnswerDetails[q.id]){alert(t('Please specify before continuing.'));return;}
+  if(currentQ<QUESTIONS.length-1){currentQ++;renderQuestion();}else{goTo('s3');}
+}
 
 async function runAIAnalysis() {
   const area=document.getElementById('ai-chat-area');
@@ -817,7 +878,7 @@ async function runAIAnalysis() {
 
 function addUserSummary(area){
   const d=document.createElement('div');
-  d.innerHTML=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:1rem;font-size:12px;color:var(--color-text-secondary);line-height:1.7;"><strong style="font-size:11px;letter-spacing:0.5px;text-transform:uppercase;display:block;margin-bottom:4px;">${t('Your responses')}</strong>${Object.values(qAnswers).map(a=>`<div>· ${t(a)}</div>`).join('')}</div>`;
+  d.innerHTML=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:1rem;font-size:12px;color:var(--color-text-secondary);line-height:1.7;"><strong style="font-size:11px;letter-spacing:0.5px;text-transform:uppercase;display:block;margin-bottom:4px;">${t('Your responses')}</strong>${QUESTIONS.filter(q=>qAnswers[q.id]).map(q=>`<div>· ${t(q.group)}: ${t(qAnswers[q.id])}${qAnswerDetails[q.id] ? ` - ${qAnswerDetails[q.id]}` : ''}</div>`).join('')}</div>`;
   area.appendChild(d);
 }
 function addTyping(area){
@@ -832,7 +893,7 @@ function addAIMsg(area,text){
   d.innerHTML=`<div class="ai-icon"><i class="ti ti-brain" aria-hidden="true"></i></div><div class="ai-bubble"><p>${fmt}</p></div>`;
   area.appendChild(d);
 }
-function buildPrompt(){return `Device: ${qAnswers.device_type||'?'}\nInvasiveness: ${qAnswers.invasive||'?'}\nEnergy: ${qAnswers.energy||'?'}\nPredicate: ${qAnswers.predicate||'?'}\nPrior clearance: ${qAnswers.prior_clearance||'?'}\nCompany: ${userData.company||'?'}`;}
+function buildPrompt(){return QUESTIONS.map(q=>`${q.group}: ${qAnswers[q.id]||'?'}${qAnswerDetails[q.id] ? ` (${qAnswerDetails[q.id]})` : ''}`).join('\n')+`\nCompany: ${userData.company||'?'}`;}
 function extractClass(t){if(/class\s*iii/i.test(t))return'III';if(/class\s*ii/i.test(t))return'II';return'I';}
 function getFallback(){
   if(currentLang === 'zh') {
@@ -897,7 +958,7 @@ function buildLabelChecklist(){
   localizePage();
 }
 
-function restart(){userData={};qAnswers={};currentQ=0;aiClassResult=null;goTo('s0');}
+function restart(){userData={};qAnswers={};qAnswerDetails={};currentQ=0;aiClassResult=null;goTo('s0');}
 localizePage();
 </script>
 </body>
