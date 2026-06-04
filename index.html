@@ -18,9 +18,10 @@
   .screen { display: none; }
   .screen.active { display: block; }
 
-  nav { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 0 1.5rem; height: 52px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-  .nav-logo { font-family: var(--font-display); font-size: 18px; color: var(--color-text-primary); }
-  .nav-logo span { color: var(--iris-teal); }
+  nav { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 0 1.5rem; min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { display: inline-flex; align-items: center; min-width: 0; }
+  .nav-logo img { height: 34px; width: auto; display: block; }
+  .nav-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
   .nav-user { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-text-secondary); }
   .nav-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--color-background-info); color: var(--color-text-info); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; }
 
@@ -72,9 +73,11 @@
   .hero { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 2.5rem 1.5rem; text-align: center; }
   .hero { position: relative; }
   .lang-switch { position: absolute; top: 14px; right: 1.5rem; display: inline-flex; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
+  .nav-lang { position: static; }
   .lang-btn { border: none; background: transparent; color: var(--color-text-secondary); font-family: var(--font-body); font-size: 12px; line-height: 1; padding: 7px 10px; cursor: pointer; }
   .lang-btn.active { background: var(--iris-blue); color: white; }
   .lang-btn:hover:not(.active) { background: var(--color-background-secondary); color: var(--color-text-primary); }
+  .hero-logo { width: min(330px, 72vw); height: auto; display: block; margin: 0 auto 1.35rem; }
   .hero-tag { display: inline-block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--iris-teal); background: #E1F5EE; padding: 3px 12px; border-radius: 20px; margin-bottom: 1rem; font-weight: 500; }
   .hero h1 { font-family: var(--font-display); font-size: 30px; line-height: 1.2; margin-bottom: 0.75rem; max-width: 480px; margin-left: auto; margin-right: auto; }
   .hero p { font-size: 14px; color: var(--color-text-secondary); max-width: 380px; margin: 0 auto 1.75rem; line-height: 1.6; }
@@ -133,6 +136,10 @@
   .upload-zone { border: 1.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 1.75rem; text-align: center; cursor: pointer; }
   .upload-zone:hover { background: var(--color-background-secondary); }
   @media (max-width: 520px) {
+    nav { padding: 0.5rem 1rem; align-items: flex-start; }
+    .nav-logo img { height: 30px; }
+    .nav-actions { flex-direction: column; align-items: flex-end; gap: 6px; }
+    .nav-user { font-size: 12px; }
     .hero { padding-top: 3.5rem; }
     .lang-switch { right: 1rem; }
   }
@@ -141,10 +148,16 @@
 <body>
 
 <nav id="main-nav" style="display:none;">
-  <div class="nav-logo">IRIS <span>DH</span></div>
-  <div class="nav-user">
-    <span id="nav-name"></span>
-    <div class="nav-avatar" id="nav-avatar"></div>
+  <div class="nav-logo"><img src="assets/logo-large.png" alt="IRIS Device & Health" /></div>
+  <div class="nav-actions">
+    <div class="lang-switch nav-lang" aria-label="Language selector">
+      <button class="lang-btn active" data-lang="en" type="button" onclick="setLanguage('en')">EN</button>
+      <button class="lang-btn" data-lang="zh" type="button" onclick="setLanguage('zh')">中文</button>
+    </div>
+    <div class="nav-user">
+      <span id="nav-name"></span>
+      <div class="nav-avatar" id="nav-avatar"></div>
+    </div>
   </div>
 </nav>
 <div class="stepper" id="main-stepper" style="display:none;">
@@ -155,9 +168,10 @@
 <div class="screen active" id="s0">
   <div class="hero">
     <div class="lang-switch" aria-label="Language selector">
-      <button class="lang-btn active" id="lang-en" type="button" onclick="setLanguage('en')">EN</button>
-      <button class="lang-btn" id="lang-zh" type="button" onclick="setLanguage('zh')">中文</button>
+      <button class="lang-btn active" data-lang="en" type="button" onclick="setLanguage('en')">EN</button>
+      <button class="lang-btn" data-lang="zh" type="button" onclick="setLanguage('zh')">中文</button>
     </div>
+    <img class="hero-logo" src="assets/logo-large.png" alt="IRIS Device & Health" />
     <div class="hero-tag">FDA 510(k) Compliance Platform</div>
     <h1>Navigate FDA clearance with confidence</h1>
     <p>AI-powered device classification and expert regulatory guidance — from product diagnosis to market-ready.</p>
@@ -735,8 +749,9 @@ function setLanguage(lang) {
 
 function localizePage() {
   document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
-  document.getElementById('lang-en')?.classList.toggle('active', currentLang === 'en');
-  document.getElementById('lang-zh')?.classList.toggle('active', currentLang === 'zh');
+  document.querySelectorAll('.lang-btn[data-lang]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === currentLang);
+  });
 
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
     acceptNode(node) {
