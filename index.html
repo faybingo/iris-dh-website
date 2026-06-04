@@ -468,7 +468,7 @@
 const STEPS = ['Register','Diagnosis','AI review','Payment','Classification','Registration','Labeling','Complete'];
 const SCREEN_STEP_MAP = {s1:0,s2:1,s3:2,s4:3,s5:4,s6:5,s7:6,s8:7};
 const PREV_SCREEN_MAP = {s1:'s0',s2:'s1',s3:'s2',s4:'s3',s5:'s4',s6:'s5',s7:'s6',s8:'s7'};
-let userData={}, qAnswers={}, qAnswerDetails={}, currentQ=0, aiClassResult=null, currentLang='en';
+let userData={}, qAnswers={}, qAnswerDetails={}, currentQ=0, aiClassResult=null, aiAnalysisReady=false, currentLang='en';
 
 const ZH_TEXT = {
   'FDA 510(k) Compliance Platform':'FDA 510(k) 合规平台',
@@ -741,6 +741,7 @@ function setLanguage(lang) {
   const current = document.querySelector('.screen.active')?.id || 's0';
   buildStepper(current);
   if(current === 's2') renderQuestion();
+  if(current === 's3' && aiAnalysisReady) renderAIAnalysisResult();
   if(current === 's5') showClassResult();
   if(current === 's7') buildLabelChecklist();
   if(current === 's8') updateCompleteScreen();
@@ -882,13 +883,22 @@ function qNext() {
 async function runAIAnalysis() {
   const area=document.getElementById('ai-chat-area');
   area.innerHTML='';
+  aiAnalysisReady=false;
   document.getElementById('proceed-to-payment').style.display='none';
   addUserSummary(area); addTyping(area);
   await new Promise(r=>setTimeout(r,2200));
-  const aiText=getFallback();
   aiClassResult='I';
-  removeTyping(area); addAIMsg(area,aiText);
+  aiAnalysisReady=true;
+  renderAIAnalysisResult();
+}
+
+function renderAIAnalysisResult() {
+  const area=document.getElementById('ai-chat-area');
+  area.innerHTML='';
+  addUserSummary(area);
+  addAIMsg(area,getFallback());
   document.getElementById('proceed-to-payment').style.display='block';
+  localizePage();
 }
 
 function addUserSummary(area){
@@ -973,7 +983,7 @@ function buildLabelChecklist(){
   localizePage();
 }
 
-function restart(){userData={};qAnswers={};qAnswerDetails={};currentQ=0;aiClassResult=null;goTo('s0');}
+function restart(){userData={};qAnswers={};qAnswerDetails={};currentQ=0;aiClassResult=null;aiAnalysisReady=false;goTo('s0');}
 localizePage();
 </script>
 </body>
