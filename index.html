@@ -81,6 +81,21 @@
   .hero-tag { display: inline-block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--iris-teal); background: #E1F5EE; padding: 3px 12px; border-radius: 20px; margin-bottom: 1rem; font-weight: 500; }
   .hero h1 { font-family: var(--font-display); font-size: 30px; line-height: 1.2; margin-bottom: 0.75rem; max-width: 480px; margin-left: auto; margin-right: auto; }
   .hero p { font-size: 14px; color: var(--color-text-secondary); max-width: 380px; margin: 0 auto 1.75rem; line-height: 1.6; }
+  .question-roller { max-width: 560px; margin: 1.5rem auto 0; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); background: var(--color-background-primary); overflow: hidden; text-align: left; }
+  .question-roller-head { display: flex; align-items: center; gap: 8px; padding: 11px 14px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); font-size: 12px; font-weight: 500; }
+  .question-roller-head i { color: var(--iris-blue); font-size: 16px; }
+  .question-window { height: 138px; overflow: hidden; position: relative; }
+  .question-window::before, .question-window::after { content: ""; position: absolute; left: 0; right: 0; height: 24px; z-index: 1; pointer-events: none; }
+  .question-window::before { top: 0; background: linear-gradient(to bottom, var(--color-background-primary), transparent); }
+  .question-window::after { bottom: 0; background: linear-gradient(to top, var(--color-background-primary), transparent); }
+  .question-track { display: flex; flex-direction: column; animation: rollQuestions 24s linear infinite; }
+  .question-roller:hover .question-track { animation-play-state: paused; }
+  .question-item { min-height: 46px; display: flex; align-items: center; gap: 8px; padding: 0 14px; color: var(--color-text-primary); font-size: 13px; line-height: 1.35; }
+  .question-item i { color: var(--iris-teal); font-size: 14px; flex-shrink: 0; }
+  @keyframes rollQuestions {
+    from { transform: translateY(0); }
+    to { transform: translateY(-276px); }
+  }
   .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 1.25rem 0; }
   .feature-tile { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem; text-align: center; }
   .feature-tile i { font-size: 20px; color: var(--iris-blue); margin-bottom: 6px; display: block; }
@@ -142,6 +157,7 @@
     .nav-user { font-size: 12px; }
     .hero { padding-top: 3.5rem; }
     .lang-switch { right: 1rem; }
+    .question-roller { margin-top: 1.25rem; }
   }
 </style>
 </head>
@@ -176,6 +192,25 @@
     <h1>Navigate FDA clearance with confidence</h1>
     <p>AI-powered device classification and expert regulatory guidance — from product diagnosis to market-ready.</p>
     <button class="btn-primary" style="width:auto;padding:11px 28px;" onclick="goTo('s1')">Start your application <i class="ti ti-arrow-right"></i></button>
+    <div class="question-roller" aria-label="Common FDA and Amazon compliance questions">
+      <div class="question-roller-head"><i class="ti ti-message-question" aria-hidden="true"></i> Common questions we help answer</div>
+      <div class="question-window">
+        <div class="question-track">
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What should we do if our product was removed by Amazon?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>We have a 510(k), but Amazon still will not approve us. What can we do?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>How do I register a massager with FDA?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What is the registration process for a beauty device?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What class is a knee brace, and how do we register it?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What documents are needed to list a blood pressure monitor on Amazon?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What should we do if our product was removed by Amazon?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>We have a 510(k), but Amazon still will not approve us. What can we do?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>How do I register a massager with FDA?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What is the registration process for a beauty device?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What class is a knee brace, and how do we register it?</span></div>
+          <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What documents are needed to list a blood pressure monitor on Amazon?</span></div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="page-wrap">
     <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--color-text-tertiary);font-weight:500;margin-bottom:1rem;">How it works</div>
@@ -475,6 +510,13 @@ const ZH_TEXT = {
   'Navigate FDA clearance with confidence':'自信推进 FDA 审批',
   'AI-powered device classification and expert regulatory guidance — from product diagnosis to market-ready.':'通过 AI 器械分类与专家法规指导，从产品诊断一路走到上市准备。',
   'Start your application':'开始申请',
+  'Common questions we help answer':'我们可以帮你解答这些问题',
+  'What should we do if our product was removed by Amazon?':'我们产品被亚马逊下架了怎么办？',
+  'We have a 510(k), but Amazon still will not approve us. What can we do?':'我们有510k,亚马逊还是审核不过怎么办？',
+  'How do I register a massager with FDA?':'按摩器怎么注册FDA？',
+  'What is the registration process for a beauty device?':'美容仪的注册流程？',
+  'What class is a knee brace, and how do we register it?':'护膝产品属于几类？如何注册？',
+  'What documents are needed to list a blood pressure monitor on Amazon?':'血压计要上亚马逊，需要什么材料？',
   'How it works':'流程说明',
   'AI diagnosis':'AI 诊断',
   'Smart questionnaire classifies your device instantly':'智能问卷即时判断器械类别',
