@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --iris-navy: #0C2340;
+    --iris-blue: #185FA5;
+    --iris-teal: #1D9E75;
+    --iris-light: #E6F1FB;
+    --iris-gold: #BA7517;
+    --font-display: 'DM Serif Display', serif;
+    --font-body: 'DM Sans', var(--font-sans);
+  }
+  body { font-family: var(--font-body); background: var(--color-background-tertiary); min-height: 100vh; color: var(--color-text-primary); }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  nav { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 0 1.5rem; height: 52px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-family: var(--font-display); font-size: 18px; color: var(--color-text-primary); }
+  .nav-logo span { color: var(--iris-teal); }
+  .nav-user { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-text-secondary); }
+  .nav-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--color-background-info); color: var(--color-text-info); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; }
+
+  .stepper { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 0.75rem 1.5rem; overflow-x: auto; }
+  .stepper-inner { display: flex; align-items: center; min-width: 560px; }
+  .step-col { display: flex; flex-direction: column; align-items: center; }
+  .step-dot { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--color-border-secondary); background: var(--color-background-primary); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: var(--color-text-tertiary); flex-shrink: 0; transition: all 0.2s; }
+  .step-dot.done { background: var(--iris-teal); border-color: var(--iris-teal); color: white; }
+  .step-dot.active { border-color: var(--iris-blue); color: var(--iris-blue); box-shadow: 0 0 0 3px #B5D4F4; }
+  .step-label { font-size: 10px; color: var(--color-text-tertiary); margin-top: 3px; white-space: nowrap; }
+  .step-label.active { color: var(--iris-blue); font-weight: 500; }
+  .step-label.done { color: var(--iris-teal); }
+  .step-line { flex: 1; height: 1.5px; background: var(--color-border-tertiary); margin: 0 3px 14px; transition: background 0.3s; }
+  .step-line.done { background: var(--iris-teal); }
+
+  .page-wrap { max-width: 560px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+
+  .back-bar { display: flex; align-items: center; margin-bottom: 1.25rem; }
+  .back-btn { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--color-text-secondary); background: none; border: none; cursor: pointer; padding: 6px 0; font-family: var(--font-body); transition: color 0.15s; }
+  .back-btn:hover { color: var(--color-text-primary); }
+  .back-btn i { font-size: 15px; }
+
+  .page-header { margin-bottom: 1.25rem; }
+  .page-header h2 { font-size: 20px; font-family: var(--font-display); margin-bottom: 3px; }
+  .page-header p { font-size: 13px; color: var(--color-text-secondary); }
+
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+  .card-title { font-size: 15px; font-weight: 500; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; }
+  .card-title i { font-size: 17px; color: var(--iris-blue); }
+
+  .field { margin-bottom: 1rem; }
+  .field:last-child { margin-bottom: 0; }
+  .field label { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 5px; }
+  .required-star { color: #E24B4A; font-size: 13px; line-height: 1; }
+  .field input, .field select, .field textarea { width: 100%; font-family: var(--font-body); font-size: 14px; margin-bottom: 0; }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .field-error { font-size: 11px; color: var(--color-text-danger); margin-top: 4px; display: none; }
+  .field.error input, .field.error select, .field.error textarea { border-color: var(--color-border-danger) !important; }
+  .field.error .field-error { display: block; }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .btn-primary { width: 100%; padding: 11px; background: var(--iris-blue); color: white; border: none; border-radius: var(--border-radius-md); font-size: 14px; font-weight: 500; cursor: pointer; font-family: var(--font-body); transition: opacity 0.15s; }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-outline { padding: 8px 16px; background: transparent; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-size: 13px; cursor: pointer; font-family: var(--font-body); color: var(--color-text-secondary); }
+  .btn-outline:hover { background: var(--color-background-secondary); }
+
+  .hero { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 2.5rem 1.5rem; text-align: center; }
+  .hero-tag { display: inline-block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--iris-teal); background: #E1F5EE; padding: 3px 12px; border-radius: 20px; margin-bottom: 1rem; font-weight: 500; }
+  .hero h1 { font-family: var(--font-display); font-size: 30px; line-height: 1.2; margin-bottom: 0.75rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .hero p { font-size: 14px; color: var(--color-text-secondary); max-width: 380px; margin: 0 auto 1.75rem; line-height: 1.6; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 1.25rem 0; }
+  .feature-tile { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem; text-align: center; }
+  .feature-tile i { font-size: 20px; color: var(--iris-blue); margin-bottom: 6px; display: block; }
+  .feature-tile h3 { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+  .feature-tile p { font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+
+  .notice { background: var(--color-background-info); border: 0.5px solid var(--color-border-info); border-radius: var(--border-radius-md); padding: 10px 14px; font-size: 12px; color: var(--color-text-info); display: flex; align-items: flex-start; gap: 8px; margin-bottom: 1rem; line-height: 1.5; }
+  .notice i { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+
+  .api-key-wrap { display: flex; gap: 8px; margin-bottom: 0; }
+  .api-key-wrap input { margin-bottom: 0; flex: 1; }
+  .api-status { font-size: 12px; margin-top: 8px; padding: 6px 10px; border-radius: var(--border-radius-md); }
+  .api-status.ok { background: #E1F5EE; color: #0F6E56; }
+  .api-status.err { background: #FCEBEB; color: #A32D2D; }
+
+  .progress-bar-wrap { height: 3px; background: var(--color-border-tertiary); border-radius: 2px; margin-bottom: 1.25rem; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--iris-blue); border-radius: 2px; transition: width 0.4s ease; }
+
+  .q-block { }
+  .q-num { font-size: 11px; color: var(--iris-blue); font-weight: 500; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .q-text { font-size: 14px; font-weight: 500; margin-bottom: 10px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 7px; }
+  .q-option { padding: 10px 14px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); cursor: pointer; font-size: 13px; transition: all 0.15s; background: var(--color-background-primary); color: var(--color-text-primary); }
+  .q-option:hover { border-color: var(--color-border-info); background: #E6F1FB; }
+  .q-option.selected { border-color: var(--iris-blue); background: #E6F1FB; color: var(--iris-blue); font-weight: 500; }
+
+  .ai-bubble-wrap { display: flex; gap: 10px; margin-bottom: 1rem; }
+  .ai-icon { width: 28px; height: 28px; border-radius: 50%; background: #E1F5EE; color: var(--iris-teal); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; }
+  .ai-bubble { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) var(--border-radius-lg); padding: 11px 13px; font-size: 13px; line-height: 1.6; flex: 1; }
+  .ai-bubble p { margin-bottom: 6px; }
+  .ai-bubble p:last-child { margin-bottom: 0; }
+  .typing-dots span { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--color-text-tertiary); margin: 0 2px; animation: blink 1.2s infinite; }
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%,80%,100%{opacity:0.2;} 40%{opacity:1;} }
+
+  .price-card { border: 1.5px solid var(--color-border-info); border-radius: var(--border-radius-lg); padding: 1.5rem; text-align: center; margin-bottom: 1rem; background: var(--color-background-primary); }
+  .price-amount { font-family: var(--font-display); font-size: 34px; color: var(--color-text-primary); margin: 0.5rem 0; }
+  .price-sub { font-size: 12px; color: var(--color-text-secondary); }
+  .feature-list { list-style: none; text-align: left; margin: 1rem 0; }
+  .feature-list li { font-size: 13px; padding: 5px 0; color: var(--color-text-secondary); display: flex; align-items: center; gap: 8px; }
+  .feature-list li i { color: var(--iris-teal); font-size: 14px; }
+
+  .result-class { text-align: center; padding: 1.5rem; }
+  .class-badge { display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 38px; color: var(--iris-teal); background: #E1F5EE; border-radius: 50%; width: 88px; height: 88px; margin-bottom: 1rem; }
+  .result-tag { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 11px; font-weight: 500; margin: 3px; }
+  .tag-low { background: #E1F5EE; color: #0F6E56; }
+  .tag-med { background: #FAEEDA; color: #854F0B; }
+  .tag-high { background: #FCEBEB; color: #A32D2D; }
+
+  .checklist { list-style: none; }
+  .checklist li { padding: 9px 0; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist i { color: var(--iris-teal); font-size: 15px; flex-shrink: 0; }
+
+  .success-icon { width: 60px; height: 60px; border-radius: 50%; background: #E1F5EE; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 26px; color: var(--iris-teal); }
+  .inline-link { color: var(--iris-blue); cursor: pointer; text-decoration: underline; font-size: 13px; background: none; border: none; padding: 0; font-family: var(--font-body); }
+
+  .upload-zone { border: 1.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 1.75rem; text-align: center; cursor: pointer; }
+  .upload-zone:hover { background: var(--color-background-secondary); }
+</style>
+</head>
+<body>
+
+<nav id="main-nav" style="display:none;">
+  <div class="nav-logo">IRIS <span>DH</span></div>
+  <div class="nav-user">
+    <span id="nav-name"></span>
+    <div class="nav-avatar" id="nav-avatar"></div>
+  </div>
+</nav>
+<div class="stepper" id="main-stepper" style="display:none;">
+  <div class="stepper-inner" id="stepper-inner"></div>
+</div>
+
+<!-- ══ S0: LANDING ══ -->
+<div class="screen active" id="s0">
+  <div class="hero">
+    <div class="hero-tag">FDA 510(k) Compliance Platform</div>
+    <h1>Navigate FDA clearance with confidence</h1>
+    <p>AI-powered device classification and expert regulatory guidance — from product diagnosis to market-ready.</p>
+    <button class="btn-primary" style="width:auto;padding:11px 28px;" onclick="goTo('s1')">Start your application <i class="ti ti-arrow-right"></i></button>
+  </div>
+  <div class="page-wrap">
+    <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--color-text-tertiary);font-weight:500;margin-bottom:1rem;">How it works</div>
+    <div class="features-grid">
+      <div class="feature-tile"><i class="ti ti-clipboard-list" aria-hidden="true"></i><h3>AI diagnosis</h3><p>Smart questionnaire classifies your device instantly</p></div>
+      <div class="feature-tile"><i class="ti ti-user-check" aria-hidden="true"></i><h3>Expert review</h3><p>Regulatory specialists validate your classification</p></div>
+      <div class="feature-tile"><i class="ti ti-building-hospital" aria-hidden="true"></i><h3>Registration</h3><p>Facility registration and labeling compliance</p></div>
+      <div class="feature-tile"><i class="ti ti-certificate" aria-hidden="true"></i><h3>Market-ready</h3><p>Complete documentation for FDA submission</p></div>
+    </div>
+    <div class="card">
+      <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:10px;">Already have an account?</div>
+      <button class="btn-outline" style="width:100%;" onclick="goTo('s1')"><i class="ti ti-login" aria-hidden="true"></i> Sign in</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S1: REGISTER ══ -->
+<div class="screen" id="s1">
+  <div class="page-wrap">
+    <div class="back-bar">
+      <button class="back-btn" onclick="goTo('s0')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to home</button>
+    </div>
+    <div class="page-header">
+      <h2>Create your account</h2>
+      <p>Step 1 of 6 — Account setup</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-user-plus" aria-hidden="true"></i> Account information</div>
+      <div class="row2">
+        <div class="field" id="f-first">
+          <label>First name <span class="required-star">*</span></label>
+          <input type="text" id="reg-first" placeholder="Jane" />
+          <div class="field-error">First name is required</div>
+        </div>
+        <div class="field" id="f-last">
+          <label>Last name <span class="required-star">*</span></label>
+          <input type="text" id="reg-last" placeholder="Smith" />
+          <div class="field-error">Last name is required</div>
+        </div>
+      </div>
+      <div class="field" id="f-email">
+        <label>Work email <span class="required-star">*</span></label>
+        <input type="email" id="reg-email" placeholder="jane@company.com" />
+        <div class="field-error">Please enter a valid email address</div>
+      </div>
+      <div class="field" id="f-company">
+        <label>Company / Organization</label>
+        <input type="text" id="reg-company" placeholder="MedTech Inc." />
+      </div>
+      <div class="field" id="f-pass">
+        <label>Password <span class="required-star">*</span></label>
+        <input type="password" id="reg-pass" placeholder="Min. 8 characters" />
+        <div class="field-error">Password must be at least 8 characters</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-key" aria-hidden="true"></i> AI API key <span style="font-size:11px;font-weight:400;color:var(--color-text-tertiary);margin-left:4px;">(optional)</span></div>
+      <div class="notice"><i class="ti ti-info-circle" aria-hidden="true"></i><span>Enter your Anthropic API key to enable live AI analysis. Leave blank to use demo mode.</span></div>
+      <div class="field">
+        <label>Anthropic API key</label>
+        <div class="api-key-wrap">
+          <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." />
+          <button class="btn-outline" onclick="testApiKey()">Test</button>
+        </div>
+        <div id="api-status" style="display:none;" class="api-status"></div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="doRegister()">Create account <i class="ti ti-arrow-right"></i></button>
+  </div>
+</div>
+
+<!-- ══ S2: QUESTIONNAIRE ══ -->
+<div class="screen" id="s2">
+  <div class="page-wrap">
+    <div class="back-bar">
+      <button class="back-btn" onclick="goTo('s1')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+    </div>
+    <div class="page-header">
+      <h2>Product diagnosis</h2>
+      <p>Answer a few questions so our AI can classify your device</p>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="q-progress" style="width:0%"></div></div>
+    <div class="card" id="q-container"></div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-outline" id="q-back-btn" onclick="qPrev()" style="flex:1;"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+      <button class="btn-primary" id="q-next-btn" onclick="qNext()" style="flex:2;">Next <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S3: AI ANALYSIS ══ -->
+<div class="screen" id="s3">
+  <div class="page-wrap">
+    <div class="back-bar">
+      <button class="back-btn" onclick="goTo('s2')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to questionnaire</button>
+    </div>
+    <div class="page-header">
+      <h2>AI analysis</h2>
+      <p>Reviewing your answers and generating a preliminary classification</p>
+    </div>
+    <div class="card" id="ai-chat-area"></div>
+    <button class="btn-primary" id="proceed-to-payment" style="display:none;" onclick="goTo('s4')">Proceed to expert review <i class="ti ti-arrow-right"></i></button>
+  </div>
+</div>
+
+<!-- ══ S4: PAYMENT ══ -->
+<div class="screen" id="s4">
+  <div class="page-wrap">
+    <div class="back-bar">
+      <button class="back-btn" onclick="goTo('s3')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to AI analysis</button>
+    </div>
+    <div class="page-header">
+      <h2>Expert review</h2>
+      <p>A licensed regulatory specialist will verify your classification within 48 hours</p>
+    </div>
+    <div class="price-card">
+      <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--color-text-tertiary);font-weight:500;">Expert review service</div>
+      <div class="price-amount">$299</div>
+      <div class="price-sub">One-time payment · 48-hour turnaround</div>
+      <ul class="feature-list">
+        <li><i class="ti ti-check" aria-hidden="true"></i> Licensed regulatory specialist review</li>
+        <li><i class="ti ti-check" aria-hidden="true"></i> Written classification determination</li>
+        <li><i class="ti ti-check" aria-hidden="true"></i> 510(k) exemption analysis</li>
+        <li><i class="ti ti-check" aria-hidden="true"></i> Recommended pathway report</li>
+        <li><i class="ti ti-check" aria-hidden="true"></i> 30-min follow-up consultation</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-credit-card" aria-hidden="true"></i> Payment details</div>
+      <div class="notice"><i class="ti ti-lock" aria-hidden="true"></i><span>Secure payment via Stripe. Connect your Stripe account to enable live payments.</span></div>
+      <div class="field" id="f-card">
+        <label>Card number <span class="required-star">*</span></label>
+        <input type="text" id="pay-card" placeholder="4242 4242 4242 4242" maxlength="19" oninput="fmtCard(this)" />
+        <div class="field-error">Please enter a valid card number</div>
+      </div>
+      <div class="row2">
+        <div class="field" id="f-exp">
+          <label>Expiry <span class="required-star">*</span></label>
+          <input type="text" id="pay-exp" placeholder="MM/YY" maxlength="5" oninput="fmtExp(this)" />
+          <div class="field-error">Required</div>
+        </div>
+        <div class="field" id="f-cvv">
+          <label>CVV <span class="required-star">*</span></label>
+          <input type="text" id="pay-cvv" placeholder="123" maxlength="4" />
+          <div class="field-error">Required</div>
+        </div>
+      </div>
+      <div class="field" id="f-cname">
+        <label>Name on card <span class="required-star">*</span></label>
+        <input type="text" id="pay-name" placeholder="Jane Smith" />
+        <div class="field-error">Required</div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="doPayment()"><i class="ti ti-lock" aria-hidden="true"></i> Pay $299 and submit for review</button>
+    <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--color-text-tertiary);">By proceeding you agree to our Terms of Service and Privacy Policy</div>
+  </div>
+</div>
+
+<!-- ══ S5: CLASSIFICATION ══ -->
+<div class="screen" id="s5">
+  <div class="page-wrap">
+    <div class="back-bar">
+      <button class="back-btn" onclick="goTo('s4')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+    </div>
+    <div class="page-header">
+      <h2>Classification result</h2>
+      <p>Expert review complete</p>
+    </div>
+    <div class="card">
+      <div class="result-class">
+        <div class="class-badge" id="result-class-badge">I</div>
+        <div style="font-size:15px;font-weight:500;margin-bottom:6px;" id="result-class-name">Class I Device</div>
+        <div style="font-size:13px;color:var(--color-text-secondary);max-width:300px;margin:0 auto 1rem;line-height:1.6;" id="result-class-desc"></div>
+        <div id="result-tags"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-route" aria-hidden="true"></i> Recommended next steps</div>
+      <ul class="checklist" id="next-steps-list"></ul>
+    </div>
+    <button class="btn-primary" onclick="goTo('s6')">Continue to facility registration <i class="ti ti-arrow-right"></i></button>
+  </div>
+</div>
+
+<!-- ══ S6: FACILITY REGISTRATION ══ -->
+<div class="screen" id="s6">
+  <div class="page-wrap">
+    <div class="back-bar">
+      <button class="back-btn" onclick="goTo('s5')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to classification</button>
+    </div>
+    <div class="page-header">
+      <h2>Facility registration</h2>
+      <p>Register your establishment with FDA (annual requirement)</p>
+    </div>
+    <div class="notice"><i class="ti ti-info-circle" aria-hidden="true"></i><span>FDA requires all device establishments to register annually. Registration fees are paid directly to FDA (~$5,672/year).</span></div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-building" aria-hidden="true"></i> Establishment details</div>
+      <div class="field" id="f-facname">
+        <label>Establishment name <span class="required-star">*</span></label>
+        <input type="text" id="fac-name" placeholder="Your Company Inc." />
+        <div class="field-error">Required</div>
+      </div>
+      <div class="field" id="f-factype">
+        <label>Establishment type <span class="required-star">*</span></label>
+        <select id="fac-type">
+          <option value="">Select type...</option>
+          <option>Manufacturer</option>
+          <option>Repackager/Relabeler</option>
+          <option>Specification Developer</option>
+          <option>Contract Manufacturer</option>
+          <option>Contract Sterilizer</option>
+        </select>
+        <div class="field-error">Required</div>
+      </div>
+      <div class="field"><label>Street address</label><input type="text" placeholder="123 Medical Drive" /></div>
+      <div class="row2">
+        <div class="field"><label>City</label><input type="text" placeholder="City" /></div>
+        <div class="field"><label>State</label><input type="text" placeholder="CA" /></div>
+      </div>
+      <div class="field"><label>Zip code</label><input type="text" placeholder="90210" /></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-user-check" aria-hidden="true"></i> Responsible party</div>
+      <div class="field" id="f-rname">
+        <label>Contact name <span class="required-star">*</span></label>
+        <input type="text" id="resp-name" placeholder="Full name" />
+        <div class="field-error">Required</div>
+      </div>
+      <div class="field" id="f-remail">
+        <label>Email <span class="required-star">*</span></label>
+        <input type="email" id="resp-email" placeholder="contact@company.com" />
+        <div class="field-error">Please enter a valid email</div>
+      </div>
+      <div class="field"><label>Phone</label><input type="tel" placeholder="+1 (555) 000-0000" /></div>
+    </div>
+    <button class="btn-primary" onclick="doFacility()">Submit registration &amp; continue <i class="ti ti-arrow-right"></i></button>
+  </div>
+</div>
+
+<!-- ══ S7: LABELING ══ -->
+<div class="screen" id="s7">
+  <div class="page-wrap">
+    <div class="back-bar">
+      <button class="back-btn" onclick="goTo('s6')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to facility registration</button>
+    </div>
+    <div class="page-header">
+      <h2>Labeling compliance</h2>
+      <p>Verify your device labeling meets 21 CFR Part 801 requirements</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-tag" aria-hidden="true"></i> Required label elements</div>
+      <div id="label-checklist-wrap"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-file-upload" aria-hidden="true"></i> Upload label draft <span style="font-size:11px;font-weight:400;color:var(--color-text-tertiary);margin-left:4px;">(optional)</span></div>
+      <div class="upload-zone" onclick="alert('In production: connect to file storage service')">
+        <i class="ti ti-upload" style="font-size:22px;color:var(--color-text-tertiary);display:block;margin-bottom:6px;" aria-hidden="true"></i>
+        <div style="font-size:13px;color:var(--color-text-secondary);">Click to upload label file</div>
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:3px;">PDF, PNG, JPG up to 10MB</div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="goTo('s8')">Complete labeling review <i class="ti ti-arrow-right"></i></button>
+  </div>
+</div>
+
+<!-- ══ S8: COMPLETE ══ -->
+<div class="screen" id="s8">
+  <div class="page-wrap">
+    <div class="card" style="text-align:center;padding:2.25rem 1.5rem;">
+      <div class="success-icon"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+      <div style="font-family:var(--font-display);font-size:22px;margin-bottom:8px;">Application complete!</div>
+      <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;max-width:320px;margin:0 auto;">
+        Congratulations — your FDA 510(k) compliance process is complete. A summary report will be sent to <strong id="complete-email"></strong>.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-layout-list" aria-hidden="true"></i> Summary</div>
+      <ul class="checklist">
+        <li><i class="ti ti-circle-check" aria-hidden="true"></i> Account registered</li>
+        <li><i class="ti ti-circle-check" aria-hidden="true"></i> Product diagnosis completed</li>
+        <li><i class="ti ti-circle-check" aria-hidden="true"></i> AI classification generated</li>
+        <li><i class="ti ti-circle-check" aria-hidden="true"></i> Expert review completed</li>
+        <li><i class="ti ti-circle-check" aria-hidden="true"></i> Device classified: <strong id="final-class">Class I</strong></li>
+        <li><i class="ti ti-circle-check" aria-hidden="true"></i> Facility registration submitted</li>
+        <li><i class="ti ti-circle-check" aria-hidden="true"></i> Labeling compliance verified</li>
+      </ul>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:10px;">Need ongoing compliance support?</div>
+      <button class="btn-primary" onclick="alert('In production: redirect to consultation booking')"><i class="ti ti-calendar" aria-hidden="true"></i> Schedule follow-up consultation</button>
+    </div>
+    <div style="text-align:center;margin-top:1rem;">
+      <button class="inline-link" onclick="restart()">Start a new application</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STEPS = ['Register','Diagnosis','AI review','Payment','Classification','Registration','Labeling','Complete'];
+const SCREEN_STEP_MAP = {s1:0,s2:1,s3:2,s4:3,s5:4,s6:5,s7:6,s8:7};
+let userData={}, apiKey='', qAnswers={}, currentQ=0, aiClassResult=null;
+
+const QUESTIONS = [
+  {id:'device_type',text:'What best describes your device?',options:['Diagnostic / imaging device','Therapeutic / treatment device','Monitoring device (e.g. wearable)','Software as a Medical Device (SaMD)','In-vitro diagnostic (IVD)','Surgical instrument / tool']},
+  {id:'invasive',text:'Is the device invasive (enters the body or contacts internal tissues)?',options:['No — external use only','Yes — non-surgical, temporary','Yes — surgically invasive','Yes — implantable']},
+  {id:'energy',text:'Does the device emit or use energy (electrical, radiation, laser, ultrasound)?',options:['No','Yes — low energy / battery powered','Yes — significant energy (laser, X-ray, RF)','Yes — ionizing radiation']},
+  {id:'predicate',text:'Do you have a predicate device in mind?',options:['Yes — I have a specific predicate','Yes — a few potential predicates','Not yet — need help identifying one','No predicate needed (de novo or PMA pathway)']},
+  {id:'prior_clearance',text:'Has your device or a similar product received prior FDA clearance?',options:['Yes — 510(k) cleared predicate exists','Unsure — need to research','No — this is a novel device','International clearance only (CE mark, etc.)']}
+];
+
+const LABEL_ITEMS = ['Device name / trade name','Manufacturer name and address','Lot or batch number','Expiration date (if applicable)','Intended use / indications for use','Warnings and precautions','Storage conditions','Instructions for use reference','UDI (Unique Device Identifier)','Sterility statement (if applicable)'];
+
+function buildStepper(sid) {
+  const nav = document.getElementById('main-nav');
+  const stepper = document.getElementById('main-stepper');
+  if (sid === 's0') { nav.style.display='none'; stepper.style.display='none'; return; }
+  nav.style.display='flex'; stepper.style.display='block';
+  const active = SCREEN_STEP_MAP[sid] ?? -1;
+  const inner = document.getElementById('stepper-inner');
+  inner.innerHTML = '';
+  STEPS.forEach((s,i) => {
+    const col = document.createElement('div'); col.className='step-col';
+    const dot = document.createElement('div');
+    dot.className='step-dot'+(i<active?' done':i===active?' active':'');
+    dot.textContent = i<active?'✓':(i+1);
+    const lbl = document.createElement('div');
+    lbl.className='step-label'+(i<active?' done':i===active?' active':'');
+    lbl.textContent=s;
+    col.appendChild(dot); col.appendChild(lbl); inner.appendChild(col);
+    if(i<STEPS.length-1){ const line=document.createElement('div'); line.className='step-line'+(i<active?' done':''); inner.appendChild(line); }
+  });
+}
+
+function goTo(sid) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(sid).classList.add('active');
+  buildStepper(sid);
+  window.scrollTo(0,0);
+  if(sid==='s2') initQuestionnaire();
+  if(sid==='s3') runAIAnalysis();
+  if(sid==='s5') showClassResult();
+  if(sid==='s7') buildLabelChecklist();
+  if(sid==='s8'){ document.getElementById('complete-email').textContent=userData.email||''; document.getElementById('final-class').textContent='Class '+(aiClassResult||'I'); }
+}
+
+function setErr(fieldId, show) {
+  const el = document.getElementById(fieldId);
+  if(el) el.classList.toggle('error', show);
+}
+
+function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+function doRegister() {
+  const first=document.getElementById('reg-first').value.trim();
+  const last=document.getElementById('reg-last').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const pass=document.getElementById('reg-pass').value;
+  let ok=true;
+  setErr('f-first',!first); if(!first) ok=false;
+  setErr('f-last',!last); if(!last) ok=false;
+  setErr('f-email',!isValidEmail(email)); if(!isValidEmail(email)) ok=false;
+  setErr('f-pass',pass.length<8); if(pass.length<8) ok=false;
+  if(!ok) return;
+  userData={first,last,email,company:document.getElementById('reg-company').value.trim()};
+  apiKey=document.getElementById('api-key-input').value.trim();
+  document.getElementById('nav-name').textContent=first+' '+last;
+  document.getElementById('nav-avatar').textContent=(first[0]||'')+(last[0]||'');
+  goTo('s2');
+}
+
+async function testApiKey() {
+  const key=document.getElementById('api-key-input').value.trim();
+  const status=document.getElementById('api-status');
+  status.style.display='block'; status.className='api-status'; status.textContent='Testing...';
+  if(!key.startsWith('sk-ant')){ status.className='api-status err'; status.textContent='✗ Invalid format. Should start with sk-ant-...'; return; }
+  try {
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:10,messages:[{role:'user',content:'hi'}]})});
+    if(r.ok){ status.className='api-status ok'; status.textContent='✓ API key valid — live AI analysis enabled'; apiKey=key; }
+    else{ status.className='api-status err'; status.textContent='✗ API key rejected'; }
+  } catch(e){ status.className='api-status err'; status.textContent='✗ Connection error'; }
+}
+
+function initQuestionnaire() { currentQ=0; renderQuestion(); }
+
+function renderQuestion() {
+  const q=QUESTIONS[currentQ];
+  document.getElementById('q-progress').style.width=(((currentQ+1)/QUESTIONS.length)*100)+'%';
+  document.getElementById('q-back-btn').disabled=currentQ===0;
+  document.getElementById('q-next-btn').innerHTML=currentQ===QUESTIONS.length-1?'Analyze my device ↗':'Next <i class="ti ti-arrow-right"></i>';
+  document.getElementById('q-container').innerHTML=`
+    <div class="q-block">
+      <div class="q-num">Question ${currentQ+1} of ${QUESTIONS.length}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="q-options">${q.options.map(o=>`<div class="q-option ${qAnswers[q.id]===o?'selected':''}" onclick="selectOpt('${q.id}',this)" data-value="${o}">${o}</div>`).join('')}</div>
+    </div>`;
+}
+
+function selectOpt(qid,el) { document.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected')); el.classList.add('selected'); qAnswers[qid]=el.dataset.value; }
+function qPrev() { if(currentQ>0){currentQ--;renderQuestion();} else goTo('s1'); }
+function qNext() { if(!qAnswers[QUESTIONS[currentQ].id]){alert('Please select an option to continue.');return;} if(currentQ<QUESTIONS.length-1){currentQ++;renderQuestion();}else{goTo('s3');} }
+
+async function runAIAnalysis() {
+  const area=document.getElementById('ai-chat-area');
+  area.innerHTML='';
+  document.getElementById('proceed-to-payment').style.display='none';
+  addUserSummary(area); addTyping(area);
+  let aiText='';
+  if(apiKey){
+    try{
+      const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'You are an FDA regulatory specialist at IRIS DH Inc. Analyze the device questionnaire and provide a preliminary 510(k) classification. Include: (1) preliminary class (Class I, II, or III), (2) key reasoning, (3) regulatory pathway, (4) caveats. Be concise and professional.',messages:[{role:'user',content:buildPrompt()}]})});
+      const data=await r.json();
+      aiText=data.content?.[0]?.text||getFallback();
+      aiClassResult=extractClass(aiText);
+    }catch(e){aiText=getFallback();aiClassResult='I';}
+  } else {
+    await new Promise(r=>setTimeout(r,2200));
+    aiText=getFallback(); aiClassResult='I';
+  }
+  removeTyping(area); addAIMsg(area,aiText);
+  document.getElementById('proceed-to-payment').style.display='block';
+}
+
+function addUserSummary(area){
+  const d=document.createElement('div');
+  d.innerHTML=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:1rem;font-size:12px;color:var(--color-text-secondary);line-height:1.7;"><strong style="font-size:11px;letter-spacing:0.5px;text-transform:uppercase;display:block;margin-bottom:4px;">Your responses</strong>${Object.values(qAnswers).map(a=>`<div>· ${a}</div>`).join('')}</div>`;
+  area.appendChild(d);
+}
+function addTyping(area){
+  const d=document.createElement('div'); d.className='ai-bubble-wrap'; d.id='typing-indicator';
+  d.innerHTML=`<div class="ai-icon"><i class="ti ti-brain" aria-hidden="true"></i></div><div class="ai-bubble" style="display:flex;align-items:center;gap:4px;min-height:40px;"><span style="font-size:12px;color:var(--color-text-secondary);margin-right:4px;">Analyzing your device</span><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  area.appendChild(d);
+}
+function removeTyping(area){const t=document.getElementById('typing-indicator');if(t)t.remove();}
+function addAIMsg(area,text){
+  const d=document.createElement('div'); d.className='ai-bubble-wrap';
+  const fmt=text.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  d.innerHTML=`<div class="ai-icon"><i class="ti ti-brain" aria-hidden="true"></i></div><div class="ai-bubble"><p>${fmt}</p></div>`;
+  area.appendChild(d);
+}
+function buildPrompt(){return `Device: ${qAnswers.device_type||'?'}\nInvasiveness: ${qAnswers.invasive||'?'}\nEnergy: ${qAnswers.energy||'?'}\nPredicate: ${qAnswers.predicate||'?'}\nPrior clearance: ${qAnswers.prior_clearance||'?'}\nCompany: ${userData.company||'?'}`;}
+function extractClass(t){if(/class\s*iii/i.test(t))return'III';if(/class\s*ii/i.test(t))return'II';return'I';}
+function getFallback(){return`**Preliminary Classification: Class I Device**\n\nBased on your questionnaire responses, your device profile aligns with a Class I classification under 21 CFR Parts 860-892.\n\n**Key reasoning:**\n• Device appears non-invasive with limited energy output\n• No significant risk factors identified\n• Profile consistent with general wellness / low-risk device categories\n\n**Regulatory pathway:**\n• 510(k) exempt (most Class I devices do not require premarket notification)\n• Must comply with General Controls: establishment registration, device listing, labeling\n\n**Important:** This is a preliminary AI assessment only. The expert review you are about to purchase will provide a definitive classification with full written determination.`;}
+
+function doPayment(){
+  const card=document.getElementById('pay-card').value.replace(/\s/g,'');
+  const exp=document.getElementById('pay-exp').value.trim();
+  const cvv=document.getElementById('pay-cvv').value.trim();
+  const name=document.getElementById('pay-name').value.trim();
+  let ok=true;
+  setErr('f-card',card.length<15); if(card.length<15) ok=false;
+  setErr('f-exp',exp.length<5); if(exp.length<5) ok=false;
+  setErr('f-cvv',cvv.length<3); if(cvv.length<3) ok=false;
+  setErr('f-cname',!name); if(!name) ok=false;
+  if(!ok) return;
+  goTo('s5');
+}
+
+function fmtCard(el){let v=el.value.replace(/\D/g,'').substring(0,16);el.value=v.replace(/(.{4})/g,'$1 ').trim();}
+function fmtExp(el){let v=el.value.replace(/\D/g,'');if(v.length>=2)v=v.substring(0,2)+'/'+v.substring(2,4);el.value=v;}
+
+function showClassResult(){
+  const cls=aiClassResult||'I';
+  document.getElementById('result-class-badge').textContent=cls;
+  document.getElementById('final-class').textContent='Class '+cls;
+  const cfg={
+    'I':{name:'Class I Device',desc:'Your device is classified as low risk. Most Class I devices are exempt from 510(k) premarket notification.',tags:[['Low risk','tag-low'],['Often 510(k) exempt','tag-low'],['General controls','tag-low']],steps:['Proceed to facility registration','Prepare device labeling per 21 CFR 801','Establish basic quality system requirements','Submit device listing to FDA']},
+    'II':{name:'Class II Device',desc:'Moderate risk device. Typically requires 510(k) premarket notification demonstrating substantial equivalence.',tags:[['Moderate risk','tag-med'],['510(k) required','tag-med'],['Special controls','tag-med']],steps:['Identify predicate device for 510(k)','Prepare 510(k) submission package','Complete facility registration','Prepare device labeling']},
+    'III':{name:'Class III Device',desc:'High risk device. Generally requires PMA (Premarket Approval), the most stringent FDA pathway.',tags:[['High risk','tag-high'],['PMA required','tag-high'],['Clinical data needed','tag-high']],steps:['Consult specialist for PMA strategy','Design clinical study protocol','Submit Pre-Submission (Q-Sub) to FDA','Prepare IDE application if needed']}
+  };
+  const c=cfg[cls]||cfg['I'];
+  document.getElementById('result-class-name').textContent=c.name;
+  document.getElementById('result-class-desc').textContent=c.desc;
+  document.getElementById('result-tags').innerHTML=c.tags.map(([t,cl])=>`<span class="result-tag ${cl}">${t}</span>`).join('');
+  document.getElementById('next-steps-list').innerHTML=c.steps.map(s=>`<li><i class="ti ti-circle-check" aria-hidden="true"></i> ${s}</li>`).join('');
+}
+
+function doFacility(){
+  const name=document.getElementById('fac-name').value.trim();
+  const type=document.getElementById('fac-type').value;
+  const rname=document.getElementById('resp-name').value.trim();
+  const remail=document.getElementById('resp-email').value.trim();
+  let ok=true;
+  setErr('f-facname',!name); if(!name) ok=false;
+  setErr('f-factype',!type); if(!type) ok=false;
+  setErr('f-rname',!rname); if(!rname) ok=false;
+  setErr('f-remail',!isValidEmail(remail)); if(!isValidEmail(remail)) ok=false;
+  if(!ok) return;
+  goTo('s7');
+}
+
+function buildLabelChecklist(){
+  document.getElementById('label-checklist-wrap').innerHTML=LABEL_ITEMS.map((item,i)=>`
+    <label style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer;font-size:13px;font-weight:400;color:var(--color-text-primary);margin-bottom:0;">
+      <input type="checkbox" id="lbl-${i}" style="width:auto;margin-bottom:0;flex-shrink:0;" />${item}
+    </label>`).join('');
+}
+
+function restart(){userData={};apiKey='';qAnswers={};currentQ=0;aiClassResult=null;goTo('s0');}
+</script>
+</body>
+</html>
