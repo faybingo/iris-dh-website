@@ -110,6 +110,10 @@
   .timeline-list { display: flex; flex-direction: column; gap: 12px; }
   .timeline-item { display: flex; gap: 10px; align-items: flex-start; font-size: 12px; color: var(--color-text-secondary); line-height: 1.45; }
   .timeline-dot { width: 20px; height: 20px; border-radius: 50%; background: var(--iris-blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+  .floating-card { position: absolute; background: #FFFFFF; border: 0.5px solid rgba(12,35,64,0.14); border-radius: 8px; box-shadow: 0 16px 42px rgba(12,35,64,0.13); padding: 12px 14px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--iris-navy); }
+  .floating-card i { color: var(--iris-teal); font-size: 18px; }
+  .floating-card.amazon { top: -20px; right: 24px; }
+  .floating-card.fda { bottom: 118px; left: -28px; }
   .question-roller { margin: 18px 0 0; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-primary); overflow: hidden; text-align: left; }
   .question-roller-head { display: flex; align-items: center; gap: 8px; padding: 11px 14px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); font-size: 12px; font-weight: 500; }
   .question-roller-head i { color: var(--iris-blue); font-size: 16px; }
@@ -209,6 +213,7 @@
     .hero-proof { grid-template-columns: 1fr; }
     .hero-visual { min-height: auto; }
     .cockpit-grid, .home-band-inner { grid-template-columns: 1fr; }
+    .floating-card { position: static; margin-top: 12px; }
     .question-roller { margin-top: 1.25rem; }
     .advantage-grid { grid-template-columns: 1fr; }
     .section-title, .home-band h2 { font-size: 28px; }
@@ -240,10 +245,9 @@
     <div class="home-nav-strip">
       <img class="home-logo" src="assets/logo-large.png" alt="IRIS Device & Health" />
       <div class="home-nav-actions">
-        <span class="home-nav-link">Amazon sellers</span>
-        <span class="home-nav-link">TikTok sellers</span>
-        <span class="home-nav-link">Shopify brands</span>
+        <span class="home-nav-link">FDA 510(k)</span>
         <span class="home-nav-link">Amazon compliance</span>
+        <span class="home-nav-link">Device registration</span>
         <div class="lang-switch" aria-label="Language selector">
           <button class="lang-btn active" data-lang="en" type="button" onclick="setLanguage('en')">EN</button>
           <button class="lang-btn" data-lang="zh" type="button" onclick="setLanguage('zh')">中文</button>
@@ -252,20 +256,21 @@
     </div>
     <div class="hero-grid">
       <div class="hero-copy">
-        <div class="hero-tag"><i class="ti ti-shield-check" aria-hidden="true"></i> FDA navigation for health product sellers</div>
-        <h1>Compliance guidance for Amazon, TikTok, and Shopify health brands.</h1>
-        <p>IRIS Device & Health helps sellers of massagers, beauty devices, posture correctors, knee braces, sleep and wellness products understand FDA basics, marketplace review documents, labeling, packaging, and advertising claims before listings get blocked.</p>
+        <div class="hero-tag"><i class="ti ti-shield-check" aria-hidden="true"></i> FDA 510(k) & Amazon Compliance</div>
+        <h1>Medical device compliance, clarified from day one.</h1>
+        <p>IRIS Device & Health helps product teams understand device class, FDA registration needs, Amazon review documents, and practical next steps before costly delays happen.</p>
         <div class="hero-cta-row">
           <button class="btn-primary" onclick="goTo('s1')">Start your application <i class="ti ti-arrow-right"></i></button>
           <button class="btn-outline" onclick="goTo('s2')"><i class="ti ti-clipboard-list" aria-hidden="true"></i> Run quick diagnosis</button>
         </div>
         <div class="hero-proof">
-          <div class="proof-item"><div class="proof-value">Amazon</div><div class="proof-label">listing and document review</div></div>
-          <div class="proof-item"><div class="proof-value">TikTok</div><div class="proof-label">beauty and wellness product support</div></div>
-          <div class="proof-item"><div class="proof-value">First brand</div><div class="proof-label">plain-language FDA guidance</div></div>
+          <div class="proof-item"><div class="proof-value">7-step</div><div class="proof-label">guided product diagnosis</div></div>
+          <div class="proof-item"><div class="proof-value">48h</div><div class="proof-label">expert review target</div></div>
+          <div class="proof-item"><div class="proof-value">FDA + AMZ</div><div class="proof-label">market access focus</div></div>
         </div>
       </div>
       <div class="hero-visual">
+        <div class="floating-card amazon"><i class="ti ti-alert-circle" aria-hidden="true"></i><span>Amazon review blockers mapped</span></div>
         <div class="compliance-cockpit">
           <div class="cockpit-top">
             <div class="cockpit-title">IRIS Compliance Cockpit</div>
@@ -273,20 +278,20 @@
           </div>
           <div class="cockpit-grid">
             <div class="cockpit-panel">
-              <div class="panel-label">Seller compliance route</div>
-              <div class="risk-score">Ready</div>
+              <div class="panel-label">Preliminary pathway</div>
+              <div class="risk-score">Class I</div>
               <div class="bar-list">
-                <div class="bar-row"><span>FDA</span><div class="bar-line"><div class="bar-fill" style="width:82%;"></div></div></div>
-                <div class="bar-row"><span>Label</span><div class="bar-line"><div class="bar-fill" style="width:58%;"></div></div></div>
-                <div class="bar-row"><span>Claims</span><div class="bar-line"><div class="bar-fill" style="width:72%;"></div></div></div>
+                <div class="bar-row"><span>Device fit</span><div class="bar-line"><div class="bar-fill" style="width:82%;"></div></div></div>
+                <div class="bar-row"><span>Labeling</span><div class="bar-line"><div class="bar-fill" style="width:58%;"></div></div></div>
+                <div class="bar-row"><span>Amazon</span><div class="bar-line"><div class="bar-fill" style="width:72%;"></div></div></div>
               </div>
             </div>
             <div class="cockpit-panel">
               <div class="panel-label">Next actions</div>
               <div class="timeline-list">
-                <div class="timeline-item"><span class="timeline-dot">1</span><span>Identify whether your product triggers FDA rules.</span></div>
-                <div class="timeline-item"><span class="timeline-dot">2</span><span>Clean up label, packaging, and ad claims.</span></div>
-                <div class="timeline-item"><span class="timeline-dot">3</span><span>Prepare Amazon, TikTok, or Shopify review files.</span></div>
+                <div class="timeline-item"><span class="timeline-dot">1</span><span>Confirm intended use and claims.</span></div>
+                <div class="timeline-item"><span class="timeline-dot">2</span><span>Prepare registration and listing route.</span></div>
+                <div class="timeline-item"><span class="timeline-dot">3</span><span>Package documents for marketplace review.</span></div>
               </div>
             </div>
           </div>
@@ -310,26 +315,27 @@
             </div>
           </div>
         </div>
+        <div class="floating-card fda"><i class="ti ti-file-check" aria-hidden="true"></i><span>FDA document route prepared</span></div>
       </div>
     </div>
   </div>
   <div class="home-section">
     <div class="home-section-inner">
-      <div class="section-kicker">Built for health product sellers</div>
-      <h2 class="section-title">A practical FDA and marketplace compliance path for first-time brands.</h2>
+      <div class="section-kicker">MasterControl-style industry focus</div>
+      <h2 class="section-title">A practical compliance path for medical device sellers and manufacturers.</h2>
       <div class="advantage-grid">
-        <div class="advantage-card"><i class="ti ti-brand-amazon" aria-hidden="true"></i><h3>Amazon sellers</h3><p>Support for massagers, beauty devices, waist supports, posture correctors, sleep products, and other health listings under review.</p></div>
-        <div class="advantage-card"><i class="ti ti-video" aria-hidden="true"></i><h3>TikTok sellers</h3><p>Guidance for beauty and wellness devices before product claims, shop review, and ad wording create compliance risk.</p></div>
-        <div class="advantage-card"><i class="ti ti-rocket" aria-hidden="true"></i><h3>First-time founders</h3><p>Plain-language navigation for Chinese entrepreneurs building a first brand without a regulatory team.</p></div>
-        <div class="advantage-card"><i class="ti ti-package" aria-hidden="true"></i><h3>Labels and claims</h3><p>Review what you say on packaging, listings, ads, and product pages so the compliance story is consistent.</p></div>
+        <div class="advantage-card"><i class="ti ti-clipboard-list" aria-hidden="true"></i><h3>AI diagnosis</h3><p>Start with a structured questionnaire that captures function, body contact, claims, software, production, and FDA history.</p></div>
+        <div class="advantage-card"><i class="ti ti-user-check" aria-hidden="true"></i><h3>Expert review</h3><p>Regulatory specialists review the pathway and help separate low-risk claims from higher-risk submissions.</p></div>
+        <div class="advantage-card"><i class="ti ti-building-hospital" aria-hidden="true"></i><h3>FDA registration</h3><p>Map establishment registration, device listing, labeling, and documentation requirements in one flow.</p></div>
+        <div class="advantage-card"><i class="ti ti-brand-amazon" aria-hidden="true"></i><h3>Amazon readiness</h3><p>Prepare the evidence package marketplaces ask for when listings are blocked, removed, or under review.</p></div>
       </div>
     </div>
   </div>
   <div class="home-band">
     <div class="home-band-inner">
       <div>
-        <h2>Turn FDA, label, and marketplace uncertainty into a clear action plan.</h2>
-        <p>Answer seven product questions and get a preliminary path before you spend time preparing the wrong Amazon, TikTok, or Shopify documents.</p>
+        <h2>Turn regulatory uncertainty into a clear action plan.</h2>
+        <p>Answer seven product questions and get a preliminary pathway before you spend time preparing the wrong documents.</p>
       </div>
       <button class="btn-primary" onclick="goTo('s1')">Begin diagnosis <i class="ti ti-arrow-right"></i></button>
     </div>
@@ -618,44 +624,28 @@ const ZH_TEXT = {
   'FDA 510(k) Compliance Platform':'FDA 510(k) 合规平台',
   'FDA 510(k) & Amazon Compliance':'FDA 510(k) 与亚马逊合规',
   'FDA 510(k)':'FDA 510(k)',
-  'Amazon sellers':'亚马逊卖家',
-  'TikTok sellers':'TikTok 卖家',
-  'Shopify brands':'Shopify 品牌',
   'Amazon compliance':'亚马逊合规',
   'Device registration':'器械注册',
   'Navigate FDA clearance with confidence':'自信推进 FDA 审批',
   'Medical device compliance, clarified from day one.':'从第一天起，把医疗器械合规讲清楚。',
-  'FDA navigation for health product sellers':'为健康产品卖家提供 FDA 合规导航',
-  'Compliance guidance for Amazon, TikTok, and Shopify health brands.':'为 Amazon、TikTok 和 Shopify 健康品牌提供合规导航。',
   'AI-powered device classification and expert regulatory guidance — from product diagnosis to market-ready.':'通过 AI 器械分类与专家法规指导，从产品诊断一路走到上市准备。',
   'IRIS Device & Health helps product teams understand device class, FDA registration needs, Amazon review documents, and practical next steps before costly delays happen.':'IRIS Device & Health 帮助产品团队在出现高成本延误之前，弄清器械类别、FDA 注册需求、亚马逊审核材料和可执行的下一步。',
-  'IRIS Device & Health helps sellers of massagers, beauty devices, posture correctors, knee braces, sleep and wellness products understand FDA basics, marketplace review documents, labeling, packaging, and advertising claims before listings get blocked.':'IRIS Device & Health 帮助按摩仪、美容仪、姿势矫正器、护膝、睡眠和 wellness 产品卖家，在链接被拦截前弄清 FDA 基础、平台审核材料、标签包装和广告声明合规。',
   'Start your application':'开始申请',
   'Run quick diagnosis':'快速诊断',
   'guided product diagnosis':'引导式产品诊断',
   'expert review target':'专家审核目标',
   'market access focus':'市场准入重点',
-  'listing and document review':'链接和材料审核',
-  'beauty and wellness product support':'美容与 wellness 产品支持',
-  'plain-language FDA guidance':'通俗易懂的 FDA 指引',
   'Amazon review blockers mapped':'定位亚马逊审核卡点',
   'IRIS Compliance Cockpit':'IRIS 合规驾驶舱',
   'Live assessment':'实时评估',
   'Preliminary pathway':'初步路径',
-  'Seller compliance route':'卖家合规路径',
-  'Ready':'已就绪',
   'Device fit':'器械匹配',
   'Labeling':'标签',
-  'Label':'标签',
-  'Claims':'声明',
   'Amazon':'亚马逊',
   'Next actions':'下一步行动',
   'Confirm intended use and claims.':'确认预期用途和产品声明。',
   'Prepare registration and listing route.':'准备注册和列名路径。',
   'Package documents for marketplace review.':'整理平台审核所需材料。',
-  'Identify whether your product triggers FDA rules.':'判断你的产品是否触发 FDA 规则。',
-  'Clean up label, packaging, and ad claims.':'梳理标签、包装和广告声明。',
-  'Prepare Amazon, TikTok, or Shopify review files.':'准备 Amazon、TikTok 或 Shopify 审核材料。',
   'FDA document route prepared':'FDA 文件路径已准备',
   'Common questions we help answer':'我们可以帮你解答这些问题',
   'What should we do if our product was removed by Amazon?':'我们产品被亚马逊下架了怎么办？',
@@ -666,9 +656,7 @@ const ZH_TEXT = {
   'What documents are needed to list a blood pressure monitor on Amazon?':'血压计要上亚马逊，需要什么材料？',
   'How it works':'流程说明',
   'MasterControl-style industry focus':'医疗器械行业解决方案',
-  'Built for health product sellers':'为健康产品卖家设计',
   'A practical compliance path for medical device sellers and manufacturers.':'为医疗器械卖家和制造商设计的实用合规路径。',
-  'A practical FDA and marketplace compliance path for first-time brands.':'为第一次做品牌的卖家设计的 FDA 与平台合规路径。',
   'AI diagnosis':'AI 诊断',
   'Smart questionnaire classifies your device instantly':'智能问卷即时判断器械类别',
   'Start with a structured questionnaire that captures function, body contact, claims, software, production, and FDA history.':'从结构化问卷开始，收集产品功能、人体接触方式、产品声明、软件、生产方式和 FDA 基础情况。',
@@ -683,16 +671,8 @@ const ZH_TEXT = {
   'Complete documentation for FDA submission':'准备 FDA 提交所需文件',
   'Amazon readiness':'亚马逊准备',
   'Prepare the evidence package marketplaces ask for when listings are blocked, removed, or under review.':'当产品被拦截、下架或进入审核时，准备平台需要的证明材料包。',
-  'Support for massagers, beauty devices, waist supports, posture correctors, sleep products, and other health listings under review.':'支持按摩仪、美容仪、护腰带、姿势矫正器、睡眠产品等健康类链接审核问题。',
-  'Guidance for beauty and wellness devices before product claims, shop review, and ad wording create compliance risk.':'在产品声明、店铺审核和广告用语带来风险前，为 beauty/wellness device 提供合规指导。',
-  'First-time founders':'首次创业者',
-  'Plain-language navigation for Chinese entrepreneurs building a first brand without a regulatory team.':'为没有法规团队、第一次做品牌的华人创业者提供通俗合规导航。',
-  'Labels and claims':'标签和声明',
-  'Review what you say on packaging, listings, ads, and product pages so the compliance story is consistent.':'检查包装、链接、广告和产品页里的表述，让整体合规逻辑保持一致。',
   'Turn regulatory uncertainty into a clear action plan.':'把法规不确定性转化为清晰行动计划。',
-  'Turn FDA, label, and marketplace uncertainty into a clear action plan.':'把 FDA、标签和平台审核的不确定性转化为清晰行动计划。',
   'Answer seven product questions and get a preliminary pathway before you spend time preparing the wrong documents.':'回答 7 个产品问题，在花时间准备错误文件之前，先获得初步路径。',
-  'Answer seven product questions and get a preliminary path before you spend time preparing the wrong Amazon, TikTok, or Shopify documents.':'回答 7 个产品问题，在花时间准备错误的 Amazon、TikTok 或 Shopify 材料前，先获得初步路径。',
   'Begin diagnosis':'开始诊断',
   'Already have an account?':'已经有账号？',
   'Sign in':'登录',
