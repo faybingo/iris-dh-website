@@ -141,6 +141,14 @@
   .target-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
   .target-card h3 { font-size: 17px; color: var(--iris-navy); margin-bottom: 8px; }
   .target-card p { font-size: 13px; line-height: 1.6; color: var(--color-text-secondary); }
+  .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .resource-card { border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; padding: 24px; background: #FFFFFF; min-height: 210px; display: flex; flex-direction: column; align-items: flex-start; }
+  .resource-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
+  .resource-card h3 { font-size: 17px; color: var(--iris-navy); margin-bottom: 8px; }
+  .resource-card p { font-size: 13px; line-height: 1.6; color: var(--color-text-secondary); margin-bottom: 16px; }
+  .download-link { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: var(--border-radius-md); background: var(--iris-blue); color: #FFFFFF; font-size: 13px; text-decoration: none; }
+  .download-link:hover { background: #143A6B; }
+  .download-link i { color: currentColor; font-size: 16px; margin: 0; }
   .advantage-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
   .advantage-card { border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; padding: 20px; background: #FFFFFF; min-height: 178px; }
   .advantage-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
@@ -233,7 +241,7 @@
     .hero-visual { min-height: auto; }
     .cockpit-grid, .home-band-inner { grid-template-columns: 1fr; }
     .question-roller { margin-top: 1.25rem; }
-    .advantage-grid, .target-grid, .steps-grid, .why-grid { grid-template-columns: 1fr; }
+    .advantage-grid, .target-grid, .resource-grid, .steps-grid, .why-grid { grid-template-columns: 1fr; }
     .section-title, .home-band h2 { font-size: 28px; }
   }
 </style>
@@ -266,6 +274,7 @@
         <a class="home-nav-link" href="#s0">Home</a>
         <a class="home-nav-link" href="#services">Services</a>
         <a class="home-nav-link" href="#how-it-works">How It Works</a>
+        <a class="home-nav-link" href="#resources">Resources</a>
         <a class="home-nav-link" href="#pricing">Pricing</a>
         <a class="home-nav-link" href="#contact">Contact</a>
         <div class="lang-switch" aria-label="Language selector">
@@ -381,6 +390,26 @@
         <div class="why-item"><i class="ti ti-language" aria-hidden="true"></i><div><h3>Bilingual clarity</h3><p>Explain FDA and marketplace requirements in both English and Chinese for cross-border teams.</p></div></div>
         <div class="why-item"><i class="ti ti-shopping-cart-check" aria-hidden="true"></i><div><h3>Marketplace-aware</h3><p>Focus on the real Amazon and TikTok review problems sellers face, not just theory.</p></div></div>
         <div class="why-item"><i class="ti ti-route" aria-hidden="true"></i><div><h3>Action-first guidance</h3><p>Turn broad compliance questions into a concrete next-step route for your product.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="home-section" id="resources">
+    <div class="home-section-inner">
+      <div class="section-kicker">Free Resources</div>
+      <h2 class="section-title">Download free FDA compliance preparation guides.</h2>
+      <div class="resource-grid">
+        <div class="resource-card">
+          <i class="ti ti-file-check" aria-hidden="true"></i>
+          <h3>FDA inspection and compliance readiness checklist</h3>
+          <p>A Chinese self-check worksheet for preparing FDA inspection and compliance basics before platform or regulatory review.</p>
+          <a class="download-link" href="assets/fda-inspection-compliance-checklist.pdf" download>Free download <i class="ti ti-download" aria-hidden="true"></i></a>
+        </div>
+        <div class="resource-card">
+          <i class="ti ti-file-certificate" aria-hidden="true"></i>
+          <h3>Chinese Design Control guide</h3>
+          <p>A Chinese-language Design Control reference for teams building health, wellness, beauty, or medical device products.</p>
+          <a class="download-link" href="assets/design-control-cn.pdf" download>Free download <i class="ti ti-download" aria-hidden="true"></i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -693,6 +722,7 @@ const ZH_TEXT = {
   'Home':'首页',
   'Services':'服务',
   'How It Works':'流程',
+  'Resources':'资源',
   'Pricing':'定价',
   'Contact':'联系',
   'FDA Compliance for Marketplace Sellers':'面向平台卖家的 FDA 合规',
@@ -746,6 +776,13 @@ const ZH_TEXT = {
   'Focus on the real Amazon and TikTok review problems sellers face, not just theory.':'关注卖家真正遇到的 Amazon 和 TikTok 审核问题，而不只是法规理论。',
   'Action-first guidance':'行动优先的指导',
   'Turn broad compliance questions into a concrete next-step route for your product.':'把宽泛的合规问题变成适合你产品的具体下一步。',
+  'Free Resources':'免费资源',
+  'Download free FDA compliance preparation guides.':'免费下载 FDA 合规准备资料。',
+  'FDA inspection and compliance readiness checklist':'FDA 检查与合规准备自查表',
+  'A Chinese self-check worksheet for preparing FDA inspection and compliance basics before platform or regulatory review.':'一份中文自查表，帮助你在平台审核或法规检查前准备 FDA 检查与基础合规事项。',
+  'Chinese Design Control guide':'中文 Design Control 指南',
+  'A Chinese-language Design Control reference for teams building health, wellness, beauty, or medical device products.':'一份中文 Design Control 参考资料，适合正在开发健康、Wellness、美容仪或医疗器械产品的团队。',
+  'Free download':'免费下载',
   'Start with a simple diagnosis, then add expert support when needed.':'先做简单诊断，需要时再增加专家支持。',
   'Free diagnosis':'免费诊断',
   'Complete the product questionnaire and get a preliminary AI-generated compliance direction.':'完成产品问卷，获得 AI 生成的初步合规方向。',
