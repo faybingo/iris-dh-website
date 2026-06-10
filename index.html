@@ -273,12 +273,12 @@
     <div class="home-nav-strip">
       <img class="home-logo" src="assets/logo-large.png" alt="IRIS Device & Health" />
       <div class="home-nav-links" aria-label="Primary navigation">
-        <a class="home-nav-link" href="#s0">Home</a>
-        <a class="home-nav-link" href="#services">Services</a>
-        <a class="home-nav-link" href="#how-it-works">How It Works</a>
-        <a class="home-nav-link" href="#resources">Resources</a>
-        <a class="home-nav-link" href="#pricing">Pricing</a>
-        <a class="home-nav-link" href="#contact">Contact</a>
+        <a class="home-nav-link" href="index.html">Home</a>
+        <a class="home-nav-link" href="services.html">Services</a>
+        <a class="home-nav-link" href="how-it-works.html">How It Works</a>
+        <a class="home-nav-link" href="resources.html">Resources</a>
+        <a class="home-nav-link" href="pricing.html">Pricing</a>
+        <a class="home-nav-link" href="contact.html">Contact</a>
       </div>
       <div class="home-nav-actions">
         <div class="lang-switch" aria-label="Language selector">
@@ -294,7 +294,7 @@
         <p>Helping Amazon, TikTok Shop, and Shopify sellers assess product classification, FDA requirements, labeling, and marketing-claim risks so listings are less likely to be rejected, removed, or challenged.</p>
         <div class="hero-cta-row">
           <button class="btn-primary" onclick="goTo('s1')">Free product assessment <i class="ti ti-arrow-right"></i></button>
-          <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})"><i class="ti ti-clipboard-list" aria-hidden="true"></i> See services</button>
+          <button class="btn-outline" onclick="window.location.href='services.html'"><i class="ti ti-clipboard-list" aria-hidden="true"></i> See services</button>
         </div>
         <div class="hero-visual">
           <div class="compliance-cockpit">
@@ -1363,6 +1363,8 @@ function buildLabelChecklist(){
 
 function restart(){userData={};qAnswers={};qAnswerDetails={};currentQ=0;aiClassResult=null;aiAnalysisReady=false;registerMethod='email';goTo('s0');}
 localizePage();
+const initialScreen = location.hash.replace('#','');
+if(/^s[0-8]$/.test(initialScreen)) goTo(initialScreen);
 </script>
 </body>
 </html>
