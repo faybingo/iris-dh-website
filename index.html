@@ -95,23 +95,9 @@
   .proof-item { border-left: 2px solid var(--iris-teal); padding-left: 12px; }
   .proof-value { font-size: 19px; font-weight: 500; color: var(--iris-navy); }
   .proof-label { font-size: 12px; color: var(--color-text-secondary); line-height: 1.45; }
-  .hero-visual { position: relative; min-height: 520px; }
+  .hero-visual { position: relative; }
   .compliance-cockpit { position: relative; background: #FFFFFF; border: 0.5px solid rgba(12,35,64,0.15); border-radius: 8px; padding: 18px; box-shadow: 0 22px 60px rgba(12,35,64,0.14); }
-  .cockpit-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 0.5px solid var(--color-border-tertiary); }
-  .cockpit-title { font-size: 13px; font-weight: 500; color: var(--iris-navy); }
-  .cockpit-status { font-size: 11px; color: #0F6E56; background: #E1F5EE; padding: 4px 9px; border-radius: 999px; }
-  .cockpit-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 14px; margin-top: 16px; }
-  .cockpit-panel { background: #F8FBFD; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; padding: 14px; }
-  .panel-label { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
-  .risk-score { font-family: var(--font-display); font-size: 46px; color: var(--iris-blue); line-height: 1; }
-  .bar-list { display: flex; flex-direction: column; gap: 9px; margin-top: 14px; }
-  .bar-row { display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center; font-size: 11px; color: var(--color-text-secondary); }
-  .bar-line { height: 7px; border-radius: 999px; background: #DDEAF4; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 999px; background: var(--iris-teal); }
-  .timeline-list { display: flex; flex-direction: column; gap: 12px; }
-  .timeline-item { display: flex; gap: 10px; align-items: flex-start; font-size: 12px; color: var(--color-text-secondary); line-height: 1.45; }
-  .timeline-dot { width: 20px; height: 20px; border-radius: 50%; background: var(--iris-blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
-  .question-roller { margin: 18px 0 0; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-primary); overflow: hidden; text-align: left; }
+  .question-roller { border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-primary); overflow: hidden; text-align: left; }
   .question-roller-head { display: flex; align-items: center; gap: 8px; padding: 11px 14px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); font-size: 12px; font-weight: 500; }
   .question-roller-head i { color: var(--iris-blue); font-size: 16px; }
   .question-window { height: 138px; overflow: hidden; position: relative; }
@@ -243,9 +229,7 @@
     .hero h1 { font-size: 38px; }
     .hero p { font-size: 15px; }
     .hero-proof { grid-template-columns: 1fr; }
-    .hero-visual { min-height: auto; }
-    .cockpit-grid, .home-band-inner { grid-template-columns: 1fr; }
-    .question-roller { margin-top: 1.25rem; }
+    .home-band-inner { grid-template-columns: 1fr; }
     .advantage-grid, .target-grid, .resource-grid, .steps-grid, .why-grid { grid-template-columns: 1fr; }
     .section-title, .home-band h2 { font-size: 28px; }
   }
@@ -305,29 +289,6 @@
       </div>
       <div class="hero-visual">
         <div class="compliance-cockpit">
-          <div class="cockpit-top">
-            <div class="cockpit-title">Marketplace Compliance Navigator</div>
-            <div class="cockpit-status">FDA • Label • Claims</div>
-          </div>
-          <div class="cockpit-grid">
-            <div class="cockpit-panel">
-              <div class="panel-label">Seller risk snapshot</div>
-              <div class="risk-score">Check</div>
-              <div class="bar-list">
-                <div class="bar-row"><span>FDA</span><div class="bar-line"><div class="bar-fill" style="width:78%;"></div></div></div>
-                <div class="bar-row"><span>Label</span><div class="bar-line"><div class="bar-fill" style="width:58%;"></div></div></div>
-                <div class="bar-row"><span>Claims</span><div class="bar-line"><div class="bar-fill" style="width:68%;"></div></div></div>
-              </div>
-            </div>
-            <div class="cockpit-panel">
-              <div class="panel-label">Next actions</div>
-              <div class="timeline-list">
-                <div class="timeline-item"><span class="timeline-dot">1</span><span>Choose product category.</span></div>
-                <div class="timeline-item"><span class="timeline-dot">2</span><span>Review claims and packaging.</span></div>
-                <div class="timeline-item"><span class="timeline-dot">3</span><span>Prepare platform documents.</span></div>
-              </div>
-            </div>
-          </div>
           <div class="question-roller" aria-label="Common FDA and Amazon compliance questions">
             <div class="question-roller-head"><i class="ti ti-message-question" aria-hidden="true"></i> Common questions we help answer</div>
             <div class="question-window">
@@ -749,15 +710,9 @@ const ZH_TEXT = {
   'See services':'查看服务',
   'marketplace compliance focus':'平台合规重点',
   'bilingual support':'中英文支持',
-  'Marketplace Compliance Navigator':'平台合规导航',
-  'FDA • Label • Claims':'FDA • 标签 • 声明',
-  'Seller risk snapshot':'卖家风险快照',
-  'Check':'检查',
   'FDA':'FDA',
   'Label':'标签',
   'Claims':'声明',
-  'Choose product category.':'选择产品类别。',
-  'Review claims and packaging.':'审核产品声明和包装。',
   'Prepare platform documents.':'准备平台审核材料。',
   'Who we help':'服务对象',
   'Built for sellers who need health-product compliance explained clearly.':'为需要清楚理解健康产品合规的卖家而设计。',
@@ -825,7 +780,6 @@ const ZH_TEXT = {
   'Device fit':'器械匹配',
   'Labeling':'标签',
   'Amazon':'亚马逊',
-  'Next actions':'下一步行动',
   'Confirm intended use and claims.':'确认预期用途和产品声明。',
   'Prepare registration and listing route.':'准备注册和列名路径。',
   'Package documents for marketplace review.':'整理平台审核所需材料。',
