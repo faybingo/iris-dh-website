@@ -87,6 +87,9 @@
   .hero-copy { text-align: center; }
   .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: #0F6E56; background: #E1F5EE; padding: 6px 12px; border-radius: 999px; margin-bottom: 1.2rem; font-weight: 500; }
   .hero h1 { font-family: var(--font-display); font-size: 56px; line-height: 1.02; margin: 0 auto 1rem; max-width: 820px; color: var(--iris-navy); }
+  .hero-title-line { display: block; }
+  html[lang="zh-CN"] .hero h1 { font-size: 46px; line-height: 1.14; max-width: 960px; }
+  html[lang="zh-CN"] .hero-title-line { white-space: nowrap; }
   .hero p { font-size: 17px; color: var(--color-text-secondary); max-width: 680px; margin: 0 auto 1.4rem; line-height: 1.65; }
   .hero-cta-row { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-bottom: 1.15rem; }
   .hero-cta-row .btn-primary, .hero-cta-row .btn-outline { min-width: 230px; min-height: 72px; border-radius: 999px; font-size: 21px; font-weight: 500; line-height: 1.1; }
@@ -95,9 +98,11 @@
   .hero-cta-row .btn-primary:hover { opacity: 1; transform: translateY(-1px); box-shadow: 0 18px 36px rgba(10,132,255,0.34); }
   .hero-cta-row .btn-outline { padding: 20px 34px; background: rgba(255,255,255,0.18); border: 2px solid #0A84FF; color: #0A84FF; }
   .hero-cta-row .btn-outline:hover { background: rgba(10,132,255,0.08); transform: translateY(-1px); }
-  .hero-visual { position: relative; max-width: 720px; margin: 0 auto; }
-  .compliance-cockpit { position: relative; background: rgba(255,255,255,0.94); border: 0.5px solid rgba(12,35,64,0.12); border-radius: 8px; padding: 10px; box-shadow: 0 16px 42px rgba(12,35,64,0.13); }
-  .question-roller { --question-row-height: 54px; position: relative; border: 1px solid transparent; border-radius: 7px; background: linear-gradient(#FFFFFF,#FFFFFF) padding-box, linear-gradient(135deg, rgba(37,99,235,0.45), rgba(29,158,117,0.58), rgba(12,35,64,0.2)) border-box; overflow: hidden; text-align: left; box-shadow: inset 0 1px 0 rgba(255,255,255,0.72), 0 10px 26px rgba(12,35,64,0.08); }
+  .hero-visual { position: relative; max-width: 760px; margin: 0 auto; }
+  .compliance-cockpit { position: relative; border-radius: 34px; padding: 18px 18px 22px; background: linear-gradient(145deg, #111827, #253349 58%, #0B1320); box-shadow: 0 24px 58px rgba(12,35,64,0.28), inset 0 1px 0 rgba(255,255,255,0.28); }
+  .compliance-cockpit::before { content: ""; position: absolute; top: 8px; left: 50%; width: 54px; height: 5px; border-radius: 999px; background: rgba(255,255,255,0.38); transform: translateX(-50%); }
+  .compliance-cockpit::after { content: ""; position: absolute; inset: 8px; border: 1px solid rgba(255,255,255,0.16); border-radius: 27px; pointer-events: none; }
+  .question-roller { --question-row-height: 54px; position: relative; border: 1px solid transparent; border-radius: 22px; background: linear-gradient(#FFFFFF,#FFFFFF) padding-box, linear-gradient(135deg, rgba(37,99,235,0.45), rgba(29,158,117,0.58), rgba(12,35,64,0.2)) border-box; overflow: hidden; text-align: left; box-shadow: inset 0 1px 0 rgba(255,255,255,0.72), 0 10px 26px rgba(12,35,64,0.08); }
   .question-roller::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(90deg, transparent, rgba(29,158,117,0.8), rgba(37,99,235,0.72), transparent); z-index: 2; }
   .question-roller-head { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 0.5px solid rgba(12,35,64,0.1); color: var(--iris-navy); background: linear-gradient(90deg, rgba(225,245,238,0.9), rgba(234,243,248,0.68)); font-size: 16px; font-weight: 600; }
   .question-roller-head i { color: var(--iris-blue); font-size: 18px; filter: drop-shadow(0 0 6px rgba(29,158,117,0.32)); }
@@ -228,6 +233,8 @@
     .home-nav-link { display: none; }
     .hero-grid { max-width: 100%; }
     .hero h1 { font-size: 38px; line-height: 1.2; padding-bottom: 4px; }
+    html[lang="zh-CN"] .hero h1 { font-size: 38px; line-height: 1.2; max-width: 100%; }
+    html[lang="zh-CN"] .hero-title-line { white-space: normal; }
     .hero p { font-size: 15px; }
     .hero-cta-row { gap: 10px; }
     .hero-cta-row .btn-primary, .hero-cta-row .btn-outline { min-width: 0; width: 100%; min-height: 58px; font-size: 18px; padding: 16px 22px; }
@@ -277,7 +284,7 @@
     <div class="hero-grid">
       <div class="hero-copy">
         <div class="hero-tag"><i class="ti ti-shield-check" aria-hidden="true"></i> FDA Compliance for Marketplace Sellers</div>
-        <h1>Selling health products or medical devices in the U.S.? First confirm whether your product meets FDA requirements.</h1>
+        <h1><span class="hero-title-line">Selling health products or medical devices in the U.S.?</span> <span class="hero-title-line">First confirm whether your product meets FDA requirements.</span></h1>
         <p>IRIS Device & Health helps Amazon, TikTok, and Shopify health-product sellers understand FDA basics, labels, packaging, and advertising claims before listings get blocked.</p>
         <div class="hero-cta-row">
           <button class="btn-primary" onclick="goTo('s1')">Free product assessment <i class="ti ti-arrow-right"></i></button>
@@ -701,7 +708,8 @@ const ZH_TEXT = {
   'Pricing':'定价',
   'Contact':'联系',
   'FDA Compliance for Marketplace Sellers':'面向平台卖家的 FDA 合规',
-  'Selling health products or medical devices in the U.S.? First confirm whether your product meets FDA requirements.':'卖健康产品和医疗器械到美国？先确认你的产品是否符合FDA要求',
+  'Selling health products or medical devices in the U.S.?':'卖健康产品和医疗器械到美国？',
+  'First confirm whether your product meets FDA requirements.':'先确认你的产品是否符合FDA要求',
   'IRIS Device & Health helps Amazon, TikTok, and Shopify health-product sellers understand FDA basics, labels, packaging, and advertising claims before listings get blocked.':'IRIS Device & Health 帮助 Amazon、TikTok 和 Shopify 健康产品卖家，在链接被拦截前弄清 FDA 基础、标签、包装和广告声明合规。',
   'Free product assessment':'免费评估我的产品',
   'See services':'查看服务',
