@@ -96,21 +96,22 @@
   .proof-value { font-size: 19px; font-weight: 500; color: var(--iris-navy); }
   .proof-label { font-size: 12px; color: var(--color-text-secondary); line-height: 1.45; }
   .hero-visual { position: relative; }
-  .compliance-cockpit { position: relative; background: #FFFFFF; border: 0.5px solid rgba(12,35,64,0.15); border-radius: 8px; padding: 18px; box-shadow: 0 22px 60px rgba(12,35,64,0.14); }
-  .question-roller { border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-primary); overflow: hidden; text-align: left; }
-  .question-roller-head { display: flex; align-items: center; gap: 8px; padding: 11px 14px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); font-size: 12px; font-weight: 500; }
-  .question-roller-head i { color: var(--iris-blue); font-size: 16px; }
-  .question-window { height: 138px; overflow: hidden; position: relative; }
-  .question-window::before, .question-window::after { content: ""; position: absolute; left: 0; right: 0; height: 24px; z-index: 1; pointer-events: none; }
-  .question-window::before { top: 0; background: linear-gradient(to bottom, var(--color-background-primary), transparent); }
-  .question-window::after { bottom: 0; background: linear-gradient(to top, var(--color-background-primary), transparent); }
+  .compliance-cockpit { position: relative; background: rgba(255,255,255,0.94); border: 0.5px solid rgba(12,35,64,0.12); border-radius: 8px; padding: 10px; box-shadow: 0 16px 42px rgba(12,35,64,0.13); }
+  .question-roller { --question-row-height: 54px; position: relative; border: 1px solid transparent; border-radius: 7px; background: linear-gradient(#FFFFFF,#FFFFFF) padding-box, linear-gradient(135deg, rgba(37,99,235,0.45), rgba(29,158,117,0.58), rgba(12,35,64,0.2)) border-box; overflow: hidden; text-align: left; box-shadow: inset 0 1px 0 rgba(255,255,255,0.72), 0 10px 26px rgba(12,35,64,0.08); }
+  .question-roller::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(90deg, transparent, rgba(29,158,117,0.8), rgba(37,99,235,0.72), transparent); z-index: 2; }
+  .question-roller-head { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 0.5px solid rgba(12,35,64,0.1); color: var(--iris-navy); background: linear-gradient(90deg, rgba(225,245,238,0.9), rgba(234,243,248,0.68)); font-size: 16px; font-weight: 600; }
+  .question-roller-head i { color: var(--iris-blue); font-size: 18px; filter: drop-shadow(0 0 6px rgba(29,158,117,0.32)); }
+  .question-window { height: calc(var(--question-row-height) * 3); overflow: hidden; position: relative; }
+  .question-window::before, .question-window::after { content: ""; position: absolute; left: 0; right: 0; height: 18px; z-index: 1; pointer-events: none; }
+  .question-window::before { top: 0; background: linear-gradient(to bottom, #FFFFFF, transparent); }
+  .question-window::after { bottom: 0; background: linear-gradient(to top, #FFFFFF, transparent); }
   .question-track { display: flex; flex-direction: column; animation: rollQuestions 24s linear infinite; }
   .question-roller:hover .question-track { animation-play-state: paused; }
-  .question-item { min-height: 46px; display: flex; align-items: center; gap: 8px; padding: 0 14px; color: var(--color-text-primary); font-size: 13px; line-height: 1.35; }
-  .question-item i { color: var(--iris-teal); font-size: 14px; flex-shrink: 0; }
+  .question-item { min-height: var(--question-row-height); display: flex; align-items: center; gap: 9px; padding: 0 12px; color: var(--color-text-primary); font-size: 15.5px; line-height: 1.35; }
+  .question-item i { color: var(--iris-teal); font-size: 16px; flex-shrink: 0; }
   @keyframes rollQuestions {
     from { transform: translateY(0); }
-    to { transform: translateY(-276px); }
+    to { transform: translateY(calc(var(--question-row-height) * -6)); }
   }
   .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 1.25rem 0; }
   .feature-tile { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem; text-align: center; }
@@ -289,8 +290,8 @@
       </div>
       <div class="hero-visual">
         <div class="compliance-cockpit">
-          <div class="question-roller" aria-label="Common FDA and Amazon compliance questions">
-            <div class="question-roller-head"><i class="ti ti-message-question" aria-hidden="true"></i> Common questions we help answer</div>
+          <div class="question-roller" aria-label="常见 FDA 和 Amazon 合规问题">
+            <div class="question-roller-head"><i class="ti ti-message-question" aria-hidden="true"></i> 你有这些问题吗？</div>
             <div class="question-window">
               <div class="question-track">
                 <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What should we do if our product was removed by Amazon?</span></div>
@@ -784,7 +785,6 @@ const ZH_TEXT = {
   'Prepare registration and listing route.':'准备注册和列名路径。',
   'Package documents for marketplace review.':'整理平台审核所需材料。',
   'FDA document route prepared':'FDA 文件路径已准备',
-  'Common questions we help answer':'我们可以帮你解答这些问题',
   'What should we do if our product was removed by Amazon?':'我们产品被亚马逊下架了怎么办？',
   'We have a 510(k), but Amazon still will not approve us. What can we do?':'我们有510k,亚马逊还是审核不过怎么办？',
   'How do I register a massager with FDA?':'按摩器怎么注册FDA？',
