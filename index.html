@@ -157,11 +157,12 @@
   .why-item i { color: var(--iris-teal); font-size: 22px; flex-shrink: 0; }
   .why-item h3 { font-size: 14px; color: var(--iris-navy); margin-bottom: 5px; }
   .why-item p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.55; }
-  .home-band { background: var(--iris-navy); color: white; padding: 3.25rem 1.5rem; }
-  .home-band-inner { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
+  .home-band { position: relative; background: linear-gradient(135deg, #F4FAFF 0%, #E7F1FF 44%, #E1F8F0 100%); color: var(--iris-navy); padding: 3.25rem 1.5rem; overflow: hidden; }
+  .home-band::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 15% 20%, rgba(37,99,235,0.16), transparent 30%), radial-gradient(circle at 85% 25%, rgba(29,158,117,0.18), transparent 28%), linear-gradient(115deg, rgba(255,255,255,0.82), rgba(255,255,255,0.32)); pointer-events: none; }
+  .home-band-inner { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; border: 1px solid rgba(24,95,165,0.14); border-radius: 18px; background: rgba(255,255,255,0.42); padding: 28px; box-shadow: 0 18px 46px rgba(12,35,64,0.12); }
   .home-band h2 { font-family: var(--font-display); font-size: 34px; line-height: 1.15; margin-bottom: 8px; }
-  .home-band p { color: rgba(255,255,255,0.74); line-height: 1.6; max-width: 620px; }
-  .home-band .btn-primary { width: auto; background: var(--iris-teal); padding: 13px 24px; }
+  .home-band p { color: var(--color-text-secondary); line-height: 1.6; max-width: 620px; }
+  .home-band .btn-primary { width: auto; min-height: 58px; border-radius: 999px; background: #0A84FF; padding: 16px 28px; font-size: 16px; box-shadow: 0 14px 30px rgba(10,132,255,0.24); }
 
   .notice { background: var(--color-background-info); border: 0.5px solid var(--color-border-info); border-radius: var(--border-radius-md); padding: 10px 14px; font-size: 12px; color: var(--color-text-info); display: flex; align-items: flex-start; gap: 8px; margin-bottom: 1rem; line-height: 1.5; }
   .notice i { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
