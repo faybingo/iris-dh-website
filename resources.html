@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Resources | IRIS Device & Health</title>
+<title>资源 | IRIS Device & Health</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -83,10 +83,9 @@
   .home-logo { height: 86px; width: auto; display: block; }
   .home-nav-links { display: flex; align-items: center; justify-content: center; gap: 18px; }
   .home-nav-actions { display: flex; align-items: center; justify-content: flex-end; }
-  .home-nav-links { display: flex; align-items: center; justify-content: center; gap: 18px; }
   .home-nav-link { font-size: 13px; color: var(--color-text-secondary); white-space: nowrap; text-decoration: none; }
   .home-nav-link:hover { color: var(--iris-blue); }
-  .lang-switch { display: inline-flex; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
+  .lang-switch { display: none; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
   .nav-lang { position: static; }
   .lang-btn { border: none; background: transparent; color: var(--color-text-secondary); font-family: var(--font-body); font-size: 12px; line-height: 1; padding: 7px 10px; cursor: pointer; }
   .lang-btn.active { background: var(--iris-blue); color: white; }
@@ -141,6 +140,11 @@
   .target-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
   .target-card h3 { font-size: 17px; color: var(--iris-navy); margin-bottom: 8px; }
   .target-card p { font-size: 13px; line-height: 1.6; color: var(--color-text-secondary); }
+  .pricing-table { max-width: 760px; margin: 0 auto; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: #FFFFFF; overflow: hidden; box-shadow: 0 18px 46px rgba(12,35,64,0.08); }
+  .pricing-row { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; padding: 18px 22px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .pricing-row:last-child { border-bottom: none; }
+  .pricing-service { font-size: 17px; color: var(--iris-navy); font-weight: 500; line-height: 1.4; }
+  .pricing-price { font-family: var(--font-display); font-size: 26px; color: #0A84FF; white-space: nowrap; }
   .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .resource-card { border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; padding: 24px; background: #FFFFFF; min-height: 210px; display: flex; flex-direction: column; align-items: flex-start; }
   .resource-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
@@ -265,33 +269,33 @@
 <body>
 <div class="home-nav-strip" style="padding:1.25rem 1.5rem;margin-bottom:0;">
     <a href="index.html"><img class="home-logo" src="assets/logo-large.png" alt="IRIS Device & Health" /></a>
-    <div class="home-nav-links" aria-label="Primary navigation">
-      <a class="home-nav-link" href="index.html">Home</a>
-      <a class="home-nav-link" href="services.html">Services</a>
-      <a class="home-nav-link" href="how-it-works.html">How It Works</a>
-      <a class="home-nav-link" href="resources.html" style="color:var(--iris-blue);font-weight:500;">Resources</a>
-      <a class="home-nav-link" href="pricing.html">Pricing</a>
-      <a class="home-nav-link" href="contact.html">Contact</a>
+    <div class="home-nav-links" aria-label="主导航">
+      <a class="home-nav-link" href="index.html">首页</a>
+      <a class="home-nav-link" href="services.html">服务</a>
+      <a class="home-nav-link" href="how-it-works.html">流程</a>
+      <a class="home-nav-link" href="resources.html" style="color:var(--iris-blue);font-weight:500;">资源</a>
+      <a class="home-nav-link" href="pricing.html">定价</a>
+      <a class="home-nav-link" href="contact.html">联系</a>
     </div>
     <div></div>
   </div>
 
   <div class="home-section">
     <div class="home-section-inner">
-      <div class="section-kicker">Free Resources</div>
-      <h2 class="section-title">Download free FDA compliance preparation guides.</h2>
+      <div class="section-kicker">免费资源</div>
+      <h2 class="section-title">免费下载 FDA 合规准备资料。</h2>
       <div class="resource-grid">
         <div class="resource-card">
           <i class="ti ti-file-check" aria-hidden="true"></i>
-          <h3>FDA inspection and compliance readiness checklist</h3>
-          <p>A Chinese self-check worksheet for preparing FDA inspection and compliance basics before platform or regulatory review.</p>
-          <a class="download-link" href="assets/fda-inspection-compliance-checklist.pdf" download>Free download <i class="ti ti-download" aria-hidden="true"></i></a>
+          <h3>FDA 检查与合规准备自查表</h3>
+          <p>一份中文自查表，帮助你在平台审核或法规检查前准备 FDA 检查与基础合规事项。</p>
+          <a class="download-link" href="assets/fda-inspection-compliance-checklist.pdf" download>免费下载 <i class="ti ti-download" aria-hidden="true"></i></a>
         </div>
         <div class="resource-card">
           <i class="ti ti-file-certificate" aria-hidden="true"></i>
-          <h3>Chinese Design Control guide</h3>
-          <p>A Chinese-language Design Control reference for teams building health, wellness, beauty, or medical device products.</p>
-          <a class="download-link" href="assets/design-control-cn.pdf" download>Free download <i class="ti ti-download" aria-hidden="true"></i></a>
+          <h3>中文 Design Control 指南</h3>
+          <p>一份中文 Design Control 参考资料，适合正在开发健康、Wellness、美容仪或医疗器械产品的团队。</p>
+          <a class="download-link" href="assets/design-control-cn.pdf" download>免费下载 <i class="ti ti-download" aria-hidden="true"></i></a>
         </div>
       </div>
     </div>

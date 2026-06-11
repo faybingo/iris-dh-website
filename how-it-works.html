@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>How It Works | IRIS Device & Health</title>
+<title>流程 | IRIS Device & Health</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -83,10 +83,9 @@
   .home-logo { height: 86px; width: auto; display: block; }
   .home-nav-links { display: flex; align-items: center; justify-content: center; gap: 18px; }
   .home-nav-actions { display: flex; align-items: center; justify-content: flex-end; }
-  .home-nav-links { display: flex; align-items: center; justify-content: center; gap: 18px; }
   .home-nav-link { font-size: 13px; color: var(--color-text-secondary); white-space: nowrap; text-decoration: none; }
   .home-nav-link:hover { color: var(--iris-blue); }
-  .lang-switch { display: inline-flex; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
+  .lang-switch { display: none; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
   .nav-lang { position: static; }
   .lang-btn { border: none; background: transparent; color: var(--color-text-secondary); font-family: var(--font-body); font-size: 12px; line-height: 1; padding: 7px 10px; cursor: pointer; }
   .lang-btn.active { background: var(--iris-blue); color: white; }
@@ -141,6 +140,11 @@
   .target-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
   .target-card h3 { font-size: 17px; color: var(--iris-navy); margin-bottom: 8px; }
   .target-card p { font-size: 13px; line-height: 1.6; color: var(--color-text-secondary); }
+  .pricing-table { max-width: 760px; margin: 0 auto; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: #FFFFFF; overflow: hidden; box-shadow: 0 18px 46px rgba(12,35,64,0.08); }
+  .pricing-row { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; padding: 18px 22px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .pricing-row:last-child { border-bottom: none; }
+  .pricing-service { font-size: 17px; color: var(--iris-navy); font-weight: 500; line-height: 1.4; }
+  .pricing-price { font-family: var(--font-display); font-size: 26px; color: #0A84FF; white-space: nowrap; }
   .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .resource-card { border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; padding: 24px; background: #FFFFFF; min-height: 210px; display: flex; flex-direction: column; align-items: flex-start; }
   .resource-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
@@ -265,27 +269,27 @@
 <body>
 <div class="home-nav-strip" style="padding:1.25rem 1.5rem;margin-bottom:0;">
     <a href="index.html"><img class="home-logo" src="assets/logo-large.png" alt="IRIS Device & Health" /></a>
-    <div class="home-nav-links" aria-label="Primary navigation">
-      <a class="home-nav-link" href="index.html">Home</a>
-      <a class="home-nav-link" href="services.html">Services</a>
-      <a class="home-nav-link" href="how-it-works.html" style="color:var(--iris-blue);font-weight:500;">How It Works</a>
-      <a class="home-nav-link" href="resources.html">Resources</a>
-      <a class="home-nav-link" href="pricing.html">Pricing</a>
-      <a class="home-nav-link" href="contact.html">Contact</a>
+    <div class="home-nav-links" aria-label="主导航">
+      <a class="home-nav-link" href="index.html">首页</a>
+      <a class="home-nav-link" href="services.html">服务</a>
+      <a class="home-nav-link" href="how-it-works.html" style="color:var(--iris-blue);font-weight:500;">流程</a>
+      <a class="home-nav-link" href="resources.html">资源</a>
+      <a class="home-nav-link" href="pricing.html">定价</a>
+      <a class="home-nav-link" href="contact.html">联系</a>
     </div>
     <div></div>
   </div>
 
   <div class="home-section">
     <div class="home-section-inner">
-      <div class="section-kicker">How It Works</div>
-      <h2 class="section-title">A five-step flow from product diagnosis to marketplace-ready plan.</h2>
+      <div class="section-kicker">流程</div>
+      <h2 class="section-title">从产品诊断到平台审核准备方案的五步流程。</h2>
       <div class="steps-grid">
-        <div class="step-card"><h3>Product diagnosis</h3><p>Answer seven guided questions about function, development stage, body contact, claims, software, production, and FDA history.</p></div>
-        <div class="step-card"><h3>Compliance route</h3><p>We map likely FDA and marketplace concerns so you know what needs attention first.</p></div>
-        <div class="step-card"><h3>Document checklist</h3><p>You receive a practical list of documents, labels, and proof points to prepare.</p></div>
-        <div class="step-card"><h3>Expert review</h3><p>A specialist can review the pathway and flag higher-risk claims or missing information.</p></div>
-        <div class="step-card"><h3>Marketplace-ready plan</h3><p>Use the action plan to prepare Amazon, TikTok, or Shopify review materials with less guessing.</p></div>
+        <div class="step-card"><h3>产品诊断</h3><p>回答 7 个引导式问题，涵盖产品功能、开发阶段、人体接触方式、产品声明、软件、生产方式和 FDA 相关历史。</p></div>
+        <div class="step-card"><h3>合规路径</h3><p>梳理可能的 FDA 和平台审核关注点，让你知道优先处理什么。</p></div>
+        <div class="step-card"><h3>材料清单</h3><p>获得需要准备的文件、标签和证明要点清单。</p></div>
+        <div class="step-card"><h3>专家审核</h3><p>专家可审核路径，并指出高风险声明或缺失信息。</p></div>
+        <div class="step-card"><h3>平台审核准备方案</h3><p>用清晰行动方案准备 Amazon、TikTok 或 Shopify 审核材料，减少反复猜测。</p></div>
       </div>
     </div>
   </div>

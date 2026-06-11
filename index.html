@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <style>
@@ -79,7 +79,7 @@
   .home-nav-actions { display: flex; align-items: center; justify-content: flex-end; }
   .home-nav-link { font-size: 13px; color: var(--color-text-secondary); white-space: nowrap; text-decoration: none; }
   .home-nav-link:hover { color: var(--iris-blue); }
-  .lang-switch { display: inline-flex; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
+  .lang-switch { display: none; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
   .nav-lang { position: static; }
   .lang-btn { border: none; background: transparent; color: var(--color-text-secondary); font-family: var(--font-body); font-size: 12px; line-height: 1; padding: 7px 10px; cursor: pointer; }
   .lang-btn.active { background: var(--iris-blue); color: white; }
@@ -134,6 +134,11 @@
   .target-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
   .target-card h3 { font-size: 17px; color: var(--iris-navy); margin-bottom: 8px; }
   .target-card p { font-size: 13px; line-height: 1.6; color: var(--color-text-secondary); }
+  .pricing-table { max-width: 760px; margin: 0 auto; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: #FFFFFF; overflow: hidden; box-shadow: 0 18px 46px rgba(12,35,64,0.08); }
+  .pricing-row { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; padding: 18px 22px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .pricing-row:last-child { border-bottom: none; }
+  .pricing-service { font-size: 17px; color: var(--iris-navy); font-weight: 500; line-height: 1.4; }
+  .pricing-price { font-family: var(--font-display); font-size: 26px; color: #0A84FF; white-space: nowrap; }
   .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .resource-card { border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; padding: 24px; background: #FFFFFF; min-height: 210px; display: flex; flex-direction: column; align-items: flex-start; }
   .resource-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
@@ -253,10 +258,6 @@
 <nav id="main-nav" style="display:none;">
   <div class="nav-logo"><img src="assets/logo-large.png" alt="IRIS Device & Health" /></div>
   <div class="nav-actions">
-    <div class="lang-switch nav-lang" aria-label="Language selector">
-      <button class="lang-btn active" data-lang="en" type="button" onclick="setLanguage('en')">EN</button>
-      <button class="lang-btn" data-lang="zh" type="button" onclick="setLanguage('zh')">中文</button>
-    </div>
     <div class="nav-user">
       <span id="nav-name"></span>
       <div class="nav-avatar" id="nav-avatar"></div>
@@ -273,19 +274,14 @@
     <div class="home-nav-strip">
       <img class="home-logo" src="assets/logo-large.png" alt="IRIS Device & Health" />
       <div class="home-nav-links" aria-label="Primary navigation">
-        <a class="home-nav-link" href="index.html">Home</a>
-        <a class="home-nav-link" href="services.html">Services</a>
-        <a class="home-nav-link" href="how-it-works.html">How It Works</a>
-        <a class="home-nav-link" href="resources.html">Resources</a>
-        <a class="home-nav-link" href="pricing.html">Pricing</a>
-        <a class="home-nav-link" href="contact.html">Contact</a>
+        <a class="home-nav-link" href="index.html">首页</a>
+        <a class="home-nav-link" href="services.html">服务</a>
+        <a class="home-nav-link" href="how-it-works.html">流程</a>
+        <a class="home-nav-link" href="resources.html">资源</a>
+        <a class="home-nav-link" href="pricing.html">定价</a>
+        <a class="home-nav-link" href="contact.html">联系</a>
       </div>
-      <div class="home-nav-actions">
-        <div class="lang-switch" aria-label="Language selector">
-          <button class="lang-btn active" data-lang="en" type="button" onclick="setLanguage('en')">EN</button>
-          <button class="lang-btn" data-lang="zh" type="button" onclick="setLanguage('zh')">中文</button>
-        </div>
-      </div>
+      <div class="home-nav-actions"></div>
     </div>
     <div class="hero-grid">
       <div class="hero-copy">
@@ -293,8 +289,8 @@
         <h1><span class="hero-title-line">Selling health products or medical devices in the U.S.?</span> <span class="hero-title-line">First confirm whether your product meets FDA requirements.</span></h1>
         <p>Helping Amazon, TikTok Shop, and Shopify sellers assess product classification, FDA requirements, labeling, and marketing-claim risks so listings are less likely to be rejected, removed, or challenged.</p>
         <div class="hero-cta-row">
-          <button class="btn-primary" onclick="goTo('s1')">Free product assessment <i class="ti ti-arrow-right"></i></button>
-          <button class="btn-outline" onclick="window.location.href='services.html'"><i class="ti ti-clipboard-list" aria-hidden="true"></i> See services</button>
+          <button class="btn-primary" onclick="window.location.href='pricing.html'">我的产品被下架了 <i class="ti ti-arrow-right"></i></button>
+          <button class="btn-outline" onclick="window.location.href='services.html'"><i class="ti ti-clipboard-list" aria-hidden="true"></i> 查看服务</button>
         </div>
         <div class="hero-visual">
           <div class="compliance-cockpit">
@@ -335,7 +331,7 @@
   </div>
   <div class="home-section" id="services">
     <div class="home-section-inner">
-      <div class="section-kicker">Services</div>
+      <div class="section-kicker">服务</div>
       <h2 class="section-title">Four core services for Amazon, TikTok, and Shopify health-product sellers.</h2>
       <div class="advantage-grid">
         <div class="advantage-card"><i class="ti ti-stethoscope" aria-hidden="true"></i><h3>FDA compliance navigation</h3><p>Clarify whether your product may be a medical device, what class it may fall into, and what FDA pathway to consider.</p></div>
@@ -347,7 +343,7 @@
   </div>
   <div class="home-section" id="how-it-works">
     <div class="home-section-inner">
-      <div class="section-kicker">How It Works</div>
+      <div class="section-kicker">流程</div>
       <h2 class="section-title">A five-step flow from product diagnosis to marketplace-ready plan.</h2>
       <div class="steps-grid">
         <div class="step-card"><h3>Product diagnosis</h3><p>Answer seven guided questions about function, development stage, body contact, claims, software, production, and FDA history.</p></div>
@@ -371,7 +367,7 @@
   </div>
   <div class="home-section" id="resources">
     <div class="home-section-inner">
-      <div class="section-kicker">Free Resources</div>
+      <div class="section-kicker">免费资源</div>
       <h2 class="section-title">Download free FDA compliance preparation guides.</h2>
       <div class="resource-grid">
         <div class="resource-card">
@@ -391,12 +387,14 @@
   </div>
   <div class="home-section" id="pricing">
     <div class="home-section-inner">
-      <div class="section-kicker">Pricing</div>
-      <h2 class="section-title">Start with a simple diagnosis, then add expert support when needed.</h2>
-      <div class="target-grid">
-        <div class="target-card"><i class="ti ti-sparkles" aria-hidden="true"></i><h3>Free diagnosis</h3><p>Complete the product questionnaire and get a preliminary AI-generated compliance direction.</p></div>
-        <div class="target-card"><i class="ti ti-user-check" aria-hidden="true"></i><h3>Expert review</h3><p>Submit your result for specialist review, classification feedback, and recommended next steps.</p></div>
-        <div class="target-card"><i class="ti ti-calendar" aria-hidden="true"></i><h3>Custom support</h3><p>Book consultation for urgent Amazon removals, TikTok Shop review issues, or launch planning.</p></div>
+      <div class="section-kicker">定价</div>
+      <h2 class="section-title">Amazon / 平台链接下架与 FDA 文件支持</h2>
+      <div class="pricing-table" aria-label="服务价格表">
+        <div class="pricing-row"><div class="pricing-service">Amazon要求FDA文件怎么办？</div><div class="pricing-price">$199</div></div>
+        <div class="pricing-row"><div class="pricing-service">Amazon邮件分析</div><div class="pricing-price">$199</div></div>
+        <div class="pricing-row"><div class="pricing-service">Listing下架原因分析</div><div class="pricing-price">$399</div></div>
+        <div class="pricing-row"><div class="pricing-service">申诉信专家审核</div><div class="pricing-price">$699</div></div>
+        <div class="pricing-row"><div class="pricing-service">申述服务全套</div><div class="pricing-price">from $999</div></div>
       </div>
     </div>
   </div>
@@ -406,7 +404,7 @@
         <h2>Ready to stop guessing about FDA compliance?</h2>
         <p>Start with the seven-question diagnosis and get a clearer route for your Amazon, TikTok, or Shopify health product.</p>
       </div>
-      <button class="btn-primary" onclick="goTo('s1')">Start now <i class="ti ti-arrow-right"></i></button>
+      <button class="btn-primary" onclick="window.location.href='pricing.html'">我的产品被下架了 <i class="ti ti-arrow-right"></i></button>
     </div>
   </div>
 </div>
@@ -699,7 +697,7 @@
 const STEPS = ['Register','Diagnosis','AI review','Payment','Classification','Registration','Labeling','Complete'];
 const SCREEN_STEP_MAP = {s1:0,s2:1,s3:2,s4:3,s5:4,s6:5,s7:6,s8:7};
 const PREV_SCREEN_MAP = {s1:'s0',s2:'s1',s3:'s2',s4:'s3',s5:'s4',s6:'s5',s7:'s6',s8:'s7'};
-let userData={}, qAnswers={}, qAnswerDetails={}, currentQ=0, aiClassResult=null, aiAnalysisReady=false, currentLang='en', registerMethod='email';
+let userData={}, qAnswers={}, qAnswerDetails={}, currentQ=0, aiClassResult=null, aiAnalysisReady=false, currentLang='zh', registerMethod='email';
 
 const ZH_TEXT = {
   'FDA 510(k) Compliance Platform':'FDA 510(k) 合规平台',

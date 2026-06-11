@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Services | IRIS Device & Health</title>
+<title>服务 | IRIS Device & Health</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -83,10 +83,9 @@
   .home-logo { height: 86px; width: auto; display: block; }
   .home-nav-links { display: flex; align-items: center; justify-content: center; gap: 18px; }
   .home-nav-actions { display: flex; align-items: center; justify-content: flex-end; }
-  .home-nav-links { display: flex; align-items: center; justify-content: center; gap: 18px; }
   .home-nav-link { font-size: 13px; color: var(--color-text-secondary); white-space: nowrap; text-decoration: none; }
   .home-nav-link:hover { color: var(--iris-blue); }
-  .lang-switch { display: inline-flex; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
+  .lang-switch { display: none; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-background-primary); }
   .nav-lang { position: static; }
   .lang-btn { border: none; background: transparent; color: var(--color-text-secondary); font-family: var(--font-body); font-size: 12px; line-height: 1; padding: 7px 10px; cursor: pointer; }
   .lang-btn.active { background: var(--iris-blue); color: white; }
@@ -141,6 +140,11 @@
   .target-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
   .target-card h3 { font-size: 17px; color: var(--iris-navy); margin-bottom: 8px; }
   .target-card p { font-size: 13px; line-height: 1.6; color: var(--color-text-secondary); }
+  .pricing-table { max-width: 760px; margin: 0 auto; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: #FFFFFF; overflow: hidden; box-shadow: 0 18px 46px rgba(12,35,64,0.08); }
+  .pricing-row { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; padding: 18px 22px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .pricing-row:last-child { border-bottom: none; }
+  .pricing-service { font-size: 17px; color: var(--iris-navy); font-weight: 500; line-height: 1.4; }
+  .pricing-price { font-family: var(--font-display); font-size: 26px; color: #0A84FF; white-space: nowrap; }
   .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .resource-card { border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; padding: 24px; background: #FFFFFF; min-height: 210px; display: flex; flex-direction: column; align-items: flex-start; }
   .resource-card i { color: var(--iris-blue); font-size: 24px; margin-bottom: 14px; display: block; }
@@ -265,26 +269,26 @@
 <body>
 <div class="home-nav-strip" style="padding:1.25rem 1.5rem;margin-bottom:0;">
     <a href="index.html"><img class="home-logo" src="assets/logo-large.png" alt="IRIS Device & Health" /></a>
-    <div class="home-nav-links" aria-label="Primary navigation">
-      <a class="home-nav-link" href="index.html">Home</a>
-      <a class="home-nav-link" href="services.html" style="color:var(--iris-blue);font-weight:500;">Services</a>
-      <a class="home-nav-link" href="how-it-works.html">How It Works</a>
-      <a class="home-nav-link" href="resources.html">Resources</a>
-      <a class="home-nav-link" href="pricing.html">Pricing</a>
-      <a class="home-nav-link" href="contact.html">Contact</a>
+    <div class="home-nav-links" aria-label="主导航">
+      <a class="home-nav-link" href="index.html">首页</a>
+      <a class="home-nav-link" href="services.html" style="color:var(--iris-blue);font-weight:500;">服务</a>
+      <a class="home-nav-link" href="how-it-works.html">流程</a>
+      <a class="home-nav-link" href="resources.html">资源</a>
+      <a class="home-nav-link" href="pricing.html">定价</a>
+      <a class="home-nav-link" href="contact.html">联系</a>
     </div>
     <div></div>
   </div>
 
   <div class="home-section">
     <div class="home-section-inner">
-      <div class="section-kicker">Services</div>
-      <h2 class="section-title">Four core services for Amazon, TikTok, and Shopify health-product sellers.</h2>
+      <div class="section-kicker">服务</div>
+      <h2 class="section-title">为 Amazon、TikTok Shop 和 Shopify 卖家提供四项核心合规支持。</h2>
       <div class="advantage-grid">
-        <div class="advantage-card"><i class="ti ti-stethoscope" aria-hidden="true"></i><h3>FDA compliance navigation</h3><p>Clarify whether your product may be a medical device, what class it may fall into, and what FDA pathway to consider.</p></div>
-        <div class="advantage-card"><i class="ti ti-file-description" aria-hidden="true"></i><h3>Marketplace document prep</h3><p>Prepare a practical document checklist for Amazon, TikTok Shop, or Shopify health-product listing reviews.</p></div>
-        <div class="advantage-card"><i class="ti ti-package" aria-hidden="true"></i><h3>Label and packaging review</h3><p>Review labels, packaging text, warnings, intended use language, and basic compliance gaps before launch.</p></div>
-        <div class="advantage-card"><i class="ti ti-ad" aria-hidden="true"></i><h3>Advertising claims check</h3><p>Identify risky disease, treatment, pain-relief, or medical-performance claims in listings, ads, and product pages.</p></div>
+        <div class="advantage-card"><i class="ti ti-stethoscope" aria-hidden="true"></i><h3>FDA 合规路径判断</h3><p>判断产品是否可能属于医疗器械、可能类别，以及需要考虑的 FDA 路径。</p></div>
+        <div class="advantage-card"><i class="ti ti-file-description" aria-hidden="true"></i><h3>平台审核材料准备</h3><p>为 Amazon、TikTok Shop 或 Shopify 健康产品审核准备实用材料清单。</p></div>
+        <div class="advantage-card"><i class="ti ti-package" aria-hidden="true"></i><h3>标签与包装审核</h3><p>上线前审核标签、包装文案、警告语、预期用途表述和基础合规缺口。</p></div>
+        <div class="advantage-card"><i class="ti ti-ad" aria-hidden="true"></i><h3>宣传语风险检查</h3><p>识别链接、广告和产品页中关于疾病、治疗、缓解疼痛或医疗效果的高风险声明。</p></div>
       </div>
     </div>
   </div>
