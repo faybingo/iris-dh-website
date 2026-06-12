@@ -2,6 +2,9 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRIS Device & Health | FDA 医疗器械合规</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -251,6 +254,144 @@
     .advantage-grid, .target-grid, .resource-grid, .steps-grid, .why-grid { grid-template-columns: 1fr; }
     .section-title, .home-band h2 { font-size: 28px; }
   }
+
+  .landing-page { min-height: 100vh; background: #FBFCFF; color: #071D3A; }
+  .landing-hero { position: relative; min-height: 760px; padding: 26px 32px 0; overflow: hidden; background: linear-gradient(105deg, rgba(255,255,255,0.96) 0%, rgba(249,252,255,0.92) 40%, rgba(238,234,226,0.74) 100%); }
+  .landing-hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.9) 42%, rgba(255,255,255,0.18) 72%, rgba(255,255,255,0.02) 100%), url("assets/home-hero-devices.png") right center / auto 100% no-repeat; pointer-events: none; }
+  .landing-hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; background: linear-gradient(to bottom, rgba(251,252,255,0), #FBFCFF 86%); pointer-events: none; }
+  .landing-nav, .landing-hero-content, .landing-trust-row { position: relative; z-index: 1; }
+  .landing-nav { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 210px minmax(0, 1fr) 250px; align-items: start; gap: 24px; }
+  .landing-logo { width: 170px; height: auto; display: block; }
+  .landing-nav-links { display: flex; justify-content: center; align-items: center; gap: 32px; padding-top: 20px; }
+  .landing-nav-links a { color: #071D3A; font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .landing-nav-links a:hover { color: #1E5DA8; }
+  .landing-nav-actions { display: flex; align-items: center; justify-content: flex-end; gap: 18px; padding-top: 4px; }
+  .nav-eval-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border-radius: 15px; background: #062452; color: #FFFFFF; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 16px 30px rgba(6,36,82,0.16); }
+  .nav-eval-btn:hover { background: #0B3672; }
+  .landing-lang { display: inline-flex; align-items: center; gap: 5px; color: #071D3A; font-size: 14px; padding-top: 14px; white-space: nowrap; }
+  .landing-hero-content { max-width: 1180px; margin: 88px auto 0; width: 100%; }
+  .landing-pill { display: inline-flex; align-items: center; height: 28px; padding: 0 14px; border-radius: 999px; background: rgba(7,29,58,0.08); color: #071D3A; font-size: 12px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; margin-bottom: 28px; }
+  .landing-hero h1 { font-family: var(--font-display); font-size: 68px; line-height: 1.05; color: #071D3A; letter-spacing: 0; margin-bottom: 26px; max-width: 620px; }
+  .landing-subtitle { max-width: 620px; font-size: 28px; line-height: 1.55; font-weight: 700; color: #071D3A; margin-bottom: 22px; }
+  .landing-divider { width: 46px; height: 2px; background: rgba(7,29,58,0.22); margin: 20px 0 22px; }
+  .landing-microcopy { color: rgba(7,29,58,0.58); font-size: 17px; font-weight: 600; letter-spacing: 4px; margin-bottom: 34px; }
+  .landing-cta-row { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  .landing-primary, .landing-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-width: 210px; min-height: 58px; padding: 0 30px; border-radius: 999px; font-size: 16px; font-weight: 800; text-decoration: none; transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease; }
+  .landing-primary { background: #062452; color: #FFFFFF; box-shadow: 0 18px 38px rgba(6,36,82,0.24); }
+  .landing-primary:hover, .landing-secondary:hover { transform: translateY(-1px); }
+  .landing-secondary { background: rgba(255,255,255,0.72); color: #071D3A; border: 1px solid rgba(7,29,58,0.36); }
+  .landing-trust-row { max-width: 1180px; margin: 122px auto 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 34px; padding-bottom: 34px; }
+  .trust-item { display: flex; align-items: center; justify-content: center; gap: 12px; color: #071D3A; font-size: 15px; font-weight: 700; }
+  .trust-item i { font-size: 26px; color: #071D3A; }
+  .landing-section { padding: 48px 32px; background: #FBFCFF; }
+  .landing-section.alt { background: linear-gradient(180deg, #FFFFFF 0%, #F6F9FD 100%); }
+  .landing-inner { max-width: 1180px; margin: 0 auto; }
+  .landing-section-title { text-align: center; font-family: var(--font-display); font-size: 30px; line-height: 1.2; color: #071D3A; margin-bottom: 30px; letter-spacing: 0; }
+  .client-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+  .client-card { min-height: 270px; padding: 34px; border-radius: 18px; background: linear-gradient(145deg, #FFFFFF 0%, #F3F7FC 100%); box-shadow: 0 24px 62px rgba(7,29,58,0.08); border: 1px solid rgba(7,29,58,0.06); }
+  .client-card.featured { background: linear-gradient(145deg, #082C63 0%, #021A3F 100%); color: #FFFFFF; box-shadow: 0 28px 68px rgba(6,36,82,0.26); }
+  .client-card i { display: block; font-size: 34px; margin-bottom: 24px; color: #071D3A; }
+  .client-card.featured i { color: #FFFFFF; }
+  .client-card h3 { font-size: 22px; color: inherit; margin-bottom: 18px; }
+  .client-card p { font-size: 16px; line-height: 1.75; color: rgba(7,29,58,0.72); margin-bottom: 24px; }
+  .client-card.featured p { color: rgba(255,255,255,0.82); }
+  .card-link { display: inline-flex; align-items: center; gap: 8px; color: inherit; font-size: 15px; font-weight: 800; text-decoration: none; }
+  .navigator-section { position: relative; overflow: hidden; padding: 58px 32px 24px; background: linear-gradient(100deg, #F7FBFF 0%, #FFFFFF 54%, #F0F4F8 100%); }
+  .navigator-section::after { content: ""; position: absolute; right: -60px; bottom: -44px; width: 430px; height: 260px; background: linear-gradient(145deg, #FFFFFF, #D9E3F0); border: 10px solid #172337; border-radius: 18px 18px 0 0; box-shadow: -22px 24px 52px rgba(7,29,58,0.13); transform: rotate(2deg); }
+  .navigator-layout { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; }
+  .navigator-layout h2 { font-family: var(--font-display); font-size: 32px; color: #071D3A; margin-bottom: 38px; }
+  .flow-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; max-width: 830px; }
+  .flow-step { position: relative; min-height: 150px; }
+  .flow-step:not(:last-child)::after { content: "→"; position: absolute; right: -11px; top: 34px; color: rgba(7,29,58,0.34); font-size: 24px; }
+  .flow-step i { font-size: 34px; color: #0A3B7A; margin-bottom: 16px; display: block; }
+  .flow-step h3 { font-size: 16px; color: #071D3A; margin-bottom: 10px; }
+  .flow-step p { color: rgba(7,29,58,0.62); font-size: 13px; line-height: 1.65; }
+  .why-panel { max-width: 1180px; margin: 0 auto; border-radius: 14px; background: linear-gradient(110deg, #021A3F 0%, #062E65 70%, #0B3E7F 100%); color: #FFFFFF; padding: 34px 42px; box-shadow: 0 26px 58px rgba(6,36,82,0.24); }
+  .why-panel h2 { text-align: center; font-family: var(--font-display); font-size: 30px; margin-bottom: 34px; }
+  .why-strip { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; }
+  .why-box { min-height: 150px; padding: 0 22px; text-align: center; border-left: 1px solid rgba(255,255,255,0.16); }
+  .why-box:first-child { border-left: none; }
+  .why-box i { font-size: 34px; margin-bottom: 18px; color: #FFFFFF; }
+  .why-box h3 { font-size: 17px; margin-bottom: 10px; color: #FFFFFF; }
+  .why-box p { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.74); }
+  .split-grid { display: grid; grid-template-columns: 1.2fr 0.9fr; gap: 34px; align-items: start; }
+  .case-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .case-card, .founder-card, .download-card, .newsletter-card { border: 1px solid rgba(7,29,58,0.06); border-radius: 14px; background: #FFFFFF; box-shadow: 0 18px 48px rgba(7,29,58,0.07); }
+  .case-card { overflow: hidden; }
+  .case-image { height: 118px; background: url("assets/home-hero-devices.png") center / cover no-repeat; }
+  .case-card:nth-child(1) .case-image { background-position: 71% center; }
+  .case-card:nth-child(2) .case-image { background-position: 60% center; }
+  .case-card:nth-child(3) .case-image { background-position: 83% center; }
+  .case-body { padding: 18px; }
+  .case-tag { display: inline-flex; padding: 4px 10px; border-radius: 999px; background: #EAF5FF; color: #0A3B7A; font-size: 11px; font-weight: 800; margin-bottom: 10px; }
+  .case-body h3 { font-size: 17px; color: #071D3A; margin-bottom: 8px; }
+  .case-body p { color: rgba(7,29,58,0.64); font-size: 13px; line-height: 1.65; margin-bottom: 12px; }
+  .case-body a { color: #082C63; font-size: 13px; font-weight: 800; text-decoration: none; }
+  .founder-card { display: grid; grid-template-columns: 180px 1fr; gap: 22px; padding: 28px; align-items: center; }
+  .founder-card img { width: 180px; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12px; background: #EDF2F8; }
+  .founder-card h3 { font-size: 24px; color: #071D3A; margin-bottom: 5px; }
+  .founder-card .role { color: rgba(7,29,58,0.58); font-size: 13px; margin-bottom: 16px; }
+  .founder-card ul { list-style: none; display: grid; gap: 10px; color: rgba(7,29,58,0.76); font-size: 14px; line-height: 1.55; }
+  .founder-card li::before { content: "•"; color: #082C63; font-weight: 900; margin-right: 8px; }
+  .download-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) 1.35fr; gap: 20px; }
+  .download-card { min-height: 170px; padding: 22px; text-align: center; }
+  .download-card i { font-size: 32px; color: #0A3B7A; margin-bottom: 16px; }
+  .download-card h3 { font-size: 15px; color: #071D3A; line-height: 1.35; margin-bottom: 10px; }
+  .download-card p { font-size: 12px; line-height: 1.5; color: rgba(7,29,58,0.58); margin-bottom: 14px; }
+  .download-card a { color: #082C63; font-size: 13px; font-weight: 800; text-decoration: none; }
+  .newsletter-card { padding: 26px; text-align: left; }
+  .newsletter-card h3 { font-size: 20px; color: #071D3A; margin-bottom: 10px; }
+  .newsletter-card p { color: rgba(7,29,58,0.62); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+  .newsletter-form { display: grid; gap: 10px; }
+  .newsletter-form input { height: 44px; border: 1px solid rgba(7,29,58,0.16); border-radius: 8px; padding: 0 12px; font-family: var(--font-body); }
+  .newsletter-form button { height: 44px; border: none; border-radius: 8px; background: #062452; color: #FFFFFF; font-family: var(--font-body); font-weight: 800; cursor: pointer; }
+  .bottom-cta { padding: 28px 32px 42px; background: #FBFCFF; }
+  .bottom-cta-panel { max-width: 1180px; margin: 0 auto; min-height: 138px; border-radius: 14px; padding: 30px 42px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; background: linear-gradient(105deg, #021A3F 0%, #082C63 70%, #0C3F7F 100%); color: #FFFFFF; box-shadow: 0 24px 54px rgba(6,36,82,0.22); }
+  .bottom-cta-panel h2 { font-family: var(--font-display); font-size: 34px; margin-bottom: 8px; }
+  .bottom-cta-panel p { color: rgba(255,255,255,0.76); font-size: 16px; }
+  .bottom-actions { display: flex; gap: 18px; }
+  .bottom-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 30px; border-radius: 999px; text-decoration: none; font-weight: 800; white-space: nowrap; }
+  .bottom-actions a:first-child { background: #FFFFFF; color: #062452; }
+  .bottom-actions a:last-child { color: #FFFFFF; border: 1px solid rgba(255,255,255,0.42); }
+
+  @media (max-width: 980px) {
+    .landing-hero { min-height: auto; padding: 22px 22px 36px; }
+    .landing-hero::before { background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.92) 55%, rgba(255,255,255,0.18) 100%), url("assets/home-hero-devices.png") center bottom / 120% auto no-repeat; }
+    .landing-nav { grid-template-columns: 160px 1fr; }
+    .landing-nav-links { display: none; }
+    .landing-nav-actions { grid-column: 2; }
+    .landing-hero-content { margin-top: 54px; padding-bottom: 330px; }
+    .landing-hero h1 { font-size: 54px; }
+    .landing-subtitle { font-size: 24px; }
+    .landing-trust-row, .client-grid, .flow-row, .why-strip, .split-grid, .case-grid, .download-grid, .bottom-cta-panel { grid-template-columns: 1fr; }
+    .navigator-section::after { opacity: 0.22; }
+    .flow-step:not(:last-child)::after { display: none; }
+    .why-box { border-left: none; border-top: 1px solid rgba(255,255,255,0.16); padding: 20px 0; }
+    .why-box:first-child { border-top: none; }
+    .founder-card { grid-template-columns: 150px 1fr; }
+    .bottom-actions { flex-wrap: wrap; }
+  }
+
+  @media (max-width: 560px) {
+    .landing-hero { padding: 18px 16px 28px; }
+    .landing-hero::before { background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.94) 50%, rgba(255,255,255,0.12) 100%), url("assets/home-hero-devices.png") center 78% / 178% auto no-repeat; }
+    .landing-nav { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .landing-logo { width: 122px; }
+    .landing-nav-actions { padding-top: 0; gap: 10px; }
+    .nav-eval-btn { min-height: 42px; padding: 0 14px; border-radius: 12px; font-size: 12px; }
+    .landing-lang { display: none; }
+    .landing-hero-content { margin-top: 46px; padding-bottom: 210px; }
+    .landing-hero h1 { font-size: 38px; }
+    .landing-subtitle { font-size: 21px; }
+    .landing-microcopy { font-size: 14px; letter-spacing: 2px; }
+    .landing-primary, .landing-secondary { width: 100%; }
+    .landing-trust-row { margin-top: 36px; gap: 16px; }
+    .landing-section, .navigator-section, .bottom-cta { padding-left: 16px; padding-right: 16px; }
+    .client-card, .why-panel, .founder-card, .bottom-cta-panel { padding: 24px; }
+    .founder-card { grid-template-columns: 1fr; }
+    .founder-card img { width: 100%; max-width: 220px; }
+    .bottom-actions a { width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -270,143 +411,204 @@
 
 <!-- ══ S0: LANDING ══ -->
 <div class="screen active" id="s0">
-  <div class="hero">
-    <div class="home-nav-strip">
-      <img class="home-logo" src="assets/logo-large.png" alt="IRIS Device & Health" />
-      <div class="home-nav-links" aria-label="Primary navigation">
-        <a class="home-nav-link" href="index.html">首页</a>
-        <a class="home-nav-link" href="services.html">服务</a>
-        <a class="home-nav-link" href="how-it-works.html">流程</a>
-        <a class="home-nav-link" href="resources.html">资源</a>
-        <a class="home-nav-link" href="pricing.html">定价</a>
-        <a class="home-nav-link" href="contact.html">联系</a>
-      </div>
-      <div class="home-nav-actions"></div>
-    </div>
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <div class="hero-tag"><i class="ti ti-shield-check" aria-hidden="true"></i> FDA Compliance for Marketplace Sellers</div>
-        <h1><span class="hero-title-line">Selling health products or medical devices in the U.S.?</span> <span class="hero-title-line">First confirm whether your product meets FDA requirements.</span></h1>
-        <p>Helping Amazon, TikTok Shop, and Shopify sellers assess product classification, FDA requirements, labeling, and marketing-claim risks so listings are less likely to be rejected, removed, or challenged.</p>
-        <div class="hero-cta-row">
-          <button class="btn-primary" onclick="window.location.href='pricing.html'">我的产品被下架了 <i class="ti ti-arrow-right"></i></button>
-          <button class="btn-outline" onclick="window.location.href='services.html'"><i class="ti ti-clipboard-list" aria-hidden="true"></i> 我要上架产品</button>
+  <main class="landing-page">
+    <section class="landing-hero">
+      <header class="landing-nav" aria-label="首页导航">
+        <a href="index.html" aria-label="IRIS Device & Health 首页"><img class="landing-logo" src="assets/logo-large.png" alt="IRIS Device & Health" /></a>
+        <nav class="landing-nav-links" aria-label="主导航">
+          <a href="index.html">首页</a>
+          <a href="services.html">服务</a>
+          <a href="how-it-works.html">流程</a>
+          <a href="resources.html">资源</a>
+          <a href="pricing.html">定价</a>
+          <a href="contact.html">联系我们</a>
+        </nav>
+        <div class="landing-nav-actions">
+          <a class="nav-eval-btn" href="pricing.html">免费 3 分钟评估</a>
+          <span class="landing-lang">中文 <i class="ti ti-chevron-down" aria-hidden="true"></i></span>
         </div>
-        <div class="hero-visual">
-          <div class="compliance-cockpit">
-            <div class="question-roller" aria-label="常见 FDA 和 Amazon 合规问题">
-              <div class="question-roller-head"><i class="ti ti-message-question" aria-hidden="true"></i> 你有这些问题吗？</div>
-              <div class="question-window">
-                <div class="question-track">
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What should we do if our product was removed by Amazon?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>We have a 510(k), but Amazon still will not approve us. What can we do?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>How do I register a massager with FDA?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What is the registration process for a beauty device?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What class is a knee brace, and how do we register it?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What documents are needed to list a blood pressure monitor on Amazon?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What should we do if our product was removed by Amazon?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>We have a 510(k), but Amazon still will not approve us. What can we do?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>How do I register a massager with FDA?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What is the registration process for a beauty device?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What class is a knee brace, and how do we register it?</span></div>
-                  <div class="question-item"><i class="ti ti-chevron-right" aria-hidden="true"></i><span>What documents are needed to list a blood pressure monitor on Amazon?</span></div>
-                </div>
+      </header>
+
+      <div class="landing-hero-content">
+        <div class="landing-pill">FDA Compliance Navigator</div>
+        <h1>卖医疗器械到美国？</h1>
+        <p class="landing-subtitle">我们协助您了解适用于您产品的 FDA 及其他要求，并指导您完成合规流程。</p>
+        <div class="landing-divider"></div>
+        <p class="landing-microcopy">降低合规风险 · 加速上市 · 专注增长</p>
+        <div class="landing-cta-row">
+          <a class="landing-primary" href="pricing.html">免费 3 分钟评估 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+          <a class="landing-secondary" href="services.html">了解我们的服务</a>
+        </div>
+      </div>
+
+      <div class="landing-trust-row" aria-label="服务特点">
+        <div class="trust-item"><i class="ti ti-building-bank" aria-hidden="true"></i><span>专注 FDA 医疗器械合规</span></div>
+        <div class="trust-item"><i class="ti ti-world" aria-hidden="true"></i><span>中英文双语服务</span></div>
+        <div class="trust-item"><i class="ti ti-flag-3" aria-hidden="true"></i><span>美国本土团队</span></div>
+        <div class="trust-item"><i class="ti ti-clock" aria-hidden="true"></i><span>48 小时初步反馈</span></div>
+      </div>
+    </section>
+
+    <section class="landing-section">
+      <div class="landing-inner">
+        <h2 class="landing-section-title">我们服务的客户</h2>
+        <div class="client-grid">
+          <article class="client-card featured">
+            <i class="ti ti-shopping-cart" aria-hidden="true"></i>
+            <h3>Amazon / TikTok 卖家</h3>
+            <p>产品上架与平台审核，收到 FDA 文件要求，Listing 被限制或下架，不确定产品是否合规。</p>
+            <a class="card-link" href="pricing.html">了解更多 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+          </article>
+          <article class="client-card">
+            <i class="ti ti-world" aria-hidden="true"></i>
+            <h3>跨境品牌</h3>
+            <p>进入美国市场，是否需要 FDA 注册，是否需要 US Agent，如何完成 Listing 合规。</p>
+            <a class="card-link" href="services.html">了解更多 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+          </article>
+          <article class="client-card">
+            <i class="ti ti-rocket" aria-hidden="true"></i>
+            <h3>医疗器械创业公司</h3>
+            <p>产品分类与上市路径，QMS 建立与优化，510(k) / De Novo / PMA，缺乏专职 RA/QA 团队。</p>
+            <a class="card-link" href="contact.html">了解更多 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="navigator-section">
+      <div class="navigator-layout">
+        <h2>FDA Compliance Navigator 如何帮助您</h2>
+        <div class="flow-row">
+          <article class="flow-step">
+            <i class="ti ti-upload" aria-hidden="true"></i>
+            <h3>提交产品信息</h3>
+            <p>回答几个问题，上传产品资料与图片。</p>
+          </article>
+          <article class="flow-step">
+            <i class="ti ti-cpu" aria-hidden="true"></i>
+            <h3>AI 初步评估</h3>
+            <p>基于 FDA 法规与数据库进行风险初步判断。</p>
+          </article>
+          <article class="flow-step">
+            <i class="ti ti-user-check" aria-hidden="true"></i>
+            <h3>专家法规诊断</h3>
+            <p>资深法规专家人工审核并提供专业意见。</p>
+          </article>
+          <article class="flow-step">
+            <i class="ti ti-file-analytics" aria-hidden="true"></i>
+            <h3>合规行动建议</h3>
+            <p>获得详细报告与下一步行动方案。</p>
+          </article>
+          <article class="flow-step">
+            <i class="ti ti-checkup-list" aria-hidden="true"></i>
+            <h3>持续支持</h3>
+            <p>协助准备平台回复、标签和文件清单。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-section alt">
+      <div class="why-panel">
+        <h2>为什么企业选择 IRIS Device & Health</h2>
+        <div class="why-strip">
+          <div class="why-box"><i class="ti ti-shield-check" aria-hidden="true"></i><h3>专注 FDA 医疗器械合规</h3><p>深耕法规要求与合规实务。</p></div>
+          <div class="why-box"><i class="ti ti-users" aria-hidden="true"></i><h3>服务全球客户</h3><p>中英文双语支持，适配不同时区需求。</p></div>
+          <div class="why-box"><i class="ti ti-flag-3" aria-hidden="true"></i><h3>美国本土团队</h3><p>位于洛杉矶，了解本地法规与市场。</p></div>
+          <div class="why-box"><i class="ti ti-brain" aria-hidden="true"></i><h3>AI + 专家双重保障</h3><p>科技提升效率，专家确保落地合规。</p></div>
+          <div class="why-box"><i class="ti ti-circle-check" aria-hidden="true"></i><h3>标准化服务流程</h3><p>清晰透明的流程，确保高质量交付。</p></div>
+          <div class="why-box"><i class="ti ti-bolt" aria-hidden="true"></i><h3>48 小时初步反馈</h3><p>快速响应，助您抢占市场先机。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-section">
+      <div class="landing-inner split-grid">
+        <div>
+          <h2 class="landing-section-title" style="text-align:left;">客户案例（部分）</h2>
+          <div class="case-grid">
+            <article class="case-card">
+              <div class="case-image" role="img" aria-label="红光美容仪案例"></div>
+              <div class="case-body">
+                <span class="case-tag">Amazon 卖家</span>
+                <h3>红光美容仪</h3>
+                <p>问题：Amazon 要求 FDA 文件。结果：确认产品分类路径，制定合规方案。</p>
+                <a href="services.html">查看详情 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
               </div>
-            </div>
+            </article>
+            <article class="case-card">
+              <div class="case-image" role="img" aria-label="筋膜枪案例"></div>
+              <div class="case-body">
+                <span class="case-tag">跨境品牌</span>
+                <h3>筋膜枪</h3>
+                <p>问题：不确定是否需要注册。结果：判断分类与标签风险。</p>
+                <a href="services.html">查看详情 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+              </div>
+            </article>
+            <article class="case-card">
+              <div class="case-image" role="img" aria-label="医用级监测设备案例"></div>
+              <div class="case-body">
+                <span class="case-tag">创业公司</span>
+                <h3>医用级监测设备</h3>
+                <p>问题：缺乏合规体系支持。结果：确定注册路径与资料清单。</p>
+                <a href="services.html">查看详情 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+              </div>
+            </article>
           </div>
         </div>
+
+        <aside class="founder-card">
+          <img src="assets/founder-iris.png" alt="Iris Wang 创始人头像" />
+          <div>
+            <h3>Iris Wang</h3>
+            <div class="role">Founder & Regulatory Affairs Expert</div>
+            <ul>
+              <li>USC Regulatory Science 背景</li>
+              <li>10+ 年医疗器械法规与质量体系经验</li>
+              <li>熟悉 FDA 法规与美国市场准入要求</li>
+              <li>帮助数百家企业成功合规并进入美国市场</li>
+            </ul>
+          </div>
+        </aside>
       </div>
-    </div>
-  </div>
-  <div class="home-section" id="customers">
-    <div class="home-section-inner">
-      <div class="section-kicker">Who we help</div>
-      <h2 class="section-title">Built for sellers who need health-product compliance explained clearly.</h2>
-      <div class="target-grid">
-        <div class="target-card"><i class="ti ti-brand-amazon" aria-hidden="true"></i><h3>Amazon sellers</h3><p>For massagers, beauty devices, waist supports, posture correctors, sleep products, and health listings under Amazon review.</p></div>
-        <div class="target-card"><i class="ti ti-brand-tiktok" aria-hidden="true"></i><h3>TikTok sellers</h3><p>For Beauty Device and Wellness Device sellers preparing TikTok Shop review, product claims, and ad materials.</p></div>
-        <div class="target-card"><i class="ti ti-building-store" aria-hidden="true"></i><h3>Chinese founders</h3><p>For first-time brand builders who need FDA, Amazon, label, packaging, and advertising compliance translated into next steps.</p></div>
-      </div>
-    </div>
-  </div>
-  <div class="home-section" id="services">
-    <div class="home-section-inner">
-      <div class="section-kicker">服务</div>
-      <h2 class="section-title">Four core services for Amazon, TikTok, and Shopify health-product sellers.</h2>
-      <div class="advantage-grid">
-        <div class="advantage-card"><i class="ti ti-stethoscope" aria-hidden="true"></i><h3>FDA compliance navigation</h3><p>Clarify whether your product may be a medical device, what class it may fall into, and what FDA pathway to consider.</p></div>
-        <div class="advantage-card"><i class="ti ti-file-description" aria-hidden="true"></i><h3>Marketplace document prep</h3><p>Prepare a practical document checklist for Amazon, TikTok Shop, or Shopify health-product listing reviews.</p></div>
-        <div class="advantage-card"><i class="ti ti-package" aria-hidden="true"></i><h3>Label and packaging review</h3><p>Review labels, packaging text, warnings, intended use language, and basic compliance gaps before launch.</p></div>
-        <div class="advantage-card"><i class="ti ti-ad" aria-hidden="true"></i><h3>Advertising claims check</h3><p>Identify risky disease, treatment, pain-relief, or medical-performance claims in listings, ads, and product pages.</p></div>
-      </div>
-    </div>
-  </div>
-  <div class="home-section" id="how-it-works">
-    <div class="home-section-inner">
-      <div class="section-kicker">流程</div>
-      <h2 class="section-title">A five-step flow from product diagnosis to marketplace-ready plan.</h2>
-      <div class="steps-grid">
-        <div class="step-card"><h3>Product diagnosis</h3><p>Answer seven guided questions about function, development stage, body contact, claims, software, production, and FDA history.</p></div>
-        <div class="step-card"><h3>Compliance route</h3><p>We map likely FDA and marketplace concerns so you know what needs attention first.</p></div>
-        <div class="step-card"><h3>Document checklist</h3><p>You receive a practical list of documents, labels, and proof points to prepare.</p></div>
-        <div class="step-card"><h3>Expert review</h3><p>A specialist can review the pathway and flag higher-risk claims or missing information.</p></div>
-        <div class="step-card"><h3>Marketplace-ready plan</h3><p>Use the action plan to prepare Amazon, TikTok, or Shopify review materials with less guessing.</p></div>
-      </div>
-    </div>
-  </div>
-  <div class="home-section">
-    <div class="home-section-inner">
-      <div class="section-kicker">Why IRIS</div>
-      <h2 class="section-title">Why sellers choose us before listings get blocked.</h2>
-      <div class="why-grid">
-        <div class="why-item"><i class="ti ti-language" aria-hidden="true"></i><div><h3>Bilingual clarity</h3><p>Explain FDA and marketplace requirements in both English and Chinese for cross-border teams.</p></div></div>
-        <div class="why-item"><i class="ti ti-shopping-cart-check" aria-hidden="true"></i><div><h3>Marketplace-aware</h3><p>Focus on the real Amazon and TikTok review problems sellers face, not just theory.</p></div></div>
-        <div class="why-item"><i class="ti ti-route" aria-hidden="true"></i><div><h3>Action-first guidance</h3><p>Turn broad compliance questions into a concrete next-step route for your product.</p></div></div>
-      </div>
-    </div>
-  </div>
-  <div class="home-section" id="resources">
-    <div class="home-section-inner">
-      <div class="section-kicker">免费资源</div>
-      <h2 class="section-title">Download free FDA compliance preparation guides.</h2>
-      <div class="resource-grid">
-        <div class="resource-card">
-          <i class="ti ti-file-check" aria-hidden="true"></i>
-          <h3>FDA inspection and compliance readiness checklist</h3>
-          <p>A Chinese self-check worksheet for preparing FDA inspection and compliance basics before platform or regulatory review.</p>
-          <a class="download-link" href="assets/fda-inspection-compliance-checklist.pdf" download>Free download <i class="ti ti-download" aria-hidden="true"></i></a>
-        </div>
-        <div class="resource-card">
-          <i class="ti ti-file-certificate" aria-hidden="true"></i>
-          <h3>Chinese Design Control guide</h3>
-          <p>A Chinese-language Design Control reference for teams building health, wellness, beauty, or medical device products.</p>
-          <a class="download-link" href="assets/design-control-cn.pdf" download>Free download <i class="ti ti-download" aria-hidden="true"></i></a>
+    </section>
+
+    <section class="landing-section alt">
+      <div class="landing-inner">
+        <h2 class="landing-section-title" style="text-align:left;margin-bottom:8px;">免费资源下载</h2>
+        <p style="color:rgba(7,29,58,0.62);font-size:17px;margin-bottom:28px;">实用合规工具与清单，助您迈出合规第一步</p>
+        <div class="download-grid">
+          <article class="download-card"><i class="ti ti-list-check" aria-hidden="true"></i><h3>ISO13485 启动清单</h3><p>Startup Checklist</p><a href="assets/fda-inspection-compliance-checklist.pdf" download>免费下载 →</a></article>
+          <article class="download-card"><i class="ti ti-user-shield" aria-hidden="true"></i><h3>风险管理清单</h3><p>Risk Management Checklist</p><a href="assets/fda-inspection-compliance-checklist.pdf" download>免费下载 →</a></article>
+          <article class="download-card"><i class="ti ti-rosette-discount-check" aria-hidden="true"></i><h3>供应商评估清单</h3><p>Supplier Qualification Checklist</p><a href="assets/fda-inspection-compliance-checklist.pdf" download>免费下载 →</a></article>
+          <article class="download-card"><i class="ti ti-building-warehouse" aria-hidden="true"></i><h3>内部审核清单</h3><p>Internal Audit Checklist</p><a href="assets/design-control-cn.pdf" download>免费下载 →</a></article>
+          <article class="download-card"><i class="ti ti-file-search" aria-hidden="true"></i><h3>FDA 检查准备清单</h3><p>FDA Inspection Readiness</p><a href="assets/fda-inspection-compliance-checklist.pdf" download>免费下载 →</a></article>
+          <article class="newsletter-card">
+            <h3>订阅合规资讯</h3>
+            <p>获取最新法规更新、平台政策和合规实用建议。</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="输入您的邮箱" aria-label="邮箱" />
+              <button type="button">订阅</button>
+            </form>
+            <p style="font-size:12px;margin-top:10px;margin-bottom:0;">我们尊重您的隐私，绝不骚扰。</p>
+          </article>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="home-section" id="pricing">
-    <div class="home-section-inner">
-      <div class="section-kicker">定价</div>
-      <h2 class="section-title">Amazon / 平台链接下架与 FDA 文件支持</h2>
-      <div class="pricing-table" aria-label="服务价格表">
-        <div class="pricing-row"><div class="pricing-service">Amazon要求FDA文件怎么办？</div><div class="pricing-price">$199</div></div>
-        <div class="pricing-row"><div class="pricing-service">Amazon邮件分析</div><div class="pricing-price">$199</div></div>
-        <div class="pricing-row"><div class="pricing-service">Listing下架原因分析</div><div class="pricing-price">$399</div></div>
-        <div class="pricing-row"><div class="pricing-service">申诉信专家审核</div><div class="pricing-price">$699</div></div>
-        <div class="pricing-row"><div class="pricing-service">申述服务全套</div><div class="pricing-price">from $999</div></div>
+    </section>
+
+    <section class="bottom-cta">
+      <div class="bottom-cta-panel">
+        <div>
+          <h2>准备了解您的产品适用哪些 FDA 要求？</h2>
+          <p>免费评估，专业建议，助您合规进入美国市场。</p>
+        </div>
+        <div class="bottom-actions">
+          <a href="pricing.html">免费 3 分钟评估 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+          <a href="contact.html">联系我们</a>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="home-band" id="contact">
-    <div class="home-band-inner">
-      <div>
-        <h2>Ready to stop guessing about FDA compliance?</h2>
-        <p>Start with the seven-question diagnosis and get a clearer route for your Amazon, TikTok, or Shopify health product.</p>
-      </div>
-      <button class="btn-primary" onclick="window.location.href='pricing.html'">我的产品被下架了 <i class="ti ti-arrow-right"></i></button>
-    </div>
-  </div>
+    </section>
+  </main>
 </div>
 
 <!-- ══ S1: REGISTER ══ -->
