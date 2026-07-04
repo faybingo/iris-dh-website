@@ -1552,17 +1552,29 @@ async function runAIAnalysis() {
   aiAnalysisReady=false;
   document.getElementById('proceed-to-payment').style.display='none';
   addUserSummary(area); addTyping(area);
-  await new Promise(r=>setTimeout(r,2200));
-  aiClassResult='I';
+  let analysisText = '';
+  try {
+    const response = await fetch('/api/assessment', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({answers: buildAssessmentAnswers()})
+    });
+    const data = await response.json();
+    if(!response.ok) throw new Error(data.error || 'AI 分析暂时不可用');
+    analysisText = data.analysis || '';
+  } catch (error) {
+    analysisText = `**GPT 连接暂时不可用，以下为本地备用初步评估。**\n\n${getFallback()}\n\n**技术提示：** ${error.message || '请稍后重试。'}`;
+  }
+  aiClassResult=extractClass(analysisText);
   aiAnalysisReady=true;
-  renderAIAnalysisResult();
+  renderAIAnalysisResult(analysisText);
 }
 
-function renderAIAnalysisResult() {
+function renderAIAnalysisResult(analysisText) {
   const area=document.getElementById('ai-chat-area');
   area.innerHTML='';
   addUserSummary(area);
-  addAIMsg(area,getFallback());
+  addAIMsg(area,analysisText || getFallback());
   document.getElementById('proceed-to-payment').style.display='block';
   localizePage();
 }
@@ -1579,18 +1591,26 @@ function addUserSummary(area){
 }
 function addTyping(area){
   const d=document.createElement('div'); d.className='ai-bubble-wrap'; d.id='typing-indicator';
-  d.innerHTML=`<div class="ai-icon"><i class="ti ti-brain" aria-hidden="true"></i></div><div class="ai-bubble" style="display:flex;align-items:center;gap:4px;min-height:40px;"><span style="font-size:12px;color:var(--color-text-secondary);margin-right:4px;">${t('Analyzing your device')}</span><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  d.innerHTML=`<div class="ai-icon"><i class="ti ti-brain" aria-hidden="true"></i></div><div class="ai-bubble" style="display:flex;align-items:center;gap:4px;min-height:40px;"><span style="font-size:12px;color:var(--color-text-secondary);margin-right:4px;">正在连接 GPT 生成分析</span><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
   area.appendChild(d);
 }
 function removeTyping(area){const t=document.getElementById('typing-indicator');if(t)t.remove();}
 function addAIMsg(area,text){
   const d=document.createElement('div'); d.className='ai-bubble-wrap';
-  const fmt=text.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  const fmt=escapeHtml(text).replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
   d.innerHTML=`<div class="ai-icon"><i class="ti ti-brain" aria-hidden="true"></i></div><div class="ai-bubble"><p>${fmt}</p></div>`;
   area.appendChild(d);
 }
 function buildPrompt(){return getActiveQuestions().map(q=>`${q.stage}: ${formatAnswer(q)||'?'}`).join('\n');}
-function extractClass(t){if(/class\s*iii/i.test(t))return'III';if(/class\s*ii/i.test(t))return'II';return'I';}
+function buildAssessmentAnswers(){
+  return Object.fromEntries(getActiveQuestions().map(q => [q.stage, formatAnswer(q) || '未回答']));
+}
+function extractClass(t){
+  if(/第\s*(3|III)\s*类|第三类|class\s*iii|class\s*3/i.test(t))return'III';
+  if(/第\s*(2|II)\s*类|第二类|class\s*ii|class\s*2/i.test(t))return'II';
+  if(/第\s*(1|I)\s*类|第一类|class\s*i|class\s*1/i.test(t))return'I';
+  return'I';
+}
 function getFallback(){
   const risk = estimateRisk();
   const urgentSignal = qAnswers.compliance_foundation === '产品被下架，需要紧急处理';
@@ -1599,7 +1619,7 @@ function getFallback(){
     : '目前未显示明确下架信号，但上架前仍建议确认标签、产品声明和平台文件要求。';
   const special = hasSpecialPopulationSignal() ? '\n• 产品信息中出现儿童、婴儿、孕妇或老人等特殊人群信号，风险等级建议上调一级。' : '';
   const urgent = urgentSignal ? '\n• 如链接已被限制或下架，建议优先分析平台邮件和 Listing 下架原因。' : '';
-  return`**免费初步评估：${risk.label}**\n\n根据您提交的信息，系统识别到以下合规方向。此结果用于帮助您判断下一步优先级，不构成法律意见或 FDA 最终分类结论。\n\n**主要判断依据：**\n• 产品功能：${formatAnswer(BASE_QUESTIONS.find(q => q.id === 'product_function')) || '待核实'}\n• 人体接触情况：${formatAnswer(BASE_QUESTIONS.find(q => q.id === 'body_contact')) || '待核实'}\n• 宣称强度：${qAnswers.product_claims || '待核实'}\n• 现有 FDA 基础：${formatAnswer(BASE_QUESTIONS.find(q => q.id === 'compliance_foundation')) || '待核实'}${special}${urgent}\n\n**FDA 方向提示：**\n${risk.fda}\n\n**Amazon / TikTok / Shopify 平台风险：**\n${platformLine}\n\n**建议下一步：**\n• 保存这份初步结果，整理产品链接、标签、包装和平台通知邮件。\n• 在正式上架或回复平台前，建议进行人工复核，确认产品分类、FDA 注册方向、标签和宣传语风险。\n• 如果产品涉及软件、强医疗宣称或平台下架通知，建议直接预约法规顾问评估。`;
+  return`**初步判断：暂无法判断具体类别，需要 GPT 或人工法规顾问确认**\n\n**免费初步评估：${risk.label}**\n\n根据您提交的信息，系统识别到以下合规方向。此结果用于帮助您判断下一步优先级，不构成法律意见或 FDA 最终分类结论。\n\n**主要判断依据：**\n• 产品功能：${formatAnswer(BASE_QUESTIONS.find(q => q.id === 'product_function')) || '待核实'}\n• 人体接触情况：${formatAnswer(BASE_QUESTIONS.find(q => q.id === 'body_contact')) || '待核实'}\n• 宣称强度：${qAnswers.product_claims || '待核实'}\n• 现有 FDA 基础：${formatAnswer(BASE_QUESTIONS.find(q => q.id === 'compliance_foundation')) || '待核实'}${special}${urgent}\n\n**FDA 方向提示：**\n${risk.fda}\n\n**Amazon / TikTok / Shopify 平台风险：**\n${platformLine}\n\n**建议下一步：**\n• 保存这份初步结果，整理产品链接、标签、包装和平台通知邮件。\n• 在正式上架或回复平台前，建议进行人工复核，确认产品分类、FDA 注册方向、标签和宣传语风险。\n• 如果产品涉及软件、强医疗宣称或平台下架通知，建议直接预约法规顾问评估。`;
 }
 
 function estimateRisk(){
