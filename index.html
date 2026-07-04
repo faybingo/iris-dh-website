@@ -190,6 +190,27 @@
   .q-option { padding: 10px 14px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); cursor: pointer; font-size: 13px; transition: all 0.15s; background: var(--color-background-primary); color: var(--color-text-primary); }
   .q-option:hover { border-color: var(--color-border-info); background: #E6F1FB; }
   .q-option.selected { border-color: var(--iris-blue); background: #E6F1FB; color: var(--iris-blue); font-weight: 500; }
+  .assessment-screen { min-height: 100vh; background: linear-gradient(135deg, #F6FAFF 0%, #EEF5FF 45%, #E8F7F1 100%); }
+  .assessment-wrap { max-width: 760px; padding-top: 2rem; }
+  .assessment-logo { display: block; width: 132px; height: auto; margin: 0 auto 1.5rem; }
+  .assessment-wrap .page-header { text-align: center; margin-bottom: 1.5rem; }
+  .assessment-wrap .page-header h2 { font-family: var(--font-display); font-size: 34px; line-height: 1.15; color: var(--iris-navy); }
+  .assessment-wrap .page-header p { max-width: 560px; margin: 0.5rem auto 0; line-height: 1.65; }
+  .assessment-wrap .card { border-radius: 18px; border: 1px solid rgba(7,29,58,0.08); box-shadow: 0 24px 58px rgba(7,29,58,0.08); }
+  .assessment-stage { display: inline-flex; align-items: center; gap: 8px; padding: 5px 11px; border-radius: 999px; background: rgba(6,36,82,0.08); color: #062452; font-size: 11px; font-weight: 800; letter-spacing: 0.3px; margin-bottom: 12px; }
+  .assessment-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: rgba(7,29,58,0.6); font-size: 12px; margin-bottom: 10px; }
+  .assessment-wrap .q-text { font-size: 20px; line-height: 1.45; color: #071D3A; margin-bottom: 18px; }
+  .assessment-wrap .q-option { border-radius: 14px; padding: 14px 16px; font-size: 15px; line-height: 1.45; border-color: rgba(7,29,58,0.12); }
+  .assessment-wrap .q-option.selected { border-color: #062452; background: #EFF6FF; color: #062452; box-shadow: inset 0 0 0 1px rgba(6,36,82,0.1); }
+  .assessment-input, .assessment-textarea { width: 100%; border: 1px solid rgba(7,29,58,0.14); border-radius: 14px; background: #FFFFFF; color: #071D3A; font-family: var(--font-body); font-size: 15px; line-height: 1.55; padding: 14px 16px; outline: none; }
+  .assessment-textarea { min-height: 118px; resize: vertical; }
+  .assessment-input:focus, .assessment-textarea:focus { border-color: #062452; box-shadow: 0 0 0 3px rgba(6,36,82,0.1); }
+  .assessment-hint { margin-top: 10px; color: rgba(7,29,58,0.58); font-size: 12px; line-height: 1.55; }
+  .assessment-upload-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .assessment-actions { display: flex; gap: 12px; }
+  .assessment-actions .btn-outline, .assessment-actions .btn-primary { min-height: 54px; border-radius: 999px; font-weight: 800; }
+  .assessment-actions .btn-primary { background: #062452; }
+  .assessment-wrap .progress-bar-fill { background: #062452; }
 
   .ai-bubble-wrap { display: flex; gap: 10px; margin-bottom: 1rem; }
   .ai-icon { width: 28px; height: 28px; border-radius: 50%; background: #E1F5EE; color: var(--iris-teal); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; }
@@ -434,7 +455,7 @@
         <div class="landing-divider"></div>
         <p class="landing-microcopy">降低合规风险 · 加速上市 · 专注增长</p>
         <div class="landing-cta-row">
-          <a class="landing-primary" href="pricing.html">免费 3 分钟评估 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+          <a class="landing-primary" href="#free-assessment" onclick="startFreeAssessment(event)">免费 3 分钟评估 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
           <a class="landing-secondary" href="services.html">了解我们的服务</a>
         </div>
       </div>
@@ -603,7 +624,7 @@
           <p>免费评估，专业建议，助您合规进入美国市场。</p>
         </div>
         <div class="bottom-actions">
-          <a href="pricing.html">免费 3 分钟评估 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+          <a href="#free-assessment" onclick="startFreeAssessment(event)">免费 3 分钟评估 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
           <a href="contact.html">联系我们</a>
         </div>
       </div>
@@ -667,36 +688,38 @@
 </div>
 
 <!-- ══ S2: QUESTIONNAIRE ══ -->
-<div class="screen" id="s2">
-  <div class="page-wrap">
+<div class="screen assessment-screen" id="s2">
+  <div class="page-wrap assessment-wrap">
+    <img class="assessment-logo" src="assets/logo-large.png" alt="IRIS Device & Health" />
     <div class="back-bar">
-      <button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+      <button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> 返回首页</button>
     </div>
     <div class="page-header">
-      <h2>Product diagnosis</h2>
-      <p>Answer a few questions so our AI can classify your device</p>
+      <h2>免费 3 分钟评估</h2>
+      <p>回答几个问题，我们会初步判断您的产品 FDA 与平台合规风险方向。</p>
     </div>
     <div class="progress-bar-wrap"><div class="progress-bar-fill" id="q-progress" style="width:0%"></div></div>
     <div class="card" id="q-container"></div>
-    <div style="display:flex;gap:10px;">
-      <button class="btn-outline" id="q-back-btn" onclick="qPrev()" style="flex:1;"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
-      <button class="btn-primary" id="q-next-btn" onclick="qNext()" style="flex:2;">Next <i class="ti ti-arrow-right"></i></button>
+    <div class="assessment-actions">
+      <button class="btn-outline" id="q-back-btn" onclick="qPrev()" style="flex:1;"><i class="ti ti-arrow-left" aria-hidden="true"></i> 上一步</button>
+      <button class="btn-primary" id="q-next-btn" onclick="qNext()" style="flex:2;">下一步 <i class="ti ti-arrow-right"></i></button>
     </div>
   </div>
 </div>
 
 <!-- ══ S3: AI ANALYSIS ══ -->
-<div class="screen" id="s3">
-  <div class="page-wrap">
+<div class="screen assessment-screen" id="s3">
+  <div class="page-wrap assessment-wrap">
+    <img class="assessment-logo" src="assets/logo-large.png" alt="IRIS Device & Health" />
     <div class="back-bar">
-      <button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to questionnaire</button>
+      <button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> 返回问卷</button>
     </div>
     <div class="page-header">
-      <h2>AI analysis</h2>
-      <p>Reviewing your answers and generating a preliminary classification</p>
+      <h2>免费初步评估结果</h2>
+      <p>以下结果仅为方向性提示，不构成法律意见或最终 FDA 分类结论。</p>
     </div>
     <div class="card" id="ai-chat-area"></div>
-    <button class="btn-primary" id="proceed-to-payment" style="display:none;" onclick="goTo('s4')">Proceed to expert review <i class="ti ti-arrow-right"></i></button>
+    <button class="btn-primary" id="proceed-to-payment" style="display:none;" onclick="window.location.href='pricing.html'">查看推荐服务 <i class="ti ti-arrow-right"></i></button>
   </div>
 </div>
 
@@ -898,7 +921,7 @@
 <script>
 const STEPS = ['Register','Diagnosis','AI review','Payment','Classification','Registration','Labeling','Complete'];
 const SCREEN_STEP_MAP = {s1:0,s2:1,s3:2,s4:3,s5:4,s6:5,s7:6,s8:7};
-const PREV_SCREEN_MAP = {s1:'s0',s2:'s1',s3:'s2',s4:'s3',s5:'s4',s6:'s5',s7:'s6',s8:'s7'};
+const PREV_SCREEN_MAP = {s1:'s0',s2:'s0',s3:'s2',s4:'s3',s5:'s4',s6:'s5',s7:'s6',s8:'s7'};
 let userData={}, qAnswers={}, qAnswerDetails={}, currentQ=0, aiClassResult=null, aiAnalysisReady=false, currentLang='zh', registerMethod='email';
 
 const ZH_TEXT = {
@@ -1262,15 +1285,25 @@ const ZH_PLACEHOLDERS = {
   'Please specify':'请填写说明'
 };
 
-const QUESTIONS = [
-  {id:'product_function',group:'Product function',text:'What is your product mainly used for?',options:['Beauty or personal care','Wound care or protection (non-drug)','Monitoring body data (blood pressure, blood glucose, temperature)','Physical therapy or corrective support','Other (specify)']},
-  {id:'product_readiness',group:'Product readiness',text:'What stage is your product development in?',options:['Not developed yet, concept only','In design','Design complete, not yet produced','Design complete, already produced','Currently on sale']},
-  {id:'body_contact',group:'Body contact',text:'Will your product contact the human body?',options:['No body contact','Contacts skin surface','Placed in the mouth or body cavity','Implanted in the body','Other (specify)']},
-  {id:'product_claims',group:'Product claims',text:'Does your product marketing include any of these claims?',options:['Treats a disease (for example, treats arthritis)','Relieves a symptom (for example, relieves pain)','Daily wellness only, no medical claims','No marketing yet or not launched']},
-  {id:'software_availability',group:'Software availability',text:'Does your product include a companion app or software?',options:['Hardware only, no software','Hardware plus companion app','Software-only or mobile app','Other (specify)']},
-  {id:'production_method',group:'Production method',text:'How is your product produced?',options:['Produced in-house','Produced by a contract manufacturer','Other (specify)']},
-  {id:'compliance_foundation',group:'Existing compliance foundation',text:'Have you done anything FDA-related so far?',options:['Nothing yet, starting from scratch','Already selling on Amazon, not registered','Product was removed and needs urgent handling','Facility registration completed','Other (specify)']}
+const BASE_QUESTIONS = [
+  {id:'platform',stage:'基本信息',type:'single',text:'你在哪个平台销售/计划销售这个产品？',options:['Amazon','TikTok Shop','Shopify','独立站','还没开始卖','其他']},
+  {id:'product_description',stage:'基本信息',type:'textarea',text:'简单描述一下你的产品是什么？（一句话即可）',placeholder:'例如：家用红光美容仪、筋膜枪、血氧仪、护膝、健康监测 App 等',required:true},
+  {id:'body_contact',stage:'产品特征',type:'single',text:'这个产品是否会接触人体？如果是，接触哪个部位？',options:['不接触','皮肤表面','眼耳口鼻等粘膜','进入体内','不确定']},
+  {id:'claims',stage:'风险信号',type:'multi',text:'你在产品页面、包装或广告中，是否提到以下任意词语？',options:['治疗 / Treat','缓解 / Relieve','诊断 / Diagnose','预防 / Prevent','医用 / Medical','FDA-approved','以上都没有']},
+  {id:'product_assets',stage:'资料上传',type:'upload',text:'请上传产品在售卖平台上的链接，或截图产品页面/包装标签',placeholder:'粘贴 Amazon / TikTok Shop / Shopify 链接（可选）',optional:true},
+  {id:'fda_history',stage:'现有基础',type:'single',text:'你的产品是否已经在 FDA 做过任何登记？',options:['已注册','有 510(k)','没有','不知道这是什么']},
+  {id:'platform_notice',stage:'平台通知',type:'single',text:'你是否收到过平台关于此产品的合规通知或下架通知？',options:['是（请上传邮件）','否','不确定']},
+  {id:'location',stage:'企业信息',type:'single',text:'产品/工厂所在地？',options:['中国大陆','香港','其他海外','美国本土']},
+  {id:'email',stage:'联系方式',type:'email',text:'接收免费报告的邮箱',placeholder:'contact@company.com',required:true}
 ];
+
+const BRANCH_QUESTIONS = {
+  samd_data: {id:'samd_data',stage:'软件风险',type:'single',text:'该软件是否处理/分析用户的生理健康数据（如心率、血氧、血糖等）？',options:['是','否']},
+  samd_decision: {id:'samd_decision',stage:'软件风险',type:'single',text:'该软件是否给出诊断结论、风险评分，或直接影响临床决策？',options:['是','否']},
+  combination: {id:'combination',stage:'组合产品',type:'single',text:'产品是否包含任何药物成分、化学活性成分，或与药品/精油等一起搭配销售宣称协同疗效？',options:['是','否']},
+  antimicrobial: {id:'antimicrobial',stage:'抗菌/消毒宣称',type:'single',text:'该宣称是“物理性抗菌”还是“主动杀灭/消灭细菌病毒”？',options:['物理性抗菌','主动杀灭/消灭细菌病毒','不确定']},
+  platform_doc: {id:'platform_doc',stage:'平台通知',type:'single',text:'通知具体要求提供什么文件？',options:['FDA Registration Number','510(k) Number','Certificate / Test Report','不确定']}
+};
 
 const LABEL_ITEMS = ['Device name / trade name','Manufacturer name and address','Lot or batch number','Expiration date (if applicable)','Intended use / indications for use','Warnings and precautions','Storage conditions','Instructions for use reference','UDI (Unique Device Identifier)','Sterility statement (if applicable)'];
 
@@ -1278,6 +1311,73 @@ function t(text) { return currentLang === 'zh' ? (ZH_TEXT[text] || text) : text;
 function tPlaceholder(text) { return currentLang === 'zh' ? (ZH_PLACEHOLDERS[text] || text) : text; }
 function classLabel(cls) { return currentLang === 'zh' ? `${cls} 类器械` : `Class ${cls}`; }
 function escapeAttr(text) { return String(text).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function escapeHtml(text) { return String(text ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function startFreeAssessment(event) {
+  event?.preventDefault();
+  qAnswers = {};
+  qAnswerDetails = {};
+  currentQ = 0;
+  aiAnalysisReady = false;
+  goTo('s2');
+}
+
+function getAnswerValue(id) {
+  return qAnswers[id] ?? qAnswerDetails[id] ?? '';
+}
+
+function answerIncludes(id, keyword) {
+  const value = getAnswerValue(id);
+  return Array.isArray(value) ? value.some(v => String(v).includes(keyword)) : String(value).includes(keyword);
+}
+
+function getProductSignalText() {
+  const claims = Array.isArray(qAnswers.claims) ? qAnswers.claims.join(' ') : (qAnswers.claims || '');
+  return `${qAnswerDetails.product_description || ''} ${qAnswerDetails.product_assets || ''} ${claims}`.toLowerCase();
+}
+
+function hasStrongClaim() {
+  return ['治疗','Treat','诊断','Diagnose','预防','Prevent','医用','Medical','FDA-approved'].some(k => answerIncludes('claims', k));
+}
+
+function shouldAskSaMD() {
+  const text = getProductSignalText();
+  return /app|软件|算法|监测|数据分析|生理|健康数据|risk score|score|mobile/i.test(text) || (qAnswers.body_contact === '不接触' && hasStrongClaim());
+}
+
+function shouldAskCombination() {
+  return /药物|药品|生物制品|精油|化学活性|活性成分|drug|biologic|essential oil/i.test(getProductSignalText());
+}
+
+function shouldAskAntimicrobial() {
+  return /抗菌|杀菌|消毒|除菌|antibacterial|steriliz|disinfect/i.test(getProductSignalText());
+}
+
+function hasSpecialPopulationSignal() {
+  return /儿童|婴儿|孕妇|老人|child|baby|infant|pregnan|elder/i.test(getProductSignalText());
+}
+
+function getActiveQuestions() {
+  const email = BASE_QUESTIONS[BASE_QUESTIONS.length - 1];
+  const questions = BASE_QUESTIONS.slice(0, -1);
+  if(shouldAskSaMD()) questions.push(BRANCH_QUESTIONS.samd_data, BRANCH_QUESTIONS.samd_decision);
+  if(shouldAskCombination()) questions.push(BRANCH_QUESTIONS.combination);
+  if(shouldAskAntimicrobial()) questions.push(BRANCH_QUESTIONS.antimicrobial);
+  if(qAnswers.platform_notice === '是（请上传邮件）') questions.push(BRANCH_QUESTIONS.platform_doc);
+  questions.push(email);
+  return questions;
+}
+
+function formatAnswer(q) {
+  if(q.type === 'multi') return Array.isArray(qAnswers[q.id]) && qAnswers[q.id].length ? qAnswers[q.id].join('、') : '';
+  if(q.type === 'textarea' || q.type === 'email') return qAnswerDetails[q.id] || '';
+  if(q.type === 'upload') {
+    const link = qAnswerDetails[q.id] || '';
+    const file = qAnswerDetails[`${q.id}_file`] || '';
+    return [link, file].filter(Boolean).join(' / ');
+  }
+  return qAnswers[q.id] || '';
+}
 
 function setLanguage(lang) {
   currentLang = lang;
@@ -1330,7 +1430,7 @@ function updateCompleteScreen() {
 function buildStepper(sid) {
   const nav = document.getElementById('main-nav');
   const stepper = document.getElementById('main-stepper');
-  if (sid === 's0') { nav.style.display='none'; stepper.style.display='none'; return; }
+  if (sid === 's0' || sid === 's2' || sid === 's3') { nav.style.display='none'; stepper.style.display='none'; return; }
   nav.style.display='flex'; stepper.style.display='block';
   const active = SCREEN_STEP_MAP[sid] ?? -1;
   const inner = document.getElementById('stepper-inner');
@@ -1426,36 +1526,67 @@ function doRegister() {
 function initQuestionnaire() { currentQ=0; renderQuestion(); }
 
 function renderQuestion() {
-  const q=QUESTIONS[currentQ];
-  const needsDetail=qAnswers[q.id]?.includes('(specify)');
-  document.getElementById('q-progress').style.width=(((currentQ+1)/QUESTIONS.length)*100)+'%';
+  const questions = getActiveQuestions();
+  if(currentQ >= questions.length) currentQ = questions.length - 1;
+  const q=questions[currentQ];
+  document.getElementById('q-progress').style.width=(((currentQ+1)/questions.length)*100)+'%';
   document.getElementById('q-back-btn').disabled=currentQ===0;
-  document.getElementById('q-next-btn').innerHTML=currentQ===QUESTIONS.length-1?t('Analyze my device ↗'):`${t('Next')} <i class="ti ti-arrow-right"></i>`;
+  document.getElementById('q-next-btn').innerHTML=currentQ===questions.length-1?'生成免费初步评估报告 <i class="ti ti-arrow-right"></i>':'下一步 <i class="ti ti-arrow-right"></i>';
+  let body = '';
+  if(q.type === 'single' || q.type === 'multi') {
+    body = `<div class="q-options">${q.options.map((o,idx)=>{
+      const selected = q.type === 'multi' ? (Array.isArray(qAnswers[q.id]) && qAnswers[q.id].includes(o)) : qAnswers[q.id] === o;
+      return `<div class="q-option ${selected?'selected':''}" onclick="selectOpt('${q.id}',${idx})">${escapeHtml(o)}</div>`;
+    }).join('')}</div>`;
+  } else if(q.type === 'textarea') {
+    body = `<textarea class="assessment-textarea" placeholder="${escapeAttr(q.placeholder || '')}" oninput="setQuestionDetail('${q.id}', this.value)">${escapeHtml(qAnswerDetails[q.id] || '')}</textarea>`;
+  } else if(q.type === 'email') {
+    body = `<input class="assessment-input" type="email" inputmode="email" placeholder="${escapeAttr(q.placeholder || '')}" value="${escapeAttr(qAnswerDetails[q.id] || '')}" oninput="setQuestionDetail('${q.id}', this.value)" />`;
+  } else if(q.type === 'upload') {
+    body = `<div class="assessment-upload-grid">
+      <input class="assessment-input" type="url" placeholder="${escapeAttr(q.placeholder || '')}" value="${escapeAttr(qAnswerDetails[q.id] || '')}" oninput="setQuestionDetail('${q.id}', this.value)" />
+      <input class="assessment-input" type="file" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" onchange="setQuestionDetail('${q.id}_file', this.files?.[0]?.name || '')" />
+      <div class="assessment-hint">可选：如果您还没有链接或标签，可以直接跳过。我们不会在本地保存文件，这里仅用于记录您愿意提供的资料类型。</div>
+    </div>`;
+  }
   document.getElementById('q-container').innerHTML=`
     <div class="q-block">
-      <div class="q-num">${currentLang === 'zh' ? `第 ${currentQ+1} 题，共 ${QUESTIONS.length} 题` : `Question ${currentQ+1} of ${QUESTIONS.length}`}</div>
-      <div class="q-num">${t(q.group)}</div>
-      <div class="q-text">${t(q.text)}</div>
-      <div class="q-options">${q.options.map(o=>`<div class="q-option ${qAnswers[q.id]===o?'selected':''}" onclick="selectOpt('${q.id}',this)" data-value="${o}">${t(o)}</div>`).join('')}</div>
-      ${needsDetail ? `<div class="field" style="margin-top:12px;"><input type="text" id="q-detail-input" placeholder="Please specify" value="${escapeAttr(qAnswerDetails[q.id] || '')}" oninput="setQuestionDetail('${q.id}', this.value)" /></div>` : ''}
+      <div class="assessment-meta"><span>${currentQ+1} / ${questions.length}</span><span>${Math.round(((currentQ+1)/questions.length)*100)}%</span></div>
+      <div class="assessment-stage"><i class="ti ti-compass" aria-hidden="true"></i>${escapeHtml(q.stage)}</div>
+      <div class="q-text">${escapeHtml(q.text)}</div>
+      ${body}
+      ${q.optional ? '<div class="assessment-hint">这一题可跳过；提供资料会让后续人工复核更准确。</div>' : ''}
     </div>`;
   localizePage();
 }
 
-function selectOpt(qid,el) {
-  document.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
-  qAnswers[qid]=el.dataset.value;
-  if(!qAnswers[qid].includes('(specify)')) qAnswerDetails[qid]='';
+function selectOpt(qid,idx) {
+  const q = getActiveQuestions().find(item => item.id === qid);
+  if(!q) return;
+  const value = q.options[idx];
+  if(q.type === 'multi') {
+    const current = Array.isArray(qAnswers[qid]) ? [...qAnswers[qid]] : [];
+    if(value === '以上都没有') {
+      qAnswers[qid] = current.includes(value) ? [] : [value];
+    } else {
+      const filtered = current.filter(item => item !== '以上都没有');
+      qAnswers[qid] = filtered.includes(value) ? filtered.filter(item => item !== value) : [...filtered, value];
+    }
+  } else {
+    qAnswers[qid]=value;
+  }
   renderQuestion();
 }
 function setQuestionDetail(qid,value) { qAnswerDetails[qid]=value.trim(); }
-function qPrev() { if(currentQ>0){currentQ--;renderQuestion();} else goTo('s1'); }
+function qPrev() { if(currentQ>0){currentQ--;renderQuestion();} else goTo('s0'); }
 function qNext() {
-  const q=QUESTIONS[currentQ];
-  if(!qAnswers[q.id]){alert(t('Please select an option to continue.'));return;}
-  if(qAnswers[q.id].includes('(specify)') && !qAnswerDetails[q.id]){alert(t('Please specify before continuing.'));return;}
-  if(currentQ<QUESTIONS.length-1){currentQ++;renderQuestion();}else{goTo('s3');}
+  const questions = getActiveQuestions();
+  const q=questions[currentQ];
+  const answer = formatAnswer(q);
+  if(!q.optional && !answer){alert('请先完成这一题，再继续。');return;}
+  if(q.type === 'email' && !isValidEmail(answer)){alert('请输入有效邮箱地址，用于接收免费报告。');return;}
+  const nextQuestions = getActiveQuestions();
+  if(currentQ<nextQuestions.length-1){currentQ++;renderQuestion();}else{goTo('s3');}
 }
 
 async function runAIAnalysis() {
@@ -1481,7 +1612,12 @@ function renderAIAnalysisResult() {
 
 function addUserSummary(area){
   const d=document.createElement('div');
-  d.innerHTML=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:1rem;font-size:12px;color:var(--color-text-secondary);line-height:1.7;"><strong style="font-size:11px;letter-spacing:0.5px;text-transform:uppercase;display:block;margin-bottom:4px;">${t('Your responses')}</strong>${QUESTIONS.filter(q=>qAnswers[q.id]).map(q=>`<div>· ${t(q.group)}: ${t(qAnswers[q.id])}${qAnswerDetails[q.id] ? ` - ${qAnswerDetails[q.id]}` : ''}</div>`).join('')}</div>`;
+  const rows = getActiveQuestions()
+    .map(q => ({q, answer: formatAnswer(q)}))
+    .filter(item => item.answer)
+    .map(item => `<div>· ${escapeHtml(item.q.stage)}：${escapeHtml(item.answer)}</div>`)
+    .join('');
+  d.innerHTML=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:1rem;font-size:12px;color:var(--color-text-secondary);line-height:1.7;"><strong style="font-size:11px;letter-spacing:0.5px;text-transform:uppercase;display:block;margin-bottom:4px;">你的回答</strong>${rows}</div>`;
   area.appendChild(d);
 }
 function addTyping(area){
@@ -1496,13 +1632,35 @@ function addAIMsg(area,text){
   d.innerHTML=`<div class="ai-icon"><i class="ti ti-brain" aria-hidden="true"></i></div><div class="ai-bubble"><p>${fmt}</p></div>`;
   area.appendChild(d);
 }
-function buildPrompt(){return QUESTIONS.map(q=>`${q.group}: ${qAnswers[q.id]||'?'}${qAnswerDetails[q.id] ? ` (${qAnswerDetails[q.id]})` : ''}`).join('\n')+`\nCompany: ${userData.company||'?'}`;}
+function buildPrompt(){return getActiveQuestions().map(q=>`${q.stage}: ${formatAnswer(q)||'?'}`).join('\n');}
 function extractClass(t){if(/class\s*iii/i.test(t))return'III';if(/class\s*ii/i.test(t))return'II';return'I';}
 function getFallback(){
-  if(currentLang === 'zh') {
-    return`**初步分类：I 类器械**\n\n根据你的问卷回答，该器械概况与 21 CFR Parts 860-892 下的 I 类分类相符。\n\n**关键依据：**\n• 器械看起来为非侵入性，能量输出有限\n• 未识别出显著风险因素\n• 产品特征与一般健康 / 低风险器械类别一致\n\n**法规路径：**\n• 510(k) 豁免（多数 I 类器械无需上市前通知）\n• 仍需遵守一般控制要求：机构注册、器械列名和标签合规\n\n**重要提示：** 这只是 AI 初步评估。即将购买的专家审核将提供正式分类意见和完整书面判定。`;
-  }
-  return`**Preliminary Classification: Class I Device**\n\nBased on your questionnaire responses, your device profile aligns with a Class I classification under 21 CFR Parts 860-892.\n\n**Key reasoning:**\n• Device appears non-invasive with limited energy output\n• No significant risk factors identified\n• Profile consistent with general wellness / low-risk device categories\n\n**Regulatory pathway:**\n• 510(k) exempt (most Class I devices do not require premarket notification)\n• Must comply with General Controls: establishment registration, device listing, labeling\n\n**Important:** This is a preliminary AI assessment only. The expert review you are about to purchase will provide a definitive classification with full written determination.`;
+  const risk = estimateRisk();
+  const platformNotice = qAnswers.platform_notice === '是（请上传邮件）';
+  const hasPlatformDoc = qAnswers.platform_doc;
+  const platformLine = platformNotice
+    ? `您已收到平台合规或下架通知，平台风险优先级较高${hasPlatformDoc ? `，通知提到的文件方向为：${qAnswers.platform_doc}` : ''}。`
+    : '目前未显示明确平台通知信号，但上架前仍建议确认标签、产品声明和平台文件要求。';
+  const special = hasSpecialPopulationSignal() ? '\n• 产品信息中出现儿童、婴儿、孕妇或老人等特殊人群信号，风险等级建议上调一级。' : '';
+  const urgent = platformNotice ? '\n• 如链接已被限制或下架，建议优先分析平台邮件和 Listing 下架原因。' : '';
+  return`**免费初步评估：${risk.label}**\n\n根据您提交的信息，系统识别到以下合规方向。此结果用于帮助您判断下一步优先级，不构成法律意见或 FDA 最终分类结论。\n\n**主要判断依据：**\n• 人体接触情况：${qAnswers.body_contact || '待核实'}\n• 宣称强度：${Array.isArray(qAnswers.claims) ? qAnswers.claims.join('、') : '待核实'}\n• 现有 FDA 基础：${qAnswers.fda_history || '待核实'}${special}${urgent}\n\n**FDA 方向提示：**\n${risk.fda}\n\n**Amazon / TikTok / Shopify 平台风险：**\n${platformLine}\n\n**建议下一步：**\n• 保存这份初步结果，整理产品链接、标签、包装和平台通知邮件。\n• 在正式上架或回复平台前，建议进行人工复核，确认产品分类、FDA 注册方向、标签和宣传语风险。\n• 如果产品涉及软件、药物成分、主动杀菌/消毒或平台下架通知，建议直接预约法规顾问评估。`;
+}
+
+function estimateRisk(){
+  let score = 0;
+  if(['进入体内','眼耳口鼻等粘膜'].includes(qAnswers.body_contact)) score += 3;
+  if(qAnswers.body_contact === '皮肤表面') score += 1;
+  if(hasStrongClaim()) score += 3;
+  if(answerIncludes('claims','缓解')) score += 1;
+  if(qAnswers.platform_notice === '是（请上传邮件）') score += 3;
+  if(qAnswers.fda_history === '有 510(k)') score += 1;
+  if(qAnswers.samd_data === '是' || qAnswers.samd_decision === '是') score += 3;
+  if(qAnswers.combination === '是') score += 4;
+  if(qAnswers.antimicrobial === '主动杀灭/消灭细菌病毒') score += 3;
+  if(hasSpecialPopulationSignal()) score += 1;
+  if(score >= 6) return {label:'高风险方向', fda:'您的产品可能需要更谨慎地判断是否属于医疗器械、是否涉及更高等级分类、510(k) 或其他上市前路径。建议不要仅凭自动结果自行回复平台。'};
+  if(score >= 3) return {label:'中风险方向', fda:'您的产品可能存在医疗器械属性或平台审核关注点，建议重点核实 intended use（预期用途）、宣称词、标签和是否需要 FDA Registration（FDA 注册）。'};
+  return {label:'低风险方向', fda:'目前信息显示风险相对较低，但低风险不代表零风险。正式上架前仍建议检查标签、包装、广告语和平台类目要求。'};
 }
 
 function doPayment(){
