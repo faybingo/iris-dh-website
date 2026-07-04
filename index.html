@@ -1286,24 +1286,14 @@ const ZH_PLACEHOLDERS = {
 };
 
 const BASE_QUESTIONS = [
-  {id:'platform',stage:'基本信息',type:'single',text:'你在哪个平台销售/计划销售这个产品？',options:['Amazon','TikTok Shop','Shopify','独立站','还没开始卖','其他']},
-  {id:'product_description',stage:'基本信息',type:'textarea',text:'简单描述一下你的产品是什么？（一句话即可）',placeholder:'例如：家用红光美容仪、筋膜枪、血氧仪、护膝、健康监测 App 等',required:true},
-  {id:'body_contact',stage:'产品特征',type:'single',text:'这个产品是否会接触人体？如果是，接触哪个部位？',options:['不接触','皮肤表面','眼耳口鼻等粘膜','进入体内','不确定']},
-  {id:'claims',stage:'风险信号',type:'multi',text:'你在产品页面、包装或广告中，是否提到以下任意词语？',options:['治疗 / Treat','缓解 / Relieve','诊断 / Diagnose','预防 / Prevent','医用 / Medical','FDA-approved','以上都没有']},
-  {id:'product_assets',stage:'资料上传',type:'upload',text:'请上传产品在售卖平台上的链接，或截图产品页面/包装标签',placeholder:'粘贴 Amazon / TikTok Shop / Shopify 链接（可选）',optional:true},
-  {id:'fda_history',stage:'现有基础',type:'single',text:'你的产品是否已经在 FDA 做过任何登记？',options:['已注册','有 510(k)','没有','不知道这是什么']},
-  {id:'platform_notice',stage:'平台通知',type:'single',text:'你是否收到过平台关于此产品的合规通知或下架通知？',options:['是（请上传邮件）','否','不确定']},
-  {id:'location',stage:'企业信息',type:'single',text:'产品/工厂所在地？',options:['中国大陆','香港','其他海外','美国本土']},
-  {id:'email',stage:'联系方式',type:'email',text:'接收免费报告的邮箱',placeholder:'contact@company.com',required:true}
+  {id:'product_function',stage:'产品功能',type:'single',text:'你的产品主要用来做什么？',options:['美容或个人护理','伤口处理或防护（非药物类）','监测身体数据（血压、血糖、体温）','理疗或矫正辅助','其他（specify）']},
+  {id:'product_readiness',stage:'产品完成度',type:'single',text:'你的产品开发到哪个阶段了？',options:['还没开发，暂时只有概念','设计中','设计完成，但还未生产','设计完成，已经生产','在销售中']},
+  {id:'body_contact',stage:'接触人体方式',type:'single',text:'你的产品会接触人体吗？',options:['不接触人体','接触皮肤表面','放入口腔或体腔','植入体内','其他（specify）']},
+  {id:'product_claims',stage:'产品声明',type:'single',text:'你的产品宣传语里有没有这类说法？',options:['能治疗某种疾病（如“治疗关节炎”）','能缓解某种症状（如“缓解疼痛”）','仅用于日常保健，无医疗声明','暂无宣传or还没上市']},
+  {id:'software_availability',stage:'软件有无',type:'single',text:'你的产品有配套App或软件吗？',options:['纯硬件，没有软件','硬件 + 配套App','纯软件或移动应用','其他（specify）']},
+  {id:'production_method',stage:'生产方式',type:'single',text:'你的产品是怎么生产的？',options:['自己生产','找代工厂生产','其他（specify）']},
+  {id:'compliance_foundation',stage:'现有合规基础',type:'single',text:'你现在有没有做过任何FDA相关的事情？',options:['完全没有，从零开始','已在亚马逊销售，但未注册','产品被下架，需要紧急处理','已完成设施注册','其他（specify）']}
 ];
-
-const BRANCH_QUESTIONS = {
-  samd_data: {id:'samd_data',stage:'软件风险',type:'single',text:'该软件是否处理/分析用户的生理健康数据（如心率、血氧、血糖等）？',options:['是','否']},
-  samd_decision: {id:'samd_decision',stage:'软件风险',type:'single',text:'该软件是否给出诊断结论、风险评分，或直接影响临床决策？',options:['是','否']},
-  combination: {id:'combination',stage:'组合产品',type:'single',text:'产品是否包含任何药物成分、化学活性成分，或与药品/精油等一起搭配销售宣称协同疗效？',options:['是','否']},
-  antimicrobial: {id:'antimicrobial',stage:'抗菌/消毒宣称',type:'single',text:'该宣称是“物理性抗菌”还是“主动杀灭/消灭细菌病毒”？',options:['物理性抗菌','主动杀灭/消灭细菌病毒','不确定']},
-  platform_doc: {id:'platform_doc',stage:'平台通知',type:'single',text:'通知具体要求提供什么文件？',options:['FDA Registration Number','510(k) Number','Certificate / Test Report','不确定']}
-};
 
 const LABEL_ITEMS = ['Device name / trade name','Manufacturer name and address','Lot or batch number','Expiration date (if applicable)','Intended use / indications for use','Warnings and precautions','Storage conditions','Instructions for use reference','UDI (Unique Device Identifier)','Sterility statement (if applicable)'];
 
@@ -1332,25 +1322,21 @@ function answerIncludes(id, keyword) {
 }
 
 function getProductSignalText() {
-  const claims = Array.isArray(qAnswers.claims) ? qAnswers.claims.join(' ') : (qAnswers.claims || '');
-  return `${qAnswerDetails.product_description || ''} ${qAnswerDetails.product_assets || ''} ${claims}`.toLowerCase();
+  return [
+    qAnswers.product_function,
+    qAnswers.product_claims,
+    qAnswers.software_availability,
+    qAnswers.compliance_foundation,
+    qAnswerDetails.product_function,
+    qAnswerDetails.body_contact,
+    qAnswerDetails.software_availability,
+    qAnswerDetails.production_method,
+    qAnswerDetails.compliance_foundation
+  ].filter(Boolean).join(' ').toLowerCase();
 }
 
 function hasStrongClaim() {
-  return ['治疗','Treat','诊断','Diagnose','预防','Prevent','医用','Medical','FDA-approved'].some(k => answerIncludes('claims', k));
-}
-
-function shouldAskSaMD() {
-  const text = getProductSignalText();
-  return /app|软件|算法|监测|数据分析|生理|健康数据|risk score|score|mobile/i.test(text) || (qAnswers.body_contact === '不接触' && hasStrongClaim());
-}
-
-function shouldAskCombination() {
-  return /药物|药品|生物制品|精油|化学活性|活性成分|drug|biologic|essential oil/i.test(getProductSignalText());
-}
-
-function shouldAskAntimicrobial() {
-  return /抗菌|杀菌|消毒|除菌|antibacterial|steriliz|disinfect/i.test(getProductSignalText());
+  return answerIncludes('product_claims', '治疗') || answerIncludes('product_claims', '缓解');
 }
 
 function hasSpecialPopulationSignal() {
@@ -1358,25 +1344,14 @@ function hasSpecialPopulationSignal() {
 }
 
 function getActiveQuestions() {
-  const email = BASE_QUESTIONS[BASE_QUESTIONS.length - 1];
-  const questions = BASE_QUESTIONS.slice(0, -1);
-  if(shouldAskSaMD()) questions.push(BRANCH_QUESTIONS.samd_data, BRANCH_QUESTIONS.samd_decision);
-  if(shouldAskCombination()) questions.push(BRANCH_QUESTIONS.combination);
-  if(shouldAskAntimicrobial()) questions.push(BRANCH_QUESTIONS.antimicrobial);
-  if(qAnswers.platform_notice === '是（请上传邮件）') questions.push(BRANCH_QUESTIONS.platform_doc);
-  questions.push(email);
-  return questions;
+  return BASE_QUESTIONS;
 }
 
 function formatAnswer(q) {
-  if(q.type === 'multi') return Array.isArray(qAnswers[q.id]) && qAnswers[q.id].length ? qAnswers[q.id].join('、') : '';
-  if(q.type === 'textarea' || q.type === 'email') return qAnswerDetails[q.id] || '';
-  if(q.type === 'upload') {
-    const link = qAnswerDetails[q.id] || '';
-    const file = qAnswerDetails[`${q.id}_file`] || '';
-    return [link, file].filter(Boolean).join(' / ');
-  }
-  return qAnswers[q.id] || '';
+  const answer = qAnswers[q.id] || '';
+  const detail = qAnswerDetails[q.id] || '';
+  if(answer.includes('specify') && detail) return `${answer}：${detail}`;
+  return answer;
 }
 
 function setLanguage(lang) {
@@ -1529,25 +1504,16 @@ function renderQuestion() {
   const questions = getActiveQuestions();
   if(currentQ >= questions.length) currentQ = questions.length - 1;
   const q=questions[currentQ];
+  const needsDetail = String(qAnswers[q.id] || '').includes('specify');
   document.getElementById('q-progress').style.width=(((currentQ+1)/questions.length)*100)+'%';
   document.getElementById('q-back-btn').disabled=currentQ===0;
   document.getElementById('q-next-btn').innerHTML=currentQ===questions.length-1?'生成免费初步评估报告 <i class="ti ti-arrow-right"></i>':'下一步 <i class="ti ti-arrow-right"></i>';
   let body = '';
-  if(q.type === 'single' || q.type === 'multi') {
+  if(q.type === 'single') {
     body = `<div class="q-options">${q.options.map((o,idx)=>{
-      const selected = q.type === 'multi' ? (Array.isArray(qAnswers[q.id]) && qAnswers[q.id].includes(o)) : qAnswers[q.id] === o;
+      const selected = qAnswers[q.id] === o;
       return `<div class="q-option ${selected?'selected':''}" onclick="selectOpt('${q.id}',${idx})">${escapeHtml(o)}</div>`;
-    }).join('')}</div>`;
-  } else if(q.type === 'textarea') {
-    body = `<textarea class="assessment-textarea" placeholder="${escapeAttr(q.placeholder || '')}" oninput="setQuestionDetail('${q.id}', this.value)">${escapeHtml(qAnswerDetails[q.id] || '')}</textarea>`;
-  } else if(q.type === 'email') {
-    body = `<input class="assessment-input" type="email" inputmode="email" placeholder="${escapeAttr(q.placeholder || '')}" value="${escapeAttr(qAnswerDetails[q.id] || '')}" oninput="setQuestionDetail('${q.id}', this.value)" />`;
-  } else if(q.type === 'upload') {
-    body = `<div class="assessment-upload-grid">
-      <input class="assessment-input" type="url" placeholder="${escapeAttr(q.placeholder || '')}" value="${escapeAttr(qAnswerDetails[q.id] || '')}" oninput="setQuestionDetail('${q.id}', this.value)" />
-      <input class="assessment-input" type="file" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" onchange="setQuestionDetail('${q.id}_file', this.files?.[0]?.name || '')" />
-      <div class="assessment-hint">可选：如果您还没有链接或标签，可以直接跳过。我们不会在本地保存文件，这里仅用于记录您愿意提供的资料类型。</div>
-    </div>`;
+    }).join('')}</div>${needsDetail ? `<div class="field" style="margin-top:14px;"><input class="assessment-input" type="text" placeholder="请补充说明" value="${escapeAttr(qAnswerDetails[q.id] || '')}" oninput="setQuestionDetail('${q.id}', this.value)" /></div>` : ''}`;
   }
   document.getElementById('q-container').innerHTML=`
     <div class="q-block">
@@ -1564,17 +1530,8 @@ function selectOpt(qid,idx) {
   const q = getActiveQuestions().find(item => item.id === qid);
   if(!q) return;
   const value = q.options[idx];
-  if(q.type === 'multi') {
-    const current = Array.isArray(qAnswers[qid]) ? [...qAnswers[qid]] : [];
-    if(value === '以上都没有') {
-      qAnswers[qid] = current.includes(value) ? [] : [value];
-    } else {
-      const filtered = current.filter(item => item !== '以上都没有');
-      qAnswers[qid] = filtered.includes(value) ? filtered.filter(item => item !== value) : [...filtered, value];
-    }
-  } else {
-    qAnswers[qid]=value;
-  }
+  qAnswers[qid]=value;
+  if(!value.includes('specify')) qAnswerDetails[qid]='';
   renderQuestion();
 }
 function setQuestionDetail(qid,value) { qAnswerDetails[qid]=value.trim(); }
@@ -1584,7 +1541,7 @@ function qNext() {
   const q=questions[currentQ];
   const answer = formatAnswer(q);
   if(!q.optional && !answer){alert('请先完成这一题，再继续。');return;}
-  if(q.type === 'email' && !isValidEmail(answer)){alert('请输入有效邮箱地址，用于接收免费报告。');return;}
+  if(String(qAnswers[q.id] || '').includes('specify') && !qAnswerDetails[q.id]){alert('请补充说明后继续。');return;}
   const nextQuestions = getActiveQuestions();
   if(currentQ<nextQuestions.length-1){currentQ++;renderQuestion();}else{goTo('s3');}
 }
@@ -1636,27 +1593,26 @@ function buildPrompt(){return getActiveQuestions().map(q=>`${q.stage}: ${formatA
 function extractClass(t){if(/class\s*iii/i.test(t))return'III';if(/class\s*ii/i.test(t))return'II';return'I';}
 function getFallback(){
   const risk = estimateRisk();
-  const platformNotice = qAnswers.platform_notice === '是（请上传邮件）';
-  const hasPlatformDoc = qAnswers.platform_doc;
-  const platformLine = platformNotice
-    ? `您已收到平台合规或下架通知，平台风险优先级较高${hasPlatformDoc ? `，通知提到的文件方向为：${qAnswers.platform_doc}` : ''}。`
-    : '目前未显示明确平台通知信号，但上架前仍建议确认标签、产品声明和平台文件要求。';
+  const urgentSignal = qAnswers.compliance_foundation === '产品被下架，需要紧急处理';
+  const platformLine = urgentSignal
+    ? '您选择了“产品被下架，需要紧急处理”，平台风险优先级较高，建议优先分析下架原因、平台邮件和 Listing 风险点。'
+    : '目前未显示明确下架信号，但上架前仍建议确认标签、产品声明和平台文件要求。';
   const special = hasSpecialPopulationSignal() ? '\n• 产品信息中出现儿童、婴儿、孕妇或老人等特殊人群信号，风险等级建议上调一级。' : '';
-  const urgent = platformNotice ? '\n• 如链接已被限制或下架，建议优先分析平台邮件和 Listing 下架原因。' : '';
-  return`**免费初步评估：${risk.label}**\n\n根据您提交的信息，系统识别到以下合规方向。此结果用于帮助您判断下一步优先级，不构成法律意见或 FDA 最终分类结论。\n\n**主要判断依据：**\n• 人体接触情况：${qAnswers.body_contact || '待核实'}\n• 宣称强度：${Array.isArray(qAnswers.claims) ? qAnswers.claims.join('、') : '待核实'}\n• 现有 FDA 基础：${qAnswers.fda_history || '待核实'}${special}${urgent}\n\n**FDA 方向提示：**\n${risk.fda}\n\n**Amazon / TikTok / Shopify 平台风险：**\n${platformLine}\n\n**建议下一步：**\n• 保存这份初步结果，整理产品链接、标签、包装和平台通知邮件。\n• 在正式上架或回复平台前，建议进行人工复核，确认产品分类、FDA 注册方向、标签和宣传语风险。\n• 如果产品涉及软件、药物成分、主动杀菌/消毒或平台下架通知，建议直接预约法规顾问评估。`;
+  const urgent = urgentSignal ? '\n• 如链接已被限制或下架，建议优先分析平台邮件和 Listing 下架原因。' : '';
+  return`**免费初步评估：${risk.label}**\n\n根据您提交的信息，系统识别到以下合规方向。此结果用于帮助您判断下一步优先级，不构成法律意见或 FDA 最终分类结论。\n\n**主要判断依据：**\n• 产品功能：${formatAnswer(BASE_QUESTIONS.find(q => q.id === 'product_function')) || '待核实'}\n• 人体接触情况：${formatAnswer(BASE_QUESTIONS.find(q => q.id === 'body_contact')) || '待核实'}\n• 宣称强度：${qAnswers.product_claims || '待核实'}\n• 现有 FDA 基础：${formatAnswer(BASE_QUESTIONS.find(q => q.id === 'compliance_foundation')) || '待核实'}${special}${urgent}\n\n**FDA 方向提示：**\n${risk.fda}\n\n**Amazon / TikTok / Shopify 平台风险：**\n${platformLine}\n\n**建议下一步：**\n• 保存这份初步结果，整理产品链接、标签、包装和平台通知邮件。\n• 在正式上架或回复平台前，建议进行人工复核，确认产品分类、FDA 注册方向、标签和宣传语风险。\n• 如果产品涉及软件、强医疗宣称或平台下架通知，建议直接预约法规顾问评估。`;
 }
 
 function estimateRisk(){
   let score = 0;
-  if(['进入体内','眼耳口鼻等粘膜'].includes(qAnswers.body_contact)) score += 3;
-  if(qAnswers.body_contact === '皮肤表面') score += 1;
+  if(['植入体内','放入口腔或体腔'].includes(qAnswers.body_contact)) score += 3;
+  if(qAnswers.body_contact === '接触皮肤表面') score += 1;
   if(hasStrongClaim()) score += 3;
-  if(answerIncludes('claims','缓解')) score += 1;
-  if(qAnswers.platform_notice === '是（请上传邮件）') score += 3;
-  if(qAnswers.fda_history === '有 510(k)') score += 1;
-  if(qAnswers.samd_data === '是' || qAnswers.samd_decision === '是') score += 3;
-  if(qAnswers.combination === '是') score += 4;
-  if(qAnswers.antimicrobial === '主动杀灭/消灭细菌病毒') score += 3;
+  if(qAnswers.product_function === '监测身体数据（血压、血糖、体温）') score += 2;
+  if(qAnswers.product_function === '伤口处理或防护（非药物类）') score += 1;
+  if(['硬件 + 配套App','纯软件或移动应用'].includes(qAnswers.software_availability)) score += 1;
+  if(qAnswers.compliance_foundation === '产品被下架，需要紧急处理') score += 3;
+  if(qAnswers.compliance_foundation === '已在亚马逊销售，但未注册') score += 1;
+  if(qAnswers.compliance_foundation === '已完成设施注册') score += 1;
   if(hasSpecialPopulationSignal()) score += 1;
   if(score >= 6) return {label:'高风险方向', fda:'您的产品可能需要更谨慎地判断是否属于医疗器械、是否涉及更高等级分类、510(k) 或其他上市前路径。建议不要仅凭自动结果自行回复平台。'};
   if(score >= 3) return {label:'中风险方向', fda:'您的产品可能存在医疗器械属性或平台审核关注点，建议重点核实 intended use（预期用途）、宣称词、标签和是否需要 FDA Registration（FDA 注册）。'};
