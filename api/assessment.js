@@ -36,6 +36,7 @@ function normalizeAnswers(answers) {
 
 module.exports = async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  const apiKey = process.env.OPENAI_API_KEY || process.env.OPENAI_KEY;
 
   if (req.method !== 'POST') {
     res.statusCode = 405;
@@ -43,9 +44,9 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  if (!process.env.OPENAI_API_KEY) {
+  if (!apiKey) {
     res.statusCode = 500;
-    res.end(JSON.stringify({ error: 'OPENAI_API_KEY is not configured' }));
+    res.end(JSON.stringify({ error: 'OPENAI_API_KEY or OPENAI_KEY is not configured' }));
     return;
   }
 
@@ -57,7 +58,7 @@ module.exports = async function handler(req, res) {
     const openaiResponse = await fetch(OPENAI_API_URL, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
