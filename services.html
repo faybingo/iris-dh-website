@@ -288,6 +288,11 @@
   .need-icon i { font-size: 46px; }
   .need-item h3 { color: #071D3A; font-size: 24px; line-height: 1.25; margin-bottom: 10px; }
   .need-item p { color: rgba(7,29,58,0.7); font-size: 18px; line-height: 1.55; }
+  .need-grid[data-count="5"] .need-item { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 16px; text-align: center; padding: 18px 20px; }
+  .need-grid[data-count="5"] .need-icon { width: 82px; height: 82px; flex-shrink: 0; }
+  .need-grid[data-count="5"] .need-icon i { font-size: 42px; }
+  .need-grid[data-count="5"] .need-item h3 { font-size: 19px; line-height: 1.3; margin-bottom: 8px; }
+  .need-grid[data-count="5"] .need-item p { font-size: 15px; line-height: 1.55; }
   .detail-cta { display: none; align-items: center; justify-content: center; gap: 28px; padding: 18px 28px 22px; background: color-mix(in srgb, var(--active-color) 8%, #FFFFFF); color: var(--active-color); font-size: 18px; font-weight: 800; }
   .detail-cta a { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 24px; border-radius: 9px; background: var(--active-color); color: #FFFFFF; text-decoration: none; }
   @media (max-width: 980px) {
@@ -317,6 +322,11 @@
     .need-icon { width: 64px; height: 64px; }
     .need-icon i { font-size: 34px; }
     .need-item h3 { font-size: 19px; }
+    .need-grid[data-count="5"] .need-item { display: grid; grid-template-columns: 70px 1fr; text-align: left; align-items: center; gap: 16px; padding: 18px 0; }
+    .need-grid[data-count="5"] .need-icon { width: 64px; height: 64px; }
+    .need-grid[data-count="5"] .need-icon i { font-size: 34px; }
+    .need-grid[data-count="5"] .need-item h3 { font-size: 19px; }
+    .need-grid[data-count="5"] .need-item p { font-size: 16px; }
     .detail-cta { flex-direction: column; align-items: stretch; text-align: center; }
     .detail-cta a { justify-content: center; }
   }
@@ -459,6 +469,7 @@ function renderStage(index) {
   buttons.forEach(button => button.classList.toggle('active', Number(button.dataset.stage) === index));
   detail.style.setProperty('--active-color', stage.color);
   needGrid.style.setProperty('--item-count', Math.min(stage.items.length, 5));
+  needGrid.dataset.count = stage.items.length;
   needGrid.innerHTML = stage.items.map(item => `
     <article class="need-item">
       <div class="need-icon"><i class="ti ${item[0]}" aria-hidden="true"></i></div>
