@@ -301,11 +301,6 @@
   .need-item p { color: rgba(7,29,58,0.7); font-size: 18px; line-height: 1.55; }
   .detail-cta { display: none; align-items: center; justify-content: center; gap: 28px; padding: 18px 28px 22px; background: color-mix(in srgb, var(--active-color) 8%, #FFFFFF); color: var(--active-color); font-size: 18px; font-weight: 800; }
   .detail-cta a { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 24px; border-radius: 9px; background: var(--active-color); color: #FFFFFF; text-decoration: none; }
-  .service-list { margin-top: 54px; }
-  .service-list-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
-  .service-list h2 { font-family: var(--font-display); color: #071D3A; font-size: 34px; line-height: 1.2; }
-  .service-list p { color: rgba(7,29,58,0.64); font-size: 15px; line-height: 1.6; max-width: 560px; }
-  .pricing-table { max-width: none; }
   @media (max-width: 980px) {
     .services-page { padding: 26px 18px 56px; }
     .stage-head h1 { font-size: 48px; }
@@ -320,7 +315,6 @@
     .need-item:last-child { border-bottom: 0; }
     .detail-divider { margin: 0 24px; }
     .need-title { padding-left: 24px; padding-right: 24px; }
-    .service-list-head { align-items: flex-start; flex-direction: column; }
   }
   @media (max-width: 520px) {
     .stage-head h1 { font-size: 36px; }
@@ -422,24 +416,6 @@
         </div>
       </section>
 
-      <section class="service-list" aria-labelledby="service-list-title">
-        <div class="service-list-head">
-          <div>
-            <div class="section-kicker">我要上架产品</div>
-            <h2 id="service-list-title">新品上架前的 FDA 与平台风险判断</h2>
-          </div>
-          <p>如果您已经知道需要哪一项，也可以直接从下面选择具体服务；不确定时，先按上面的阶段判断更合适。</p>
-        </div>
-        <div class="pricing-table" aria-label="上架产品服务价格表">
-        <div class="pricing-row"><div class="pricing-service">产品是否属于医疗器械</div><div class="pricing-price">$149</div></div>
-        <div class="pricing-row"><div class="pricing-service">产品FDA分类（Class 1，2，3）</div><div class="pricing-price">$99</div></div>
-        <div class="pricing-row"><div class="pricing-service">我需要FDA注册吗？</div><div class="pricing-price">$199</div></div>
-        <div class="pricing-row"><div class="pricing-service">Amazon FDA风险分析</div><div class="pricing-price">$299</div></div>
-        <div class="pricing-row"><div class="pricing-service">文案审核</div><div class="pricing-price">$299</div></div>
-        <div class="pricing-row"><div class="pricing-service">Label审核</div><div class="pricing-price">$299</div></div>
-        <div class="pricing-row"><div class="pricing-service">Premium：打包价+下一步建议</div><div class="pricing-price">$999</div></div>
-        </div>
-      </section>
     </div>
   </main>
 <script>
