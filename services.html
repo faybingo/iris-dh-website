@@ -279,18 +279,7 @@
   .stage-button.active .stage-summary { color: rgba(7,29,58,0.82); }
   .stage-detail { --active-color: #16A34A; position: relative; border: 1.5px solid color-mix(in srgb, var(--active-color) 42%, #FFFFFF); border-radius: 18px; background: rgba(255,255,255,0.92); box-shadow: 0 24px 70px rgba(7,29,58,0.08); overflow: hidden; }
   .stage-detail::before { content: ""; position: absolute; inset: 0 0 auto; height: 7px; background: linear-gradient(90deg, var(--active-color), color-mix(in srgb, var(--active-color) 40%, #FFFFFF)); opacity: 0.74; }
-  .detail-top { display: grid; grid-template-columns: 92px 1fr auto; gap: 22px; align-items: center; padding: 34px 36px 28px; }
-  .detail-icon { width: 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--active-color); background: color-mix(in srgb, var(--active-color) 12%, #FFFFFF); }
-  .detail-icon i { font-size: 44px; }
-  .detail-title-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
-  .detail-title-row h2 { font-size: 40px; line-height: 1.12; color: #071D3A; margin: 0; }
-  .detail-title-row .num { color: var(--active-color); margin-right: 4px; }
-  .detail-pill { display: inline-flex; align-items: center; min-height: 32px; padding: 6px 14px; border-radius: 999px; background: color-mix(in srgb, var(--active-color) 12%, #FFFFFF); color: var(--active-color); font-size: 16px; font-weight: 800; }
-  .detail-copy { color: rgba(7,29,58,0.72); font-size: 20px; line-height: 1.55; }
-  .collapse-icon { width: 48px; height: 48px; border-radius: 50%; border: 0; background: color-mix(in srgb, var(--active-color) 10%, #FFFFFF); color: var(--active-color); display: flex; align-items: center; justify-content: center; }
-  .collapse-icon i { font-size: 28px; }
-  .detail-divider { height: 1px; margin: 0 36px; background: rgba(7,29,58,0.12); }
-  .need-title { display: flex; align-items: center; gap: 12px; padding: 28px 36px 18px; color: #071D3A; font-size: 28px; font-weight: 800; }
+  .need-title { display: flex; align-items: center; gap: 12px; padding: 38px 36px 18px; color: #071D3A; font-size: 28px; font-weight: 800; }
   .need-title span { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #FFFFFF; background: var(--active-color); font-size: 18px; }
   .need-grid { display: grid; grid-template-columns: repeat(var(--item-count, 3), minmax(0, 1fr)); gap: 0; padding: 0 36px 34px; }
   .need-item { display: grid; grid-template-columns: 96px 1fr; gap: 24px; align-items: center; padding: 18px 28px; border-right: 1px solid rgba(7,29,58,0.14); min-height: 150px; }
@@ -307,13 +296,9 @@
     .stage-head p { font-size: 19px; }
     .stage-map { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 34px; }
     .stage-map::before { display: none; }
-    .detail-top { grid-template-columns: 74px 1fr; padding: 28px 24px 22px; }
-    .collapse-icon { display: none; }
-    .detail-icon { width: 68px; height: 68px; }
     .need-grid { grid-template-columns: 1fr; padding: 0 24px 28px; }
     .need-item { border-right: 0; border-bottom: 1px solid rgba(7,29,58,0.12); padding: 18px 0; }
     .need-item:last-child { border-bottom: 0; }
-    .detail-divider { margin: 0 24px; }
     .need-title { padding-left: 24px; padding-right: 24px; }
   }
   @media (max-width: 520px) {
@@ -326,9 +311,7 @@
     .stage-label { font-size: 20px; }
     .stage-number { min-width: 40px; height: 30px; font-size: 18px; margin-right: 8px; }
     .stage-summary { font-size: 14px; margin-top: 8px; }
-    .detail-top { grid-template-columns: 1fr; gap: 14px; }
-    .detail-title-row h2 { font-size: 28px; }
-    .detail-copy, .need-item p { font-size: 16px; }
+    .need-item p { font-size: 16px; }
     .need-title { font-size: 22px; }
     .need-item { grid-template-columns: 70px 1fr; gap: 16px; min-height: 0; }
     .need-icon { width: 64px; height: 64px; }
@@ -396,18 +379,6 @@
       </section>
 
       <section class="stage-detail" id="stage-detail" style="--active-color:#F59E0B;" aria-live="polite">
-        <div class="detail-top">
-          <div class="detail-icon"><i class="ti ti-rocket" id="detail-icon" aria-hidden="true"></i></div>
-          <div>
-            <div class="detail-title-row">
-              <h2><span class="num" id="detail-number">02</span><span id="detail-title">刚起步阶段</span></h2>
-              <span class="detail-pill" id="detail-pill">准备上市</span>
-            </div>
-            <p class="detail-copy" id="detail-copy">准备把产品卖到美国，需要满足亚马逊和 FDA 的基础合规要求</p>
-          </div>
-          <div class="collapse-icon"><i class="ti ti-chevron-up" aria-hidden="true"></i></div>
-        </div>
-        <div class="detail-divider"></div>
         <h3 class="need-title"><span><i class="ti ti-star-filled" aria-hidden="true"></i></span>我现在最需要做什么？</h3>
         <div class="need-grid" id="need-grid" style="--item-count:3;"></div>
         <div class="detail-cta" id="detail-cta">
@@ -480,11 +451,6 @@ const stageData = [
 
 const buttons = document.querySelectorAll('.stage-button');
 const detail = document.getElementById('stage-detail');
-const detailIcon = document.getElementById('detail-icon');
-const detailNumber = document.getElementById('detail-number');
-const detailTitle = document.getElementById('detail-title');
-const detailPill = document.getElementById('detail-pill');
-const detailCopy = document.getElementById('detail-copy');
 const needGrid = document.getElementById('need-grid');
 const detailCta = document.getElementById('detail-cta');
 
@@ -492,11 +458,6 @@ function renderStage(index) {
   const stage = stageData[index];
   buttons.forEach(button => button.classList.toggle('active', Number(button.dataset.stage) === index));
   detail.style.setProperty('--active-color', stage.color);
-  detailIcon.className = `ti ${stage.icon}`;
-  detailNumber.textContent = stage.number;
-  detailTitle.textContent = stage.title;
-  detailPill.textContent = stage.pill;
-  detailCopy.textContent = stage.copy;
   needGrid.style.setProperty('--item-count', Math.min(stage.items.length, 5));
   needGrid.innerHTML = stage.items.map(item => `
     <article class="need-item">
