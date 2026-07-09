@@ -442,7 +442,7 @@ html {
     --font-body: 'DM Sans', var(--font-sans);
   }
   body { font-family: var(--font-body); background: var(--color-background-tertiary); min-height: 100vh; color: var(--color-text-primary); }
-  .screen { display: block; }
+  .screen { display: none; }
   .screen.active { display: block; }
 
   nav { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 0.4rem 1.5rem; min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; position: sticky; top: 0; z-index: 100; }
